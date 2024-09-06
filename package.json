@@ -3,15 +3,31 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "android": "NODE_VERSION=v18.12.1 ENVFILE=.env.development react-native run-android",
+    "android:stage": "NODE_VERSION=v18.12.1 ENVFILE=.env.staging react-native run-android",
+    "android:prod": "NODE_VERSION=v18.12.1 ENVFILE=.env.production react-native run-android",
+    "android:dev:apk": "NODE_VERSION=v18.12.1 cd android && ENVFILE=.env.development ./gradlew assembleRelease",
+    "android:dev:bundle": "NODE_VERSION=v18.12.1 cd android && ENVFILE=.env.development ./gradlew bundleRelease",
+    "android:stage:apk": "NODE_VERSION=v18.12.1 cd android && ENVFILE=.env.staging ./gradlew assembleRelease",
+    "android:stage:bundle": "NODE_VERSION=v18.12.1 cd android && ENVFILE=.env.staging ./gradlew bundleRelease",
+    "android:prod:apk": "NODE_VERSION=v18.12.1 cd android && ENVFILE=.env.production ./gradlew assembleRelease",
+    "android:prod:bundle": "NODE_VERSION=v18.12.1 cd android && ENVFILE=.env.production ./gradlew bundleRelease",
+    "ios": "NODE_VERSION=v18.12.1 ENVFILE=.env.development react-native run-ios",
+    "ios:stage": "NODE_VERSION=v18.12.1 ENVFILE=.env.staging react-native run-ios",
+    "ios:prod": "NODE_VERSION=v18.12.1 ENVFILE=.env.production react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "pod": "cd ios && pod install",
+    "android:clean": "cd android && ./gradlew clean",
+    "ios:clean": "rm -rf ./ios/build ./ios/Pods ./ios/modum_app.xcworkspace && rm -f ./ios/Podfile.lock",
+    "ios:jsbundle": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'",
+    "device": "xcrun simctl list devices available"
   },
   "dependencies": {
     "react": "18.2.0",
-    "react-native": "0.74.5"
+    "react-native": "0.74.5",
+    "react-native-config": "^1.5.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

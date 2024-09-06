@@ -1,0 +1,10 @@
+//
+//  Config.xcconfig
+//  burdock
+//
+//  Created by 팜에어 on 9/6/24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+#include? "tmp.xcconfig"
