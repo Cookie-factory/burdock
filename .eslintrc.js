@@ -30,7 +30,7 @@ module.exports = {
     'no-implicit-coercion': 'error', // 암묵적인 타입 강제를 오류로 표시, 3 + "3" = 6
     'no-undef': 'off', // 정의되지 않은 변수 사용에 대한 규칙을 비활성화
     semi: 'error', // 세미콜론 사용에 대한 규칙 여부
-    '@typescript-eslint/no-explicit-any': 'warn', // any 타입 사용에 대한 규칙 여부
+    // '@typescript-eslint/no-explicit-any': 'warn', // any 타입 사용에 대한 규칙 여부
 
     'no-empty-function': 'off',
     '@typescript-eslint/no-empty-function': 'off',
