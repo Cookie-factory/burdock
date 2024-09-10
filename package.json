@@ -15,18 +15,27 @@
     "ios": "NODE_VERSION=v18.12.1 ENVFILE=.env.development react-native run-ios",
     "ios:stage": "NODE_VERSION=v18.12.1 ENVFILE=.env.staging react-native run-ios",
     "ios:prod": "NODE_VERSION=v18.12.1 ENVFILE=.env.production react-native run-ios",
-    "lint": "eslint .",
+    "lint": "eslint '**/*.{ts,tsx}' --ext .tsx,.ts --fix",
+    "lint-staged": "lint-staged",
     "start": "react-native start",
     "test": "jest",
     "pod": "cd ios && pod install",
     "android:clean": "cd android && ./gradlew clean",
     "ios:clean": "rm -rf ./ios/build ./ios/Pods ./ios/modum_app.xcworkspace && rm -f ./ios/Podfile.lock",
     "ios:jsbundle": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'",
-    "device": "xcrun simctl list devices available"
+    "device": "xcrun simctl list devices available",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   },
   "dependencies": {
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
+    "@tanstack/react-query": "^5.55.4",
     "axios": "^1.7.7",
     "dayjs": "^1.11.13",
     "jwt-decode": "^4.0.0",
@@ -51,12 +60,19 @@
     "@types/lodash": "^4.17.7",
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.5.0",
+    "@typescript-eslint/parser": "^8.5.0",
     "babel-jest": "^29.6.3",
     "babel-plugin-module-resolver": "^5.0.2",
     "eslint": "^8.19.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.35.2",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "husky": "^8.0.0",
     "jest": "^29.6.3",
     "metro-react-native-babel-preset": "^0.77.0",
     "prettier": "2.8.8",
+    "react-query-native-devtools": "^4.0.0",
     "react-test-renderer": "18.2.0",
     "typescript": "5.0.4"
   },
