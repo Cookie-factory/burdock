@@ -18,6 +18,9 @@ module.exports = {
     'import/resolver': {
       'babel-module': {},
     },
+    react: {
+      version: 'detect', // 자동으로 React 버전 감지
+    },
   },
   plugins: ['react', 'react-hooks', '@typescript-eslint'],
   parser: '@typescript-eslint/parser', // 코드 분석 파서 설정
