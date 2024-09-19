@@ -1,6 +1,6 @@
-import {PostEmailLoginResponse} from '~/types/api/auth/response';
+import {PostLoginResponse} from '~/types/api/auth/response';
 import {apiCall} from '../common';
-import {PostEmailLoginData} from '~/types/api/auth/data';
+import {PostEmailLoginData, PostSocialLoginData} from '~/types/api/auth/data';
 
 export const postEmailLogin = (data: PostEmailLoginData) => {
   const testData2 = {
@@ -8,9 +8,17 @@ export const postEmailLogin = (data: PostEmailLoginData) => {
     password: 'test1234',
   };
 
-  return apiCall<PostEmailLoginResponse>({
+  return apiCall<PostLoginResponse>({
     method: 'POST',
     url: 'auth/login',
     data: testData2,
+  });
+};
+
+export const postSocialLogin = (data: PostSocialLoginData) => {
+  return apiCall<PostLoginResponse>({
+    method: 'POST',
+    url: 'auth/social/login',
+    data,
   });
 };

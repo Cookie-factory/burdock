@@ -1,7 +1,7 @@
 import axios, {AxiosError, AxiosRequestConfig} from 'axios';
 import _ from 'lodash';
 import {Platform} from 'react-native';
-import {PostEmailLoginResponse} from '~/types/api/auth/response';
+import {PostLoginResponse} from '~/types/api/auth/response';
 import {ErrorResponse} from '~/types/api/common';
 import {config} from '~/utils/config';
 import {getSecurityData, setSecurityData} from '~/utils/storage';
@@ -42,7 +42,7 @@ axiosInstance.interceptors.response.use(
             refreshToken,
           },
         })) as {
-          data: PostEmailLoginResponse;
+          data: PostLoginResponse;
         };
 
         setSecurityData(
