@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">burdock</string>
+    <string name="kakao_app_key">59d29773f7e99ebb4c44d1fd99aca9e6</string>
 </resources>

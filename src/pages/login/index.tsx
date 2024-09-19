@@ -1,3 +1,4 @@
+import {KakaoOAuthToken, login} from '@react-native-seoul/kakao-login';
 import React, {useState} from 'react';
 import {View} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
@@ -26,6 +27,26 @@ function Login() {
         console.log(error);
       });
   };
+
+  const signInWithKakao = async (): Promise<void> => {
+    try {
+      const token: KakaoOAuthToken = await login();
+
+      /*
+      {
+      "refreshToken":"",
+      "accessToken":"",
+      "idToken":"",
+      "scopes":"",
+      }
+      */
+      console.log('@ TOKEN');
+      console.log(JSON.stringify(token));
+    } catch (error) {
+      console.log('@@@E ERROR');
+      console.log(error);
+    }
+  };
   return (
     <View>
       <View>
@@ -48,13 +69,23 @@ function Login() {
         />
       </View>
 
-      <View>
+      <View style={{marginVertical: 30}}>
         <CenterButton
           style={{
             width: 200,
           }}
           onPress={onSubmit}>
           <Text>이메일로 로그인</Text>
+        </CenterButton>
+      </View>
+
+      <View>
+        <CenterButton
+          style={{
+            width: 200,
+          }}
+          onPress={signInWithKakao}>
+          <Text>카카오 로그인</Text>
         </CenterButton>
       </View>
     </View>
