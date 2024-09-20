@@ -50,6 +50,7 @@ export const useGetBoard = (query: IDQuery) => {
   return useQuery({
     queryKey: [queryKeys.board.getBoard, query.id],
     queryFn: () => getBoard(query),
+    enabled: Boolean(query.id),
   });
 };
 
