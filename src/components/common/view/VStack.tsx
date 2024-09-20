@@ -5,7 +5,7 @@ import {StyleSheet, View, ViewProps} from 'react-native';
  *@description column view
  */
 function VStack(props: ViewProps) {
-  return <View style={style.view} {...props} />;
+  return <View {...props} style={[style.view, props.style]} />;
 }
 
 const style = StyleSheet.create({

@@ -5,7 +5,7 @@ import {StyleSheet, View, ViewProps} from 'react-native';
  *@description center view
  */
 function Center(props: ViewProps) {
-  return <View style={style.view} {...props} />;
+  return <View {...props} style={[style.view, props.style]} />;
 }
 
 const style = StyleSheet.create({
