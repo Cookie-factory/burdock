@@ -4,3 +4,17 @@ export interface ErrorResponse {
   statusCode: number;
   path: string;
 }
+
+/**
+ *@description api 쿼리 => id 프로퍼티
+ */
+export type IDQuery = {
+  id?: string;
+};
+
+/**
+ *@description api 응답 => id 프로퍼티
+ */
+export type IDResponse = {
+  id: string;
+};
