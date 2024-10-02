@@ -1,22 +1,19 @@
 import React from 'react';
-import {Pressable, StyleSheet} from 'react-native';
-import {PressableProps} from '~/types/style';
-import {MakeOptional} from '~/types/util/utility';
+import {Pressable} from 'react-native';
+import {CustomUIProps, PressableProps} from '~/types/style';
+import {styleTransform} from '~/utils/style';
 
 /**
  *@description center style button
  */
-function CenterButton(props: MakeOptional<PressableProps, 'style'>) {
-  return <Pressable {...props} style={[style.button, props.style]} />;
-}
-
-const style = StyleSheet.create({
-  button: {
+function CenterButton(props: CustomUIProps<PressableProps>) {
+  const transformStyle = styleTransform(props, {
     borderWidth: 1,
-    minHeight: 40,
+    minHeight: 32,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-});
+  });
+  return <Pressable {...props} style={[transformStyle, props.style]} />;
+}
 
 export default CenterButton;

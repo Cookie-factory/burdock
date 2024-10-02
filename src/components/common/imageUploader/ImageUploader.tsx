@@ -1,11 +1,11 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {Image, Pressable, ScrollView} from 'react-native';
 import {RegisterImageData} from '~/types/util/image';
 import {config} from '~/utils/config';
 import HStack from '../view/HStack';
 import VStack from '../view/VStack';
 
-const MAX_IMAGE_COUNT = 5;
+// const MAX_IMAGE_COUNT = 5;
 
 interface Props {
   images: RegisterImageData[];
@@ -62,7 +62,7 @@ function ImageUploader({images, setImages, onImagePicker}: Props) {
                   source={{
                     uri: `${
                       item.type === 'REGISTERED' ? config.IMAGE_BASE_URL : ''
-                    }${item.registerPageImageName}`,
+                    }${item.localImageName}`,
                   }}
                   alt={'image'}
                 />

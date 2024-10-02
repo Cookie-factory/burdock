@@ -1,17 +1,16 @@
 import React from 'react';
-import {StyleSheet, View, ViewProps} from 'react-native';
+import {View} from 'react-native';
+import {CustomUIProps} from '~/types/style';
+import {styleTransform} from '~/utils/style';
 
 /**
  *@description column view
  */
-function VStack(props: ViewProps) {
-  return <View {...props} style={[style.view, props.style]} />;
-}
-
-const style = StyleSheet.create({
-  view: {
+function VStack(props: CustomUIProps) {
+  const transformStyle = styleTransform(props, {
     alignItems: 'center',
-  },
-});
+  });
+  return <View {...props} style={[transformStyle, props.style]} />;
+}
 
 export default VStack;
