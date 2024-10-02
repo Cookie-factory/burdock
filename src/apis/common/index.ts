@@ -10,7 +10,7 @@ import {getSecurityData, setSecurityData} from '~/utils/storage';
 export const BASE_URL = __DEV__
   ? Platform.OS === 'android'
     ? 'http://10.0.2.2:3000'
-    : "'http://localhost:3000'"
+    : 'http://localhost:3000'
   : config.BASE_URL;
 
 const axiosInstance = axios.create();
@@ -155,17 +155,17 @@ export const imageApiCall = async <ResponseType = any>(props: {
   if (__DEV__) {
     console.log('@ API CALL PREVIOUS @');
     console.log(`accessToken : ${accessToken}`);
-    console.log(`path : ${BASE_URL}${props.url}`);
+    console.log(`path : ${BASE_URL}/${props.url}`);
     console.log('');
   }
 
-  return fetch(`${BASE_URL}${props.url}`, {
+  return fetch(`${BASE_URL}/${props.url}`, {
     method: 'POST',
     body: props.data,
     headers: {
       'Content-Type': 'multipart/form-data',
     },
-    signal: apiTimeout(props.timeout ?? 60),
+    signal: apiTimeout(props.timeout ?? 600),
   })
     .then(async response => {
       const data = (await response.json()) as ResponseType;
