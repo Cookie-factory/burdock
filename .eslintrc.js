@@ -40,6 +40,7 @@ module.exports = {
 
     'no-empty-function': 'off',
     '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/no-misused-promises': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off', // 함수의 반환 타입 명시 여부
     'react/display-name': 'off',
     'react/prop-types': 'off',
