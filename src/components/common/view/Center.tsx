@@ -10,6 +10,7 @@ function Center(props: CustomUIProps) {
   const transformStyle = styleTransform(props, {
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
   });
 
   return <View {...props} style={[transformStyle, props.style]} />;

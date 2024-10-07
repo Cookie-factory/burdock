@@ -1,8 +1,9 @@
 import React from 'react';
-import {View} from 'react-native';
-import {Button, Text} from 'react-native-paper';
 import {useDeleteBoard, useGetBoard} from '~/apis/board/hook';
+import CenterButton from '~/components/common/button/CenterButton';
+import Text from '~/components/common/text/Text';
 import HStack from '~/components/common/view/HStack';
+import VStack from '~/components/common/view/VStack';
 import useNavigate from '~/hooks/navigator/useNavigation';
 import useParam from '~/hooks/navigator/useParam';
 
@@ -34,19 +35,29 @@ function CommunityContent() {
   };
 
   return (
-    <View style={{flex: 1}}>
-      <HStack>
-        <Button mode="contained" onPress={onMoveModifyPage}>
-          수정
-        </Button>
+    <VStack flex={1} px={20} pt={20}>
+      <HStack justifyContent="flex-end" mb={24}>
+        <CenterButton mr={14} w={94} onPress={onMoveModifyPage}>
+          <Text>수정</Text>
+        </CenterButton>
 
-        <Button mode="contained" onPress={onDelete}>
-          삭제
-        </Button>
+        <CenterButton w={94} onPress={onDelete}>
+          <Text>삭제</Text>
+        </CenterButton>
       </HStack>
-      <Text>{data?.data.title ?? ''}</Text>
-      <Text>{data?.data.content ?? ''}</Text>
-    </View>
+
+      <HStack borderWidth={1} h={48} mb={24}>
+        <Text w={'100%'} borderWidth={1}>
+          {data?.data.title ?? ''}
+        </Text>
+      </HStack>
+
+      <VStack borderWidth={1} minH={120}>
+        <Text w={'100%'} borderWidth={1}>
+          {data?.data.content ?? ''}
+        </Text>
+      </VStack>
+    </VStack>
   );
 }
 

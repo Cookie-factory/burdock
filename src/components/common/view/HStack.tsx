@@ -10,6 +10,7 @@ function HStack(props: CustomUIProps) {
   const transformStyle = styleTransform(props, {
     flexDirection: 'row',
     alignItems: 'center',
+    width: '100%',
   });
 
   return <View {...props} style={[transformStyle, props.style]} />;

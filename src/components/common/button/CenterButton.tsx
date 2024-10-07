@@ -12,6 +12,7 @@ function CenterButton(props: CustomUIProps<PressableProps>) {
     minHeight: 32,
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
   });
   return <Pressable {...props} style={[transformStyle, props.style]} />;
 }

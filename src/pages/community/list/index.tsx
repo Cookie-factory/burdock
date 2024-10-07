@@ -1,14 +1,12 @@
 import React from 'react';
-import {View} from 'react-native';
-import {Button, Text} from 'react-native-paper';
 import {useGetBoardList} from '~/apis/board/hook';
 import useNavigate from '~/hooks/navigator/useNavigation';
 import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 import VStack from '~/components/common/view/VStack';
-import {BoardItem} from '~/types/api/board';
+import {BoardItem as BoardItemType} from '~/types/api/board';
 import CenterButton from '~/components/common/button/CenterButton';
-import HStack from '~/components/common/view/HStack';
-import dayjs from 'dayjs';
+import Text from '~/components/common/text/Text';
+import BoardItem from '~/components/community/board/BoardItem';
 
 function CommunityList() {
   const {navigate} = useNavigate();
@@ -42,15 +40,14 @@ function CommunityList() {
     }
   };
 
-  const onMoveContent = (id: string) => {
-    navigate('CommunityContent', {id});
-  };
-
   return (
-    <View style={{flex: 1, borderWidth: 1}}>
-      <Button mode="contained" onPress={() => navigate('CommunityRegister')}>
-        추가
-      </Button>
+    <VStack flex={1} px={20} borderWidth={10} borderColor={'blue'}>
+      <CenterButton
+        h={44}
+        mb={18}
+        onPress={() => navigate('CommunityRegister')}>
+        <Text>추가</Text>
+      </CenterButton>
 
       <KeyboardAwareFlatList
         showsVerticalScrollIndicator={false}
@@ -60,36 +57,11 @@ function CommunityList() {
         onEndReachedThreshold={0.5}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({item}) => {
-          const _item = item as BoardItem;
-          return (
-            <CenterButton onPress={() => onMoveContent(_item.id)}>
-              <VStack
-                style={{
-                  width: '100%',
-                  paddingHorizontal: 20,
-                  paddingVertical: 14,
-                }}>
-                <Text style={{width: 90, borderWidth: 1, marginBottom: 8}}>
-                  {_item.title}
-                </Text>
-
-                <HStack
-                  style={{
-                    width: '100%',
-                    justifyContent: 'flex-end',
-                    borderWidth: 1,
-                  }}>
-                  <Text style={{marginRight: 20}}>{_item.author.nickname}</Text>
-                  <Text style={{}}>
-                    {dayjs(_item.updatedAt).format('YY.MM.DD hh:mm')}
-                  </Text>
-                </HStack>
-              </VStack>
-            </CenterButton>
-          );
+          const _item = item as BoardItemType;
+          return <BoardItem data={_item} />;
         }}
       />
-    </View>
+    </VStack>
   );
 }
 

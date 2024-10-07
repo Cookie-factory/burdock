@@ -9,6 +9,7 @@ import {styleTransform} from '~/utils/style';
 function VStack(props: CustomUIProps) {
   const transformStyle = styleTransform(props, {
     alignItems: 'center',
+    width: '100%',
   });
   return <View {...props} style={[transformStyle, props.style]} />;
 }
