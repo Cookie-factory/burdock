@@ -4,6 +4,7 @@ import CenterButton from '~/components/common/button/CenterButton';
 import Text from '~/components/common/text/Text';
 import HStack from '~/components/common/view/HStack';
 import VStack from '~/components/common/view/VStack';
+import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
 import useNavigate from '~/hooks/navigator/useNavigation';
 import useParam from '~/hooks/navigator/useParam';
 
@@ -35,29 +36,31 @@ function CommunityContent() {
   };
 
   return (
-    <VStack flex={1} px={20} pt={20}>
-      <HStack justifyContent="flex-end" mb={24}>
-        <CenterButton mr={14} w={94} onPress={onMoveModifyPage}>
-          <Text>수정</Text>
-        </CenterButton>
+    <WhiteSafeAreaView>
+      <VStack flex={1} px={20} pt={20}>
+        <HStack justifyContent="flex-end" mb={24}>
+          <CenterButton mr={14} w={94} onPress={onMoveModifyPage}>
+            <Text>수정</Text>
+          </CenterButton>
 
-        <CenterButton w={94} onPress={onDelete}>
-          <Text>삭제</Text>
-        </CenterButton>
-      </HStack>
+          <CenterButton w={94} onPress={onDelete}>
+            <Text>삭제</Text>
+          </CenterButton>
+        </HStack>
 
-      <HStack borderWidth={1} h={48} mb={24}>
-        <Text w={'100%'} borderWidth={1}>
-          {data?.data.title ?? ''}
-        </Text>
-      </HStack>
+        <HStack borderWidth={1} h={48} mb={24}>
+          <Text w={'100%'} borderWidth={1}>
+            {data?.data.title ?? ''}
+          </Text>
+        </HStack>
 
-      <VStack borderWidth={1} minH={120}>
-        <Text w={'100%'} borderWidth={1}>
-          {data?.data.content ?? ''}
-        </Text>
+        <VStack borderWidth={1} minH={120}>
+          <Text w={'100%'} borderWidth={1}>
+            {data?.data.content ?? ''}
+          </Text>
+        </VStack>
       </VStack>
-    </VStack>
+    </WhiteSafeAreaView>
   );
 }
 

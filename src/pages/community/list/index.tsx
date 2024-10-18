@@ -7,6 +7,7 @@ import {BoardItem as BoardItemType} from '~/types/api/board';
 import CenterButton from '~/components/common/button/CenterButton';
 import Text from '~/components/common/text/Text';
 import BoardItem from '~/components/community/board/BoardItem';
+import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
 
 function CommunityList() {
   const {navigate} = useNavigate();
@@ -41,27 +42,29 @@ function CommunityList() {
   };
 
   return (
-    <VStack flex={1} px={20} borderWidth={10} borderColor={'blue'}>
-      <CenterButton
-        h={44}
-        mb={18}
-        onPress={() => navigate('CommunityRegister')}>
-        <Text>추가</Text>
-      </CenterButton>
+    <WhiteSafeAreaView>
+      <VStack flex={1} px={20} borderWidth={10} borderColor={'blue'}>
+        <CenterButton
+          h={44}
+          mb={18}
+          onPress={() => navigate('CommunityRegister')}>
+          <Text>추가</Text>
+        </CenterButton>
 
-      <KeyboardAwareFlatList
-        showsVerticalScrollIndicator={false}
-        data={boardList ?? []}
-        bounces={false}
-        onEndReached={onExpandList}
-        onEndReachedThreshold={0.5}
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({item}) => {
-          const _item = item as BoardItemType;
-          return <BoardItem data={_item} />;
-        }}
-      />
-    </VStack>
+        <KeyboardAwareFlatList
+          showsVerticalScrollIndicator={false}
+          data={boardList ?? []}
+          bounces={false}
+          onEndReached={onExpandList}
+          onEndReachedThreshold={0.5}
+          keyExtractor={(_, index) => index.toString()}
+          renderItem={({item}) => {
+            const _item = item as BoardItemType;
+            return <BoardItem data={_item} />;
+          }}
+        />
+      </VStack>
+    </WhiteSafeAreaView>
   );
 }
 
