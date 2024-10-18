@@ -19,11 +19,7 @@ function BackButton({onPress}: Props) {
   };
 
   return (
-    <CenterButton
-      w={'40px'}
-      h={'40px'}
-      alignItems={'flex-start'}
-      onPress={onBack}>
+    <CenterButton w={40} h={40} alignItems={'flex-start'} onPress={onBack}>
       <BackIcon />
     </CenterButton>
   );
