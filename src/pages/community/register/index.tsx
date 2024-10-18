@@ -7,6 +7,7 @@ import Text from '~/components/common/text/Text';
 import Center from '~/components/common/view/Center';
 import HStack from '~/components/common/view/HStack';
 import VStack from '~/components/common/view/VStack';
+import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
 import useImagePickerUpload from '~/hooks/navigator/useImagePickerUpload';
 import useNavigate from '~/hooks/navigator/useNavigation';
 import useParam from '~/hooks/navigator/useParam';
@@ -77,57 +78,59 @@ function CommunityRegister() {
   }, [beforeBoardData?.data]);
 
   return (
-    <VStack flex={1} px={20}>
-      <Input
-        label="제목"
-        placeholder="제목"
-        onChangeText={text => setForm(prev => ({...prev, title: text}))}
-        value={form.title}
-      />
+    <WhiteSafeAreaView>
+      <VStack flex={1} px={20}>
+        <Input
+          label="제목"
+          placeholder="제목"
+          onChangeText={text => setForm(prev => ({...prev, title: text}))}
+          value={form.title}
+        />
 
-      <CenterButton
-        onPress={onImagePicker}
-        borderWidth={1}
-        w={120}
-        h={40}
-        my={14}>
-        <Text>이미지 선택하기</Text>
-      </CenterButton>
+        <CenterButton
+          onPress={onImagePicker}
+          borderWidth={1}
+          w={120}
+          h={40}
+          my={14}>
+          <Text>이미지 선택하기</Text>
+        </CenterButton>
 
-      <HStack borderWidth={1} h={80}>
-        {imageDatas.map((item, i) => {
-          return (
-            <Center borderWidth={1} w={80} h={80} key={i}>
-              <Image
-                borderWidth={1}
-                w={80}
-                h={80}
-                key={i}
-                source={{
-                  uri:
-                    item.localImageName ??
-                    `${config.IMAGE_BASE_URL}${item.cloudImageName}`,
-                }}
-              />
-            </Center>
-          );
-        })}
-      </HStack>
+        <HStack borderWidth={1} h={80}>
+          {imageDatas.map((item, i) => {
+            return (
+              <Center borderWidth={1} w={80} h={80} key={i}>
+                <Image
+                  borderWidth={1}
+                  w={80}
+                  h={80}
+                  key={i}
+                  source={{
+                    uri:
+                      item.localImageName ??
+                      `${config.IMAGE_BASE_URL}${item.cloudImageName}`,
+                  }}
+                />
+              </Center>
+            );
+          })}
+        </HStack>
 
-      <Input
-        mt={30}
-        h={240}
-        multiline
-        label="내용"
-        placeholder="내용"
-        onChangeText={text => setForm(prev => ({...prev, content: text}))}
-        value={form.content}
-      />
+        <Input
+          mt={30}
+          h={240}
+          multiline
+          label="내용"
+          placeholder="내용"
+          onChangeText={text => setForm(prev => ({...prev, content: text}))}
+          value={form.content}
+        />
 
-      <CenterButton mt={30} onPress={onAddButtonClick}>
-        <Text>추가</Text>
-      </CenterButton>
-    </VStack>
+        <CenterButton mt={30} onPress={onAddButtonClick}>
+          <Text>추가</Text>
+        </CenterButton>
+      </VStack>
+    </WhiteSafeAreaView>
   );
 }
 
