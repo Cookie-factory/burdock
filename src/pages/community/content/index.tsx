@@ -1,12 +1,15 @@
 import React from 'react';
 import {useDeleteBoard, useGetBoard} from '~/apis/board/hook';
 import CenterButton from '~/components/common/button/CenterButton';
+import Image from '~/components/common/image/Image';
 import Text from '~/components/common/text/Text';
+import Center from '~/components/common/view/Center';
 import HStack from '~/components/common/view/HStack';
 import VStack from '~/components/common/view/VStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
 import useNavigate from '~/hooks/navigator/useNavigation';
 import useParam from '~/hooks/navigator/useParam';
+import {config} from '~/utils/config';
 
 function CommunityContent() {
   const {navigate, goBack} = useNavigate();
@@ -52,6 +55,24 @@ function CommunityContent() {
           <Text w={'100%'} borderWidth={1}>
             {data?.data.title ?? ''}
           </Text>
+        </HStack>
+
+        <HStack borderWidth={1} h={80}>
+          {(data?.data.images ?? []).map((item, i) => {
+            return (
+              <Center borderWidth={1} w={80} h={80} key={i}>
+                <Image
+                  borderWidth={1}
+                  w={80}
+                  h={80}
+                  key={i}
+                  source={{
+                    uri: `${config.IMAGE_BASE_URL}${item}`,
+                  }}
+                />
+              </Center>
+            );
+          })}
         </HStack>
 
         <VStack borderWidth={1} minH={120}>
