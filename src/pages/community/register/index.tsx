@@ -13,6 +13,7 @@ import useNavigate from '~/hooks/navigator/useNavigation';
 import useParam from '~/hooks/navigator/useParam';
 import {PostBoardData} from '~/types/api/board/data';
 import {config} from '~/utils/config';
+import IconCircleDelete24 from '~/assets/icons/IconCircleDelete24.svg';
 
 function CommunityRegister() {
   const {goBack} = useNavigate();
@@ -20,16 +21,15 @@ function CommunityRegister() {
 
   const {data: beforeBoardData} = useGetBoard({id: param?.id});
   const [isSubmitFormLoading, setSubmitFormLoading] = useState(false);
-  const {onImageUpload, onImagePicker, isImageLoad, imageDatas} =
+  const {onImageUpload, onImagePicker, isImageLoad, imageDatas, setImageDatas} =
     useImagePickerUpload({isSubmitFormLoading, maxImageUploadCount: 5});
 
   const postBoard = usePostBoard();
   const patchBoard = usePatchBoard();
 
-  const [form, setForm] = useState<PostBoardData>({
+  const [form, setForm] = useState<Omit<PostBoardData, 'images'>>({
     title: '',
     content: '',
-    images: [],
   });
 
   const onAddButtonClick = () => {
@@ -45,7 +45,10 @@ function CommunityRegister() {
       // 수정하기
       patchBoard
         .mutateAsync({
-          data: form,
+          data: {
+            ...form,
+            images: imageDatas.map(item => item.cloudImageName),
+          },
           id: param.id,
         })
         .then(patchResponse => {
@@ -71,9 +74,21 @@ function CommunityRegister() {
     }
   };
 
+  const onDeleteImage = (index: number) => {
+    setImageDatas(prev => {
+      return prev.filter((_, _i) => _i !== index);
+    });
+  };
+
   useEffect(() => {
     if (beforeBoardData?.data && param?.id) {
       setForm({...beforeBoardData.data});
+      setImageDatas(
+        (beforeBoardData?.data.images ?? []).map(item => ({
+          type: 'REGISTERED',
+          cloudImageName: item,
+        })),
+      );
     }
   }, [beforeBoardData?.data]);
 
@@ -111,6 +126,17 @@ function CommunityRegister() {
                       `${config.IMAGE_BASE_URL}${item.cloudImageName}`,
                   }}
                 />
+
+                <CenterButton
+                  onPress={() => onDeleteImage(i)}
+                  borderWidth={1}
+                  position="absolute"
+                  top={0}
+                  right={0}
+                  w={38}
+                  h={38}>
+                  <IconCircleDelete24 />
+                </CenterButton>
               </Center>
             );
           })}
