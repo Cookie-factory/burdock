@@ -18,7 +18,6 @@ interface Props {
  */
 function Header({title, rightButton, leftButton, isRemoveTopPosition}: Props) {
   const insets = useSafeAreaInsets();
-  console.log(insets.top);
 
   return (
     <HStack
