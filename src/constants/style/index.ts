@@ -18,6 +18,7 @@ export const styleTransformKey = {
   h: 'height',
   minW: 'minWidth',
   minH: 'minHeight',
+  bgColor: 'backgroundColor',
 };
 
 // style key
@@ -50,5 +51,32 @@ export const styleKey = {
   flex: 'flex',
   fontSize: 'fontSize',
   fontWeight: 'fontWeight',
+  zIndex: 'zIndex',
+  position: 'position',
+  left: 'left',
+  right: 'right',
+  top: 'top',
+  bottom: 'bottom',
   ...styleTransformKey,
+};
+
+export const uiStyle = {
+  header: {
+    height: 60,
+  },
+};
+
+export const colors = {
+  gray: {
+    0: '#FFFFFF',
+    10: '#F6F7F7',
+    20: '#ECECEE',
+    30: '#E1E2E4',
+    40: '#C6C8CD',
+    50: '#9EA1A8',
+    60: '#7F838C',
+    70: '#5D626D',
+    80: '#383E4A',
+    90: '#1A1E27',
+  },
 };
