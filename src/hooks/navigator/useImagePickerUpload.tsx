@@ -91,7 +91,7 @@ function useImagePickerUpload({
     try {
       const imageInfo = imageDatas.reduce<PostCloudImageData[]>(
         (result, item) => {
-          // cloudData있는 image만 (수정상태 불러온 이미지 제외)
+          // cloudData있는 image만 (수정상태 불러온 이미지 제외) -> 없으면 이전에 등록했던 이미지
           if (item.cloudData) {
             result.push(item.cloudData);
           }
