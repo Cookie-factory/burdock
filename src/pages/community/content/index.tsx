@@ -7,6 +7,7 @@ import Center from '~/components/common/view/Center';
 import HStack from '~/components/common/view/HStack';
 import VStack from '~/components/common/view/VStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
+import useFocusScreen from '~/hooks/navigator/useFocusScreen';
 import useNavigate from '~/hooks/navigator/useNavigation';
 import useParam from '~/hooks/navigator/useParam';
 import {config} from '~/utils/config';
@@ -16,7 +17,7 @@ function CommunityContent() {
 
   const param = useParam('CommunityContent');
 
-  const {data} = useGetBoard({id: param?.id});
+  const {data, refetch} = useGetBoard({id: param?.id});
   const deleteBoard = useDeleteBoard();
 
   const onDelete = () => {
@@ -37,6 +38,10 @@ function CommunityContent() {
       id: data?.data.id,
     });
   };
+
+  useFocusScreen(() => {
+    refetch();
+  });
 
   return (
     <WhiteSafeAreaView>

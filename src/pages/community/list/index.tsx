@@ -8,10 +8,12 @@ import CenterButton from '~/components/common/button/CenterButton';
 import Text from '~/components/common/text/Text';
 import BoardItem from '~/components/community/board/BoardItem';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
+import useFocusScreen from '~/hooks/navigator/useFocusScreen';
 
 function CommunityList() {
   const {navigate} = useNavigate();
   const {
+    refetch,
     data,
     fetchNextPage,
     isFetchingNextPage,
@@ -40,6 +42,10 @@ function CommunityList() {
       fetchNextPage();
     }
   };
+
+  useFocusScreen(() => {
+    refetch();
+  });
 
   return (
     <WhiteSafeAreaView>
