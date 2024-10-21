@@ -7,6 +7,7 @@ import Login from '~/pages/login';
 import {RouteList} from '~/types/navigator';
 import Header from '~/components/common/header/Header';
 import BackButton from '~/components/common/button/BackButton';
+import TabRouter from './TabRouter';
 
 const stack = createNativeStackNavigator<RouteList>();
 
@@ -14,6 +15,13 @@ function BaseRouter() {
   return (
     <NavigationContainer>
       <stack.Navigator>
+        <stack.Screen
+          name="tab"
+          component={TabRouter}
+          options={{
+            headerShown: false,
+          }}
+        />
         <stack.Screen
           name="Login"
           component={Login}

@@ -64,6 +64,9 @@ export const uiStyle = {
   header: {
     height: 60,
   },
+  tab: {
+    height: 60,
+  },
 };
 
 export const colors = {
