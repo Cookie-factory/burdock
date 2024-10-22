@@ -11,6 +11,7 @@ import {MessageItem} from '~/types/api/message';
 import HStack from '~/components/common/view/HStack';
 import dayjs from 'dayjs';
 import {useGetAuthInfo} from '~/apis/auth/hook';
+import {Platform} from 'react-native';
 
 function Inquiry() {
   const {data: getChatroomListData} = useGetChatroomList({
@@ -19,23 +20,43 @@ function Inquiry() {
 
   const {data: getAuthInfoData} = useGetAuthInfo();
 
-  console.log('@@ INFO');
-  console.log('@@ INFO');
-  console.log('@@ INFO');
-  console.log(getAuthInfoData?.data);
-
   const roomId = getChatroomListData?.data[0].id;
 
-  const socket = io('http://localhost:9090/chat'); // 서버주소가 http 프로토콜임을 유의
+  const socket = io(
+    Platform.OS === 'android'
+      ? 'http://10.0.2.2:9090/chat'
+      : 'http://localhost:9090/chat',
+  ); // 서버주소가 http 프로토콜임을 유의
 
   const {refetch} = useGetMessageOnRoom(roomId);
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState<MessageItem[]>([]);
 
-  console.log('@@@ LIST DATA');
-  console.log('@@@ LIST DATA');
-  console.log('@@@ LIST DATA');
-  console.log(getChatroomListData?.data[0]);
+  const onSendWhenEnter = (_message: string) => {
+    if (_message === '') return;
+
+    socket.emit('message', {
+      chatRoomId: roomId,
+      senderId: getAuthInfoData?.data.id,
+      senderNickname: getAuthInfoData?.data.nickname,
+      content: _message,
+    }); // 클라이언트에서 서버로 이벤트를 발생시킨다
+
+    setMessage('');
+  };
+
+  const onSendWhenClickButton = () => {
+    if (message === '') return;
+
+    socket.emit('message', {
+      chatRoomId: roomId,
+      senderId: getAuthInfoData?.data.id,
+      senderNickname: getAuthInfoData?.data.nickname,
+      content: message,
+    }); // 클라이언트에서 서버로 이벤트를 발생시킨다
+
+    setMessage('');
+  };
 
   useEffect(() => {
     if (roomId) {
@@ -76,23 +97,6 @@ function Inquiry() {
     };
   }, [messageList, roomId, getAuthInfoData?.data]);
 
-  const onSend2 = (_message: string) => {
-    if (_message === '') return;
-
-    socket.emit('message', {
-      chatRoomId: roomId,
-      senderId: getAuthInfoData?.data.id,
-      senderNickname: getAuthInfoData?.data.nickname,
-      content: _message,
-    }); // 클라이언트에서 서버로 이벤트를 발생시킨다
-
-    setMessage('');
-  };
-
-  const onSend = (_key: string) => {
-    console.log(_key);
-  };
-
   return (
     <WhiteSafeAreaView>
       <VStack flex={1} px={20}>
@@ -104,14 +108,10 @@ function Inquiry() {
           marginBottom={16}
           placeholder="메시지 입력"
           onChangeText={setMessage}
-          // returnKeyType="done"
-          // enterKeyHint="enter"
-          onSubmitEditing={e => onSend2(e.nativeEvent.text)}
-          // onKeyPress={e => onSend(e.nativeEvent.key)}
-          // value={form.email}
+          onSubmitEditing={e => onSendWhenEnter(e.nativeEvent.text)}
         />
 
-        <CenterButton>
+        <CenterButton onPress={onSendWhenClickButton}>
           <Text>전송</Text>
         </CenterButton>
 
