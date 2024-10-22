@@ -32,6 +32,7 @@ export type RootStackParamList = {
   CommunityContent: {
     id: string;
   };
+  Inquiry: undefined;
   // VoteMain: undefined;
   // MypageMain: undefined;
 };

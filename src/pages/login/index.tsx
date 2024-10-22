@@ -61,7 +61,7 @@ function Login() {
       await setSecurityData(config.ACCESS_TOKEN_NAME, tokenData.access);
       await setSecurityData(config.REFRESH_TOKEN_NAME, tokenData.refresh);
 
-      reset({index: 0, routes: [{name: 'CommunityList'}]});
+      reset({index: 0, routes: [{name: 'tab'}]});
     } catch (error) {
       removeSecurityData(config.ACCESS_TOKEN_NAME);
       removeSecurityData(config.REFRESH_TOKEN_NAME);

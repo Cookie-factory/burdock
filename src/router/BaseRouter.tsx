@@ -8,6 +8,7 @@ import {RouteList} from '~/types/navigator';
 import Header from '~/components/common/header/Header';
 import BackButton from '~/components/common/button/BackButton';
 import TabRouter from './TabRouter';
+import Inquiry from '~/pages/mypage/inquiry';
 
 const stack = createNativeStackNavigator<RouteList>();
 
@@ -16,13 +17,6 @@ function BaseRouter() {
     <NavigationContainer>
       <stack.Navigator>
         <stack.Screen
-          name="tab"
-          component={TabRouter}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <stack.Screen
           name="Login"
           component={Login}
           options={{
@@ -30,6 +24,15 @@ function BaseRouter() {
             header: () => <Header title="로그인" />,
           }}
         />
+
+        <stack.Screen
+          name="tab"
+          component={TabRouter}
+          options={{
+            headerShown: false,
+          }}
+        />
+
         <stack.Screen
           name="CommunityList"
           component={CommunityList}
@@ -58,6 +61,14 @@ function BaseRouter() {
             header: () => (
               <Header title="게시글 내용" leftButton={<BackButton />} />
             ),
+          }}
+        />
+        <stack.Screen
+          name="Inquiry"
+          component={Inquiry}
+          options={{
+            headerShown: true,
+            header: () => <Header title="1:1 문의" />,
           }}
         />
       </stack.Navigator>
