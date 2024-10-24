@@ -35,6 +35,11 @@ export type RootStackParamList = {
   Inquiry: undefined;
   // VoteMain: undefined;
   // MypageMain: undefined;
+  Setting: undefined;
+  NoticeList: undefined;
+  NoticeContent: undefined;
+  EventList: undefined;
+  EventContent: undefined;
 };
 
 // export type RouteList = RootStackParamList;

@@ -9,6 +9,11 @@ import Header from '~/components/common/header/Header';
 import BackButton from '~/components/common/button/BackButton';
 import TabRouter from './TabRouter';
 import Inquiry from '~/pages/mypage/inquiry';
+import Setting from '~/pages/mypage/setting';
+import NoticeList from '~/pages/mypage/notice/list';
+import NoticeContent from '~/pages/mypage/notice/content';
+import EventList from '~/pages/mypage/event/list';
+import EventContent from '~/pages/mypage/event/content';
 
 const stack = createNativeStackNavigator<RouteList>();
 
@@ -69,6 +74,49 @@ function BaseRouter() {
           options={{
             headerShown: true,
             header: () => <Header title="1:1 문의" />,
+          }}
+        />
+
+        <stack.Screen
+          name="Setting"
+          component={Setting}
+          options={{
+            headerShown: true,
+            header: () => <Header title="설정" />,
+          }}
+        />
+
+        <stack.Screen
+          name="NoticeList"
+          component={NoticeList}
+          options={{
+            headerShown: true,
+            header: () => <Header title="공지사항" />,
+          }}
+        />
+
+        <stack.Screen
+          name="NoticeContent"
+          component={NoticeContent}
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <stack.Screen
+          name="EventList"
+          component={EventList}
+          options={{
+            headerShown: true,
+            header: () => <Header title="이벤트" />,
+          }}
+        />
+
+        <stack.Screen
+          name="EventContent"
+          component={EventContent}
+          options={{
+            headerShown: false,
           }}
         />
       </stack.Navigator>

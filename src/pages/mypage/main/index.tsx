@@ -7,16 +7,20 @@ import MenuItem from '~/components/mypage/main/MenuItem';
 function MypageMain() {
   const tmp = [
     {
-      name: 'test1',
+      name: '공지사항',
+      url: 'NoticeList',
+    },
+    {
+      name: '이벤트',
+      url: 'EventList',
+    },
+    {
+      name: '1:1 문의',
       url: 'Inquiry',
     },
     {
-      name: 'test2',
-      url: 'Inquiry',
-    },
-    {
-      name: 'test3',
-      url: 'Inquiry',
+      name: '설정',
+      url: 'Setting',
     },
   ];
   return (
