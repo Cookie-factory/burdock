@@ -12,10 +12,10 @@ import useNavigate from '~/hooks/navigator/useNavigation';
  *@description 공지사항 페이지
  */
 function NoticeList() {
-  const {data} = useGetNoticeList({});
+  const {data} = useGetNoticeList({type: 'NOTICE'});
   const navigate = useNavigate();
 
-  const onMoveNoticeContent = (id: string) => {
+  const onMoveContent = (id: string) => {
     navigate.navigate('NoticeContent', {id});
   };
   return (
@@ -25,9 +25,7 @@ function NoticeList() {
 
         <VStack borderWidth={1} py={12}>
           {data?.data.map(_item => (
-            <Pressable
-              key={_item.id}
-              onPress={() => onMoveNoticeContent(_item.id)}>
+            <Pressable key={_item.id} onPress={() => onMoveContent(_item.id)}>
               <HStack justifyContent="space-between">
                 <Text>{_item.title ?? ''}</Text>
 

@@ -111,7 +111,7 @@ function BaseRouter() {
           component={EventList}
           options={{
             headerShown: true,
-            header: () => <Header title="이벤트" />,
+            header: () => <Header title="이벤트" leftButton={<BackButton />} />,
           }}
         />
 
@@ -119,7 +119,8 @@ function BaseRouter() {
           name="EventContent"
           component={EventContent}
           options={{
-            headerShown: false,
+            headerShown: true,
+            header: () => <Header title="" leftButton={<BackButton />} />,
           }}
         />
       </stack.Navigator>

@@ -1,15 +1,40 @@
+import dayjs from 'dayjs';
 import React from 'react';
+import {Pressable} from 'react-native';
+import {useGetNoticeList} from '~/apis/notice/hook';
 import Text from '~/components/common/text/Text';
+import HStack from '~/components/common/view/HStack';
 import VStack from '~/components/common/view/VStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
+import useNavigate from '~/hooks/navigator/useNavigation';
 
+/**
+ *@description 이벤트 목록 페이지
+ */
 function EventList() {
+  const {data} = useGetNoticeList({type: 'EVENT'});
+  const navigate = useNavigate();
+
+  const onMoveContent = (id: string) => {
+    navigate.navigate('EventContent', {id});
+  };
+
   return (
     <WhiteSafeAreaView>
       <VStack flex={1} px={20}>
         <Text mb={20}>이벤트 목록</Text>
 
-        <VStack borderWidth={1} py={12}></VStack>
+        <VStack borderWidth={1} py={12}>
+          {data?.data.map(_item => (
+            <Pressable key={_item.id} onPress={() => onMoveContent(_item.id)}>
+              <HStack justifyContent="space-between">
+                <Text>{_item.title ?? ''}</Text>
+
+                <Text>{dayjs(_item.updatedAt).format('YYYY.MM.DD')}</Text>
+              </HStack>
+            </Pressable>
+          ))}
+        </VStack>
       </VStack>
     </WhiteSafeAreaView>
   );

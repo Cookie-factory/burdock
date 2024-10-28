@@ -39,7 +39,7 @@ export type RootStackParamList = {
   NoticeList: undefined;
   NoticeContent: {id: string};
   EventList: undefined;
-  EventContent: undefined;
+  EventContent: {id: string};
 };
 
 // export type RouteList = RootStackParamList;
