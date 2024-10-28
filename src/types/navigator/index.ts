@@ -37,7 +37,7 @@ export type RootStackParamList = {
   // MypageMain: undefined;
   Setting: undefined;
   NoticeList: undefined;
-  NoticeContent: undefined;
+  NoticeContent: {id: string};
   EventList: undefined;
   EventContent: undefined;
 };

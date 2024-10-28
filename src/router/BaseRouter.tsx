@@ -91,7 +91,9 @@ function BaseRouter() {
           component={NoticeList}
           options={{
             headerShown: true,
-            header: () => <Header title="공지사항" />,
+            header: () => (
+              <Header title="공지사항" leftButton={<BackButton />} />
+            ),
           }}
         />
 
@@ -99,7 +101,8 @@ function BaseRouter() {
           name="NoticeContent"
           component={NoticeContent}
           options={{
-            headerShown: false,
+            headerShown: true,
+            header: () => <Header title="" leftButton={<BackButton />} />,
           }}
         />
 

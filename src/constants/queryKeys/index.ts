@@ -12,4 +12,8 @@ export const queryKeys = {
   auth: {
     getAuthInfo: 'get auth info',
   },
+  notice: {
+    getNotice: 'get notice',
+    getNoticeList: 'get notice list',
+  },
 } as const;
