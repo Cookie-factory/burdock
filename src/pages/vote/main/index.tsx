@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useGetVoteRanking} from '~/apis/vote/hook';
 import CenterButton from '~/components/common/button/CenterButton';
+import SearchNaviBar from '~/components/common/searchBar/SearchNaviBar';
 import Text from '~/components/common/text/Text';
 import VStack from '~/components/common/view/VStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
@@ -12,18 +13,10 @@ function VoteMain() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCelebrityId, setSelectedCelebrityId] = useState<string>();
 
-  // const [dataList, setDataList] = useState<CelebrityItem[]>([]);
-
   const onVoteModalOpen = (_id: string) => {
     setIsOpen(true);
     setSelectedCelebrityId(_id);
   };
-
-  // useEffect(() => {
-  //   if (data?.pages) {
-  //     setDataList((data?.pages ?? []).flatMap(item => item.data));
-  //   }
-  // }, [data?.pages]);
 
   return (
     <WhiteSafeAreaView>
@@ -31,6 +24,8 @@ function VoteMain() {
         <VStack pb={30}>
           <Text>메인</Text>
         </VStack>
+
+        <SearchNaviBar />
 
         <VStack>
           {(data?.data ?? []).map(item => (

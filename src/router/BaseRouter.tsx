@@ -14,6 +14,7 @@ import NoticeList from '~/pages/mypage/notice/list';
 import NoticeContent from '~/pages/mypage/notice/content';
 import EventList from '~/pages/mypage/event/list';
 import EventContent from '~/pages/mypage/event/content';
+import SearchPage from '~/pages/search';
 
 const stack = createNativeStackNavigator<RouteList>();
 
@@ -118,6 +119,15 @@ function BaseRouter() {
         <stack.Screen
           name="EventContent"
           component={EventContent}
+          options={{
+            headerShown: true,
+            header: () => <Header title="" leftButton={<BackButton />} />,
+          }}
+        />
+
+        <stack.Screen
+          name="SearchPage"
+          component={SearchPage}
           options={{
             headerShown: true,
             header: () => <Header title="" leftButton={<BackButton />} />,
