@@ -1,31 +1,29 @@
-import React, {useEffect, useState} from 'react';
-import {useGetCelebrityList} from '~/apis/celebrity/hook';
+import React, {useState} from 'react';
+import {useGetVoteRanking} from '~/apis/vote/hook';
 import CenterButton from '~/components/common/button/CenterButton';
 import Text from '~/components/common/text/Text';
 import VStack from '~/components/common/view/VStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
 import VoteModal from '~/components/vote/main/VoteModal';
-import {CelebrityItem} from '~/types/api/celebrity';
 
 function VoteMain() {
-  const {data} = useGetCelebrityList({
-    category: 'YOUTUBE',
-  });
+  const {data, refetch} = useGetVoteRanking({});
+
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCelebrityId, setSelectedCelebrityId] = useState<string>();
 
-  const [dataList, setDataList] = useState<CelebrityItem[]>([]);
+  // const [dataList, setDataList] = useState<CelebrityItem[]>([]);
 
   const onVoteModalOpen = (_id: string) => {
     setIsOpen(true);
     setSelectedCelebrityId(_id);
   };
 
-  useEffect(() => {
-    if (data?.pages) {
-      setDataList((data?.pages ?? []).flatMap(item => item.data));
-    }
-  }, [data?.pages]);
+  // useEffect(() => {
+  //   if (data?.pages) {
+  //     setDataList((data?.pages ?? []).flatMap(item => item.data));
+  //   }
+  // }, [data?.pages]);
 
   return (
     <WhiteSafeAreaView>
@@ -35,19 +33,23 @@ function VoteMain() {
         </VStack>
 
         <VStack>
-          {dataList.map(item => (
+          {(data?.data ?? []).map(item => (
             <CenterButton
-              onPress={() => onVoteModalOpen(item.id)}
-              key={item.id}
+              onPress={() => onVoteModalOpen(item.celebrityId)}
+              key={item.celebrityId}
               py={20}
-              mb={4}>
-              <Text>{item.name}</Text>
+              mb={4}
+              flexDirection="row"
+              justifyContent="space-between">
+              <Text>{item.celebrityName}</Text>
+              <Text>{item.totalVotes}</Text>
             </CenterButton>
           ))}
         </VStack>
       </VStack>
 
       <VoteModal
+        refetch={refetch}
         isOpen={isOpen}
         celebrityId={selectedCelebrityId}
         onClose={() => setIsOpen(false)}

@@ -11,8 +11,9 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   celebrityId?: string;
+  refetch: () => void;
 }
-function VoteModal({isOpen, onClose, celebrityId}: Props) {
+function VoteModal({isOpen, onClose, celebrityId, refetch}: Props) {
   const [count, setCount] = useState(0);
   const postVote = usePostVote();
 
@@ -31,7 +32,7 @@ function VoteModal({isOpen, onClose, celebrityId}: Props) {
               '%c등록이 되었습니다.',
               'color: red; font-weight: bold; font-size: 50px;',
             );
-
+            refetch();
             onClose();
           }
         })

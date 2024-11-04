@@ -19,4 +19,7 @@ export const queryKeys = {
   celebrity: {
     getCelebrityList: 'get celebrity list',
   },
+  vote: {
+    getVoteRank: 'get vote rank',
+  },
 } as const;
