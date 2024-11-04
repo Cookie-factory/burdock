@@ -4,12 +4,14 @@ import CenterButton from '~/components/common/button/CenterButton';
 import Text from '~/components/common/text/Text';
 import VStack from '~/components/common/view/VStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
+import VoteModal from '~/components/vote/main/VoteModal';
 import {CelebrityItem} from '~/types/api/celebrity';
 
 function VoteMain() {
   const {data} = useGetCelebrityList({
     category: 'YOUTUBE',
   });
+  const [isOpen, setIsOpen] = useState(true);
 
   const [dataList, setDataList] = useState<CelebrityItem[]>([]);
 
@@ -33,6 +35,8 @@ function VoteMain() {
           ))}
         </VStack>
       </VStack>
+
+      <VoteModal isOpen={isOpen} />
     </WhiteSafeAreaView>
   );
 }

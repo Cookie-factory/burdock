@@ -7,7 +7,7 @@ import {styleTransform} from '~/utils/style';
 /**
  *@description Input style button
  */
-function Input(props: CustomUIProps<TextInputProps, CustomViewStyle>) {
+function CustomInput(props: CustomUIProps<TextInputProps, CustomViewStyle>) {
   const transformStyle = styleTransform(props, {
     borderWidth: 1,
     paddingLeft: 14,
@@ -18,4 +18,4 @@ function Input(props: CustomUIProps<TextInputProps, CustomViewStyle>) {
   return <TextInput {...props} style={[transformStyle, props.style]} />;
 }
 
-export default Input;
+export default CustomInput;

@@ -4,7 +4,7 @@ import Text from '~/components/common/text/Text';
 import VStack from '~/components/common/view/VStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
 import io from 'socket.io-client';
-import Input from '~/components/common/input/Input';
+import CustomInput from '~/components/common/input/Input';
 import CenterButton from '~/components/common/button/CenterButton';
 import {useGetMessageOnRoom} from '~/apis/message/hook';
 import {MessageItem} from '~/types/api/message';
@@ -102,7 +102,7 @@ function Inquiry() {
       <VStack flex={1} px={20}>
         <Text mb={20}>1:1문의</Text>
 
-        <Input
+        <CustomInput
           label="입력"
           value={message}
           marginBottom={16}

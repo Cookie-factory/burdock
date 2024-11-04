@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useGetBoard, usePatchBoard, usePostBoard} from '~/apis/board/hook';
 import CenterButton from '~/components/common/button/CenterButton';
 import Image from '~/components/common/image/Image';
-import Input from '~/components/common/input/Input';
+import CustomInput from '~/components/common/input/Input';
 import Text from '~/components/common/text/Text';
 import Center from '~/components/common/view/Center';
 import HStack from '~/components/common/view/HStack';
@@ -95,7 +95,7 @@ function CommunityRegister() {
   return (
     <WhiteSafeAreaView>
       <VStack flex={1} px={20}>
-        <Input
+        <CustomInput
           label="제목"
           placeholder="제목"
           onChangeText={text => setForm(prev => ({...prev, title: text}))}
@@ -142,7 +142,7 @@ function CommunityRegister() {
           })}
         </HStack>
 
-        <Input
+        <CustomInput
           mt={30}
           h={240}
           multiline

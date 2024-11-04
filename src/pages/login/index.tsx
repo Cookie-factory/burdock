@@ -2,7 +2,7 @@ import {KakaoOAuthToken, login} from '@react-native-seoul/kakao-login';
 import React, {useState} from 'react';
 import {usePostEmailLogin, usePostSocialLogin} from '~/apis/auth/hook';
 import CenterButton from '~/components/common/button/CenterButton';
-import Input from '~/components/common/input/Input';
+import CustomInput from '~/components/common/input/Input';
 import Text from '~/components/common/text/Text';
 import VStack from '~/components/common/view/VStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
@@ -71,7 +71,7 @@ function Login() {
     <WhiteSafeAreaView>
       <VStack flex={1} px={20} borderWidth={10} borderColor={'blue'}>
         <VStack px={20} borderWidth={1}>
-          <Input
+          <CustomInput
             label="이메일"
             marginBottom={16}
             placeholder="이메일"
@@ -79,7 +79,7 @@ function Login() {
             value={form.email}
           />
 
-          <Input
+          <CustomInput
             label="비밀번호"
             placeholder="비밀번호"
             onChangeText={text => setForm(prev => ({...prev, passwords: text}))}

@@ -2,7 +2,7 @@ import React from 'react';
 import {ModalProps} from 'react-native-paper';
 import {CustomUIProps} from '~/types/style';
 import {styleTransform} from '~/utils/style';
-import Modal from '../modal/Modal';
+import CustomModal from '../modal/Modal';
 
 /**
  *@description Popup ui,
@@ -12,9 +12,9 @@ function Popup(props: CustomUIProps<ModalProps>) {
   const transformStyle = styleTransform(props);
 
   return (
-    <Modal {...props} style={[transformStyle, props.style]}>
+    <CustomModal {...props} style={[transformStyle, props.style]}>
       {props.children}
-    </Modal>
+    </CustomModal>
   );
 }
 

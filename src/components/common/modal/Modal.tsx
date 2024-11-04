@@ -7,7 +7,7 @@ import {styleTransform} from '~/utils/style';
  *@description Modal ui,
  *@TODO 추후 style props 수정
  */
-function Modal(props: CustomUIProps<ModalProps>) {
+function CustomModal(props: CustomUIProps<ModalProps>) {
   const transformStyle = styleTransform(props);
 
   return (
@@ -17,4 +17,4 @@ function Modal(props: CustomUIProps<ModalProps>) {
   );
 }
 
-export default Modal;
+export default CustomModal;
