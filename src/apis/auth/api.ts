@@ -7,7 +7,7 @@ import {PostEmailLoginData, PostSocialLoginData} from '~/types/api/auth/data';
 
 export const postEmailLogin = (data: PostEmailLoginData) => {
   const testData2 = {
-    email: 'tester10@test.com',
+    email: 'test1@test.com',
     password: 'test1234',
   };
 

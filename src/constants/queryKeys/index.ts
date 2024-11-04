@@ -16,4 +16,7 @@ export const queryKeys = {
     getNotice: 'get notice',
     getNoticeList: 'get notice list',
   },
+  celebrity: {
+    getCelebrityList: 'get celebrity list',
+  },
 } as const;
