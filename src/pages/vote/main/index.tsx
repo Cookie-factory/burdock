@@ -11,15 +11,22 @@ function VoteMain() {
   const {data} = useGetCelebrityList({
     category: 'YOUTUBE',
   });
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedCelebrityId, setSelectedCelebrityId] = useState<string>();
 
   const [dataList, setDataList] = useState<CelebrityItem[]>([]);
+
+  const onVoteModalOpen = (_id: string) => {
+    setIsOpen(true);
+    setSelectedCelebrityId(_id);
+  };
 
   useEffect(() => {
     if (data?.pages) {
       setDataList((data?.pages ?? []).flatMap(item => item.data));
     }
   }, [data?.pages]);
+
   return (
     <WhiteSafeAreaView>
       <VStack flex={1} px={20}>
@@ -29,14 +36,22 @@ function VoteMain() {
 
         <VStack>
           {dataList.map(item => (
-            <CenterButton key={item.id} py={20} mb={4}>
+            <CenterButton
+              onPress={() => onVoteModalOpen(item.id)}
+              key={item.id}
+              py={20}
+              mb={4}>
               <Text>{item.name}</Text>
             </CenterButton>
           ))}
         </VStack>
       </VStack>
 
-      <VoteModal isOpen={isOpen} />
+      <VoteModal
+        isOpen={isOpen}
+        celebrityId={selectedCelebrityId}
+        onClose={() => setIsOpen(false)}
+      />
     </WhiteSafeAreaView>
   );
 }
