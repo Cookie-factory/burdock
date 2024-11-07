@@ -9,11 +9,11 @@ function CustomModalContent(props: CustomUIProps) {
   return (
     <VStack
       bgColor={'#fff'}
-      borderWidth={1}
       py={24}
       px={18}
       minH={200}
       {...props}
+      borderRadius={16}
     />
   );
 }

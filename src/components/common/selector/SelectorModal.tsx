@@ -35,7 +35,10 @@ function CustomSelectorActionSheet({
 
   return (
     <CustomActionSheet isOpen={isOpen} onClose={onClose}>
-      <CustomModalContent height={height} borderWidth={3}>
+      <CustomModalContent
+        height={height}
+        borderBottomLeftRadius={0}
+        borderBottomRightRadius={0}>
         <VStack flex={1} justifyContent="space-between">
           <VStack>
             {title && (

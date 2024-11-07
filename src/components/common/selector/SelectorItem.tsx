@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import CenterButton from '../button/CenterButton';
 import CustomText from '../text/Text';
 import {SelectorItem as SelectorItemType} from '~/types/components/common/selector';
 import {Icon} from 'react-native-paper';
+import {colors} from '~/constants/style';
 
 interface Props {
   data: SelectorItemType;
@@ -18,10 +19,18 @@ function SelectorItem({data, selectedItem, onSelectItem}: Props) {
     <CenterButton
       h={50}
       px={18}
+      mb={12}
       flexDirection="row"
       justifyContent="flex-start"
+      borderBottomWidth={1}
+      borderBottomColor={
+        selectedItem?.value === data.value ? colors.red[50] : colors.gray[40]
+      }
       onPress={() => onSelectItem(data)}>
       <Icon
+        color={
+          selectedItem?.value === data.value ? colors.red[50] : colors.gray[40]
+        }
         source={
           selectedItem?.value === data.value
             ? 'check-circle'

@@ -8,7 +8,6 @@ import {styleTransform} from '~/utils/style';
  */
 function CenterButton(props: CustomUIProps<PressableProps>) {
   const transformStyle = styleTransform(props, {
-    borderWidth: 1,
     minHeight: 32,
     justifyContent: 'center',
     alignItems: 'center',
