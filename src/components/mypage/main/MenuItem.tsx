@@ -11,9 +11,9 @@ function MenuItem({name, url}: Props) {
   const {navigate} = useNavigate();
   return (
     <CenterButton
-      h={42}
+      alignItems="flex-start"
+      h={50}
       marginVertical={10}
-      borderWidth={1}
       onPress={() => navigate(url)}>
       <Text>{name}</Text>
     </CenterButton>
