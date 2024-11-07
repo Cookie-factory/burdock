@@ -57,6 +57,7 @@ export const styleKey = {
   right: 'right',
   top: 'top',
   bottom: 'bottom',
+  color: 'color',
   ...styleTransformKey,
 };
 
@@ -81,5 +82,16 @@ export const colors = {
     70: '#5D626D',
     80: '#383E4A',
     90: '#1A1E27',
+  },
+  mint: {
+    50: '#0DCACA',
+  },
+  blue: {
+    30: '#A1BEFF',
+    50: '#3D89F6',
+  },
+  red: {
+    30: '#E2AC78',
+    50: '#FF5024',
   },
 };

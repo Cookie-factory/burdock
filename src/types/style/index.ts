@@ -48,7 +48,7 @@ export type CustomUIProps<
 // 커스텀 style props 타입 -> styleTransformKey 상수로 타입 지정
 export type CustomStyle = {
   [_key in keyof typeof styleTransformKey]?: string | number;
-} & Pick<TextStyle, 'fontSize' | 'fontWeight'>;
+} & Pick<TextStyle, 'fontSize' | 'fontWeight' | 'color'>;
 
 export type CustomViewStyle = ViewStyle & CustomStyle;
 
