@@ -1,10 +1,9 @@
+import {AuthInfo} from '.';
+
 /**
  *@description 이메일 로그인 api 응답
  */
-export interface PostLoginResponse {
-  access: string;
-  refresh: string;
-}
+export type PostLoginResponse = AuthInfo;
 
 /**
  *@description 유저 정보 조회 api 응답
@@ -15,3 +14,8 @@ export type GetAuthInfoResponse = {
   id: string;
   nickname: string;
 };
+
+/**
+ *@description 회원가입 api 응답
+ */
+export type PostSignupResponse = AuthInfo;

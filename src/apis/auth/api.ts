@@ -3,7 +3,11 @@ import {
   PostLoginResponse,
 } from '~/types/api/auth/response';
 import {apiCall} from '../common';
-import {PostEmailLoginData, PostSocialLoginData} from '~/types/api/auth/data';
+import {
+  PostEmailLoginData,
+  PostSignupData,
+  PostSocialLoginData,
+} from '~/types/api/auth/data';
 
 export const postEmailLogin = (data: PostEmailLoginData) => {
   const testData2 = {
@@ -30,5 +34,13 @@ export const getAuthInfo = () => {
   return apiCall<GetAuthInfoResponse>({
     method: 'GET',
     url: 'auth/info',
+  });
+};
+
+export const postSignup = (data: PostSignupData) => {
+  return apiCall({
+    method: 'POST',
+    url: 'auth/signup',
+    data,
   });
 };

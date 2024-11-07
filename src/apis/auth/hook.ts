@@ -1,6 +1,10 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
-import {getAuthInfo, postEmailLogin, postSocialLogin} from './api';
-import {PostEmailLoginData, PostSocialLoginData} from '~/types/api/auth/data';
+import {getAuthInfo, postEmailLogin, postSignup, postSocialLogin} from './api';
+import {
+  PostEmailLoginData,
+  PostSignupData,
+  PostSocialLoginData,
+} from '~/types/api/auth/data';
 import {queryKeys} from '~/constants/queryKeys';
 
 export const usePostEmailLogin = () => {
@@ -19,5 +23,11 @@ export const useGetAuthInfo = () => {
   return useQuery({
     queryKey: [queryKeys.auth.getAuthInfo],
     queryFn: () => getAuthInfo(),
+  });
+};
+
+export const usePostSignup = () => {
+  return useMutation({
+    mutationFn: (data: PostSignupData) => postSignup(data),
   });
 };
