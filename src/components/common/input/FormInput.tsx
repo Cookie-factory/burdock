@@ -11,7 +11,6 @@ function FormInput(props: CustomUIProps<TextInputProps, CustomViewStyle>) {
   // focus에 따른 input 스타일 변경 state
   const [calStyle, setCalStyle] = useState({
     borderWidth: 0,
-    fontSize: 0,
   });
 
   return (
@@ -22,7 +21,6 @@ function FormInput(props: CustomUIProps<TextInputProps, CustomViewStyle>) {
         }
         setCalStyle({
           borderWidth: 1,
-          fontSize: -2,
         });
       }}
       onBlur={args => {
@@ -31,12 +29,11 @@ function FormInput(props: CustomUIProps<TextInputProps, CustomViewStyle>) {
         }
         setCalStyle({
           borderWidth: 0,
-          fontSize: 0,
         });
       }}
       pl={16}
       h={48}
-      fontSize={16 + calStyle.fontSize}
+      fontSize={16}
       borderWidth={3 + calStyle.borderWidth}
       placeholderTextColor={colors.gray[40]}
       borderColor={colors.mint[50]}
