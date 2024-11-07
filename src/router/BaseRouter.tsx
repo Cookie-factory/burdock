@@ -15,6 +15,7 @@ import NoticeContent from '~/pages/mypage/notice/content';
 import EventList from '~/pages/mypage/event/list';
 import EventContent from '~/pages/mypage/event/content';
 import SearchPage from '~/pages/search';
+import Signup from '~/pages/signup';
 
 const stack = createNativeStackNavigator<RouteList>();
 
@@ -26,8 +27,7 @@ function BaseRouter() {
           name="Login"
           component={Login}
           options={{
-            headerShown: true,
-            header: () => <Header title="로그인" />,
+            headerShown: false,
           }}
         />
 
@@ -131,6 +131,17 @@ function BaseRouter() {
           options={{
             headerShown: true,
             header: () => <Header title="" leftButton={<BackButton />} />,
+          }}
+        />
+
+        <stack.Screen
+          name="Signup"
+          component={Signup}
+          options={{
+            headerShown: true,
+            header: () => (
+              <Header title="회원가입" leftButton={<BackButton />} />
+            ),
           }}
         />
       </stack.Navigator>

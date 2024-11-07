@@ -41,6 +41,7 @@ export type RootStackParamList = {
   EventList: undefined;
   EventContent: {id: string};
   SearchPage: undefined;
+  Signup: undefined;
 };
 
 // export type RouteList = RootStackParamList;
