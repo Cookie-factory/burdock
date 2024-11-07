@@ -90,7 +90,9 @@ function Login() {
         <VStack mb={24}>
           <FormInput
             label="이메일"
-            marginBottom={16}
+            containerStyle={{
+              marginBottom: 16,
+            }}
             placeholder="이메일"
             onChangeText={text => setForm(prev => ({...prev, email: text}))}
             value={form.email}
