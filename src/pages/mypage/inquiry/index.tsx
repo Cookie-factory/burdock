@@ -4,7 +4,6 @@ import Text from '~/components/common/text/Text';
 import VStack from '~/components/common/view/VStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
 import io from 'socket.io-client';
-import CustomInput from '~/components/common/input/Input';
 import CenterButton from '~/components/common/button/CenterButton';
 import {useGetMessageOnRoom} from '~/apis/message/hook';
 import {MessageItem} from '~/types/api/message';
@@ -12,6 +11,11 @@ import HStack from '~/components/common/view/HStack';
 import dayjs from 'dayjs';
 import {useGetAuthInfo} from '~/apis/auth/hook';
 import {Platform} from 'react-native';
+import InnerLayout from '~/components/common/layout/InnerLayout';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Icon} from 'react-native-paper';
+import FormInput from '~/components/common/input/FormInput';
+import {colors} from '~/constants/style';
 
 function Inquiry() {
   const {data: getChatroomListData} = useGetChatroomList({
@@ -20,7 +24,9 @@ function Inquiry() {
 
   const {data: getAuthInfoData} = useGetAuthInfo();
 
-  const roomId = getChatroomListData?.data[0].id;
+  const roomId = getChatroomListData?.data
+    ? getChatroomListData?.data[0].id
+    : undefined;
 
   const socket = io(
     Platform.OS === 'android'
@@ -79,8 +85,6 @@ function Inquiry() {
 
     // 서버로부터 메시지를 받았을 때
     socket.on('message', ({nickname, sender, content}) => {
-      console.log('@@@ mE');
-      console.log(content);
       setMessageList(prev => [
         ...prev,
         {
@@ -99,39 +103,57 @@ function Inquiry() {
 
   return (
     <WhiteSafeAreaView>
-      <VStack flex={1} px={20}>
-        <Text mb={20}>1:1문의</Text>
+      <InnerLayout>
+        <KeyboardAwareScrollView
+          bounces={false}
+          style={{
+            flex: 1,
+            borderWidth: 1,
+            borderRadius: 12,
+            borderColor: colors.blue[30],
+            transform: [{scaleY: -1}],
+          }}>
+          <VStack>
+            {messageList.map((_message, i) => (
+              <VStack
+                px={20}
+                py={16}
+                key={i}
+                style={{transform: [{scaleY: -1}]}}>
+                <HStack mb={4} justifyContent="space-between">
+                  <Text fontWeight={'bold'}>{_message.sender.nickname}</Text>
 
-        <CustomInput
+                  <Text>
+                    {dayjs(_message.createdAt).format('YY.MM.DD hh:mm')}
+                  </Text>
+                </HStack>
+
+                <HStack>
+                  <Text>{_message.content}</Text>
+                </HStack>
+              </VStack>
+            ))}
+          </VStack>
+        </KeyboardAwareScrollView>
+
+        <FormInput
+          containerStyle={{
+            position: 'absolute',
+            bottom: 0,
+            zIndex: 9999,
+          }}
           label="입력"
           value={message}
-          marginBottom={16}
           placeholder="메시지 입력"
           onChangeText={setMessage}
-          onSubmitEditing={e => onSendWhenEnter(e.nativeEvent.text)}
-        />
+          onSubmitEditing={e => onSendWhenEnter(e.nativeEvent.text)}>
+          <CenterButton w={44} h={44} onPress={onSendWhenClickButton}>
+            <Icon source="chevron-right" size={28} />
+          </CenterButton>
+        </FormInput>
 
-        <CenterButton onPress={onSendWhenClickButton}>
-          <Text>전송</Text>
-        </CenterButton>
-
-        <VStack borderWidth={1} py={12}>
-          {messageList.map((_message, i) => (
-            <VStack borderWidth={1} py={10} key={i}>
-              <HStack mb={4} justifyContent="space-between">
-                <Text>{_message.sender.nickname}</Text>
-                <Text>
-                  {dayjs(_message.createdAt).format('YY.MM.DD hh:mm:ss')}
-                </Text>
-              </HStack>
-
-              <HStack>
-                <Text>{_message.content}</Text>
-              </HStack>
-            </VStack>
-          ))}
-        </VStack>
-      </VStack>
+        <VStack h={64}></VStack>
+      </InnerLayout>
     </WhiteSafeAreaView>
   );
 }

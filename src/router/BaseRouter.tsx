@@ -74,7 +74,9 @@ function BaseRouter() {
           component={Inquiry}
           options={{
             headerShown: true,
-            header: () => <Header title="1:1 문의" />,
+            header: () => (
+              <Header title="1:1 문의" leftButton={<BackButton />} />
+            ),
           }}
         />
 
