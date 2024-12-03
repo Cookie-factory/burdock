@@ -3,6 +3,8 @@ import HStack from '../view/HStack';
 import CustomInput from '../input/Input';
 import CustomText from '../text/Text';
 import {useGetCelebrityList} from '~/apis/celebrity/hook';
+import CenterButton from '../button/CenterButton';
+import {APP_WIDTH} from '~/utils/dimension';
 
 interface Props {
   searchText: string;
@@ -15,11 +17,13 @@ interface Props {
 function SearchBar({searchText, onChangeText}: Props) {
   return (
     <HStack borderWidth={1}>
-      <HStack>
-        <CustomInput flex={1} value={searchText} onChangeText={onChangeText} />
-
-        <CustomText w={34}>검색</CustomText>
+      <HStack flex={1}>
+        <CustomInput value={searchText} onChangeText={onChangeText} />
       </HStack>
+
+      <CenterButton w={54} h={34} borderWidth={1}>
+        <CustomText>검색</CustomText>
+      </CenterButton>
     </HStack>
   );
 }

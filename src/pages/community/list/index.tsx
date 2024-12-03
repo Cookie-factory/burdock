@@ -2,13 +2,14 @@ import React from 'react';
 import {useGetBoardList} from '~/apis/board/hook';
 import useNavigate from '~/hooks/navigator/useNavigation';
 import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
-import VStack from '~/components/common/view/VStack';
 import {BoardItem as BoardItemType} from '~/types/api/board';
 import CenterButton from '~/components/common/button/CenterButton';
 import Text from '~/components/common/text/Text';
 import BoardItem from '~/components/community/board/BoardItem';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
 import useFocusScreen from '~/hooks/navigator/useFocusScreen';
+import InnerLayout from '~/components/common/layout/InnerLayout';
+import HStack from '~/components/common/view/HStack';
 
 function CommunityList() {
   const {navigate} = useNavigate();
@@ -49,15 +50,19 @@ function CommunityList() {
 
   return (
     <WhiteSafeAreaView>
-      <VStack flex={1} px={20} borderWidth={10} borderColor={'blue'}>
-        <CenterButton
-          h={44}
-          mb={18}
-          onPress={() => navigate('CommunityRegister')}>
-          <Text>추가</Text>
-        </CenterButton>
+      <InnerLayout>
+        <HStack mb={18} px={12} justifyContent="flex-end">
+          <CenterButton
+            w={74}
+            borderBottomWidth={1}
+            h={44}
+            onPress={() => navigate('CommunityRegister')}>
+            <Text>글 추가</Text>
+          </CenterButton>
+        </HStack>
 
         <KeyboardAwareFlatList
+          style={{flex: 1, width: '100%'}}
           showsVerticalScrollIndicator={false}
           data={boardList ?? []}
           bounces={false}
@@ -69,7 +74,7 @@ function CommunityList() {
             return <BoardItem data={_item} />;
           }}
         />
-      </VStack>
+      </InnerLayout>
     </WhiteSafeAreaView>
   );
 }

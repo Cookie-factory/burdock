@@ -47,11 +47,11 @@ function CommunityContent() {
     <WhiteSafeAreaView>
       <VStack flex={1} px={20} pt={20}>
         <HStack justifyContent="flex-end" mb={24}>
-          <CenterButton mr={14} w={94} onPress={onMoveModifyPage}>
+          <CenterButton w={64} onPress={onMoveModifyPage}>
             <Text>수정</Text>
           </CenterButton>
 
-          <CenterButton w={94} onPress={onDelete}>
+          <CenterButton w={64} onPress={onDelete}>
             <Text>삭제</Text>
           </CenterButton>
         </HStack>
@@ -62,7 +62,7 @@ function CommunityContent() {
           </Text>
         </HStack>
 
-        <HStack borderWidth={1} h={80}>
+        <HStack borderWidth={1} h={80} mb={16}>
           {(data?.data.images ?? []).map((item, i) => {
             return (
               <Center borderWidth={1} w={80} h={80} key={i}>
@@ -80,8 +80,8 @@ function CommunityContent() {
           })}
         </HStack>
 
-        <VStack borderWidth={1} minH={120}>
-          <Text w={'100%'} borderWidth={1}>
+        <VStack minH={120} borderWidth={1}>
+          <Text fontSize={14} w={'100%'} borderWidth={1}>
             {data?.data.content ?? ''}
           </Text>
         </VStack>

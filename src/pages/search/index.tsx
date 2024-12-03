@@ -24,10 +24,6 @@ function SearchPage() {
   return (
     <WhiteSafeAreaView>
       <VStack flex={1} px={20}>
-        <VStack pb={30}>
-          <Text>메인</Text>
-        </VStack>
-
         <SearchBar searchText={searchText} onChangeText={setSearchText} />
 
         <VStack>
