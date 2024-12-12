@@ -101,6 +101,7 @@ function Login() {
           <FormInput
             label="비밀번호"
             placeholder="비밀번호"
+            secureTextEntry
             onChangeText={text => setForm(prev => ({...prev, passwords: text}))}
             value={form.password}
           />

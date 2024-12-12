@@ -110,6 +110,7 @@ function Signup() {
 
           <FormLabel>비밀번호</FormLabel>
           <FormInput
+            secureTextEntry
             textContentType="password"
             placeholder="비밀번호"
             onChangeText={text => setForm(prev => ({...prev, password: text}))}
@@ -120,7 +121,9 @@ function Signup() {
 
           <FormLabel>비밀번호 확인</FormLabel>
           <FormInput
+            secureTextEntry
             placeholder="비밀번호 확인"
+            textContentType="password"
             onChangeText={text => setPasswordConfirm(text)}
           />
           <FormErrorMessage isShow={false}>
