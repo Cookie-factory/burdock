@@ -2,7 +2,7 @@
  *@description 텍스트 다루는 유틸
  */
 
-import {EMOJI_REGEX} from '~/constants/regEx';
+import {regrex} from '~/constants/regEx';
 
 /**
  *@description 텍스트 하이픈 제거 함수
@@ -22,5 +22,5 @@ export function addHypen(text: string) {
  *@description 이모지 제거 함수
  */
 export const changeEmojiText = (text: string) => {
-  return text.replace(EMOJI_REGEX, '');
+  return text.replace(regrex.emoji, '');
 };
