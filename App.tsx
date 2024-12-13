@@ -4,6 +4,7 @@ import BaseRouter from '~/router/BaseRouter';
 import {config} from '~/utils/config';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {SheetProvider} from 'react-native-actions-sheet';
+import Toast from 'react-native-toast-message';
 
 const queryClient = new QueryClient();
 
@@ -17,6 +18,8 @@ function App(): React.JSX.Element {
           <BaseRouter />
         </PaperProvider>
       </SheetProvider>
+
+      <Toast />
     </QueryClientProvider>
   );
 }
