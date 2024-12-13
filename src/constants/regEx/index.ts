@@ -25,6 +25,11 @@ export const regrex = {
   includeNumber: /[0-9]/,
 
   /**
+   *@description 닉네임 길이가 2~12자 여부
+   */
+  nickname: /^.{2,12}$/,
+
+  /**
    *@description 텍스트 길이가 8~20자 여부
    */
   textRangeOf8To20: /^.{8,20}$/,

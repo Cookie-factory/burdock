@@ -126,7 +126,7 @@ export const apiCall = async <ResponseType = any>(
         };
       } else {
         throw {
-          data: error?.message ?? '',
+          message: error?.message ?? '',
           statusCode: error.response?.status,
         };
       }

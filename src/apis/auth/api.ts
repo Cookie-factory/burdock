@@ -44,3 +44,11 @@ export const postSignup = (data: PostSignupData) => {
     data,
   });
 };
+
+export const getCheckDuplicateNickname = (nickname: string) => {
+  return apiCall<string>({
+    method: 'POST',
+    url: `auth/nickname/duplicate`,
+    data: {nickname},
+  });
+};

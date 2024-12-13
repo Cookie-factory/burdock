@@ -11,6 +11,7 @@ export const queryKeys = {
   },
   auth: {
     getAuthInfo: 'get auth info',
+    getCheckDuplicateNickname: 'get check duplicate nickname',
   },
   notice: {
     getNotice: 'get notice',

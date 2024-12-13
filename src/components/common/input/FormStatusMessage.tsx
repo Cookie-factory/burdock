@@ -4,18 +4,28 @@ import CustomText from '../text/Text';
 import {TextProps} from 'react-native';
 import {CustomTextStyle, CustomUIProps, CustomViewStyle} from '~/types/style';
 import VStack from '../view/VStack';
+import {FormStatus} from '~/types/components/common/selector';
 
 interface Props {
   containerStyle?: CustomViewStyle;
   isShow: boolean;
+  type?: FormStatus;
 }
 /**
- *@description 폼 error message 스타일 공통 컴포넌트
+ *@description 폼 status message 스타일 공통 컴포넌트
  */
-function FormErrorMessage(
+function FormStatusMessage(
   props: CustomUIProps<TextProps, CustomTextStyle> & Props,
 ) {
-  const height = 32;
+  const height = 34;
+  const textColor = props?.type
+    ? props.type === 'DEFAULT'
+      ? colors.gray[70]
+      : props.type === 'SUCCESS'
+      ? colors.blue[50]
+      : colors.red[50]
+    : colors.red[50];
+
   return props.isShow ? (
     <VStack
       h={height}
@@ -23,11 +33,11 @@ function FormErrorMessage(
       pl={14}
       alignItems="flex-start"
       style={props.containerStyle}>
-      <CustomText color={colors.red[50]} fontSize={12} {...props} />
+      <CustomText color={textColor} fontSize={12} {...props} />
     </VStack>
   ) : (
-    <VStack h={height} style={props.containerStyle}></VStack>
+    <VStack h={22} style={props.containerStyle}></VStack>
   );
 }
 
-export default FormErrorMessage;
+export default FormStatusMessage;

@@ -1,24 +1,54 @@
-import _ from 'lodash';
-import React, {useState} from 'react';
+import _, {debounce} from 'lodash';
+import React, {useCallback, useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {usePostSignup} from '~/apis/auth/hook';
+import {usePostCheckDuplicateNickname, usePostSignup} from '~/apis/auth/hook';
 import ActiveButton from '~/components/common/button/ActiveButton';
-import FormErrorMessage from '~/components/common/input/FormErrorMessage';
+import FormStatusMessage from '~/components/common/input/FormStatusMessage';
 import FormInput from '~/components/common/input/FormInput';
 import FormLabel from '~/components/common/input/FormLabel';
 import InnerLayout from '~/components/common/layout/InnerLayout';
 import CustomSelector from '~/components/common/selector/Selector';
 import CustomSelectorActionSheet from '~/components/common/selector/SelectorModal';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
+import {regrex} from '~/constants/regEx';
+import {toastText} from '~/constants/text';
 import useActionsheet from '~/hooks/actionsheet/useActionsheet';
 import useNavigate from '~/hooks/navigator/useNavigation';
+import useToastShow from '~/hooks/toast/useToastShow';
 import {GenderType} from '~/types/api/auth';
 import {PostSignupData} from '~/types/api/auth/data';
-import {SelectorItem} from '~/types/components/common/selector';
+import {FormStatus, SelectorItem} from '~/types/components/common/selector';
+import {isApiErrorWithMessage} from '~/utils/api';
 
 function Signup() {
   const postSignup = usePostSignup();
   const navigate = useNavigate();
+  const toastShow = useToastShow();
+
+  const initStatusForm = {
+    email: {
+      isShow: false,
+      text: '',
+      type: 'ERROR' as FormStatus,
+    },
+    password: {
+      isShow: false,
+      text: '',
+      type: 'ERROR' as FormStatus,
+    },
+    confirmPassword: {
+      isShow: false,
+      text: '',
+      type: 'ERROR' as FormStatus,
+    },
+    nickname: {
+      isShow: false,
+      text: '',
+      type: 'ERROR' as FormStatus,
+    },
+  };
+
+  const [statusForm, setStatusForm] = useState(initStatusForm);
 
   const genderSelectorList: SelectorItem[] = [
     {
@@ -70,10 +100,50 @@ function Signup() {
   const ageSelectorOpen = useActionsheet();
   const genderSelectorOpen = useActionsheet();
 
+  const {mutateAsync: checkDuplicateNicknameMutate} =
+    usePostCheckDuplicateNickname();
+
+  /**
+   *@description 회원가입 이벤트
+   */
   const onSubmit = () => {
-    console.log(isActiveSubmitButton);
     if (!isActiveSubmitButton) return;
-    if (passwordConfirm !== form.password) return;
+
+    if (passwordConfirm !== form.password) {
+      toastShow.onShowToast({
+        text1: toastText.error.noMatchPassword,
+        type: 'error',
+      });
+
+      return;
+    }
+
+    if (!regrex.email.test(form.email)) {
+      toastShow.onShowToast({
+        text1: toastText.error.invalidEmailFormat,
+        type: 'error',
+      });
+
+      return;
+    }
+
+    if (!genderSelectedItem?.value) {
+      toastShow.onShowToast({
+        text1: toastText.error.noChoiceGender,
+        type: 'error',
+      });
+
+      return;
+    }
+
+    if (!ageSelectedItem?.value) {
+      toastShow.onShowToast({
+        text1: toastText.error.noChoiceAge,
+        type: 'error',
+      });
+
+      return;
+    }
 
     postSignup
       .mutateAsync({
@@ -83,9 +153,24 @@ function Signup() {
       })
       .then(response => {
         if (response.statusCode === 201) {
+          toastShow.onShowToast({
+            text1: `${form.nickname}님 ${toastText.success.signupComplete}`,
+          });
           navigate.reset({index: 0, routes: [{name: 'tab'}]});
         }
+      })
+      .catch(error => {
+        console.log(error);
       });
+  };
+
+  const onChangePassword = (_password: string, isConfirm?: boolean) => {
+    if (isConfirm) {
+      // 비밀번호 확인 입력일 경우
+      setPasswordConfirm(_password);
+    } else {
+      setForm(prev => ({...prev, password: _password}));
+    }
   };
 
   const isActiveSubmitButton =
@@ -94,6 +179,46 @@ function Signup() {
     !_.isEmpty(form?.password) &&
     Boolean(genderSelectedItem) &&
     Boolean(ageSelectedItem);
+
+  const onChangeNickname = useCallback(
+    debounce(nickname => {
+      if (nickname.length < 2) {
+        setStatusForm(prev => ({
+          ...prev,
+          nickname: initStatusForm.nickname,
+        }));
+      } else {
+        checkDuplicateNicknameMutate(nickname)
+          .then(response => {
+            if (response.data) {
+              setStatusForm(prev => ({
+                ...prev,
+                nickname: {
+                  isShow: true,
+                  text: response.data,
+                  type: 'SUCCESS',
+                },
+              }));
+            }
+          })
+          .catch(error => {
+            if (isApiErrorWithMessage(error)) {
+              setStatusForm(prev => ({
+                ...prev,
+                nickname: {
+                  isShow: true,
+                  text: error?.message,
+                  type: 'ERROR',
+                },
+              }));
+            } else {
+              // 문법 오류거나 다른 서버에서 받아오는 특정 양식 api 오류일 경우
+            }
+          });
+      }
+    }, 500),
+    [],
+  );
 
   return (
     <WhiteSafeAreaView>
@@ -104,40 +229,52 @@ function Signup() {
             placeholder="이메일"
             onChangeText={text => setForm(prev => ({...prev, email: text}))}
           />
-          <FormErrorMessage isShow={false}>
-            잘못된 이메일 주소입니다.
-          </FormErrorMessage>
+          <FormStatusMessage
+            isShow={statusForm.email.isShow}
+            type={statusForm.email.type}>
+            {statusForm.email.text}
+          </FormStatusMessage>
 
-          <FormLabel>비밀번호</FormLabel>
+          <FormLabel>비밀번호 (*8~20자)</FormLabel>
           <FormInput
             secureTextEntry
             textContentType="password"
             placeholder="비밀번호"
-            onChangeText={text => setForm(prev => ({...prev, password: text}))}
+            onChangeText={onChangePassword}
           />
-          <FormErrorMessage isShow={false}>
-            잘못된 비밀번호입니다.
-          </FormErrorMessage>
+          <FormStatusMessage
+            isShow={statusForm.password.isShow}
+            type={statusForm.password.type}>
+            {statusForm.password.text}
+          </FormStatusMessage>
 
           <FormLabel>비밀번호 확인</FormLabel>
           <FormInput
             secureTextEntry
             placeholder="비밀번호 확인"
             textContentType="password"
-            onChangeText={text => setPasswordConfirm(text)}
+            onChangeText={text => onChangePassword(text, true)}
           />
-          <FormErrorMessage isShow={false}>
-            비밀번호가 일치하지 않습니다.
-          </FormErrorMessage>
+          <FormStatusMessage
+            isShow={statusForm.confirmPassword.isShow}
+            type={statusForm.confirmPassword.type}>
+            {statusForm.confirmPassword.text}
+          </FormStatusMessage>
 
-          <FormLabel>닉네임</FormLabel>
+          <FormLabel>닉네임 (*2~16자)</FormLabel>
           <FormInput
             placeholder="닉네임"
-            onChangeText={text => setForm(prev => ({...prev, nickname: text}))}
+            onChangeText={text => {
+              onChangeNickname(text);
+
+              setForm(prev => ({...prev, nickname: text}));
+            }}
           />
-          <FormErrorMessage isShow={false}>
-            잘못된 닉네임입니다.
-          </FormErrorMessage>
+          <FormStatusMessage
+            isShow={statusForm.nickname.isShow}
+            type={statusForm.nickname.type}>
+            {statusForm.nickname.text}
+          </FormStatusMessage>
 
           <FormLabel>연령대</FormLabel>
           <CustomSelector
