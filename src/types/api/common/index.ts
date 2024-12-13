@@ -5,6 +5,11 @@ export interface ErrorResponse {
   path: string;
 }
 
+export interface ErrorData {
+  message: string;
+  statusCode: number;
+}
+
 /**
  *@description api 쿼리 => id 프로퍼티
  */
