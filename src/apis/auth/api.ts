@@ -45,10 +45,18 @@ export const postSignup = (data: PostSignupData) => {
   });
 };
 
-export const getCheckDuplicateNickname = (nickname: string) => {
+export const postCheckDuplicateNickname = (nickname: string) => {
   return apiCall<string>({
     method: 'POST',
     url: `auth/nickname/duplicate`,
     data: {nickname},
+  });
+};
+
+export const postCheckDuplicateEmail = (email: string) => {
+  return apiCall<string>({
+    method: 'POST',
+    url: 'auth/email/duplicate',
+    data: {email},
   });
 };

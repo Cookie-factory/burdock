@@ -13,13 +13,8 @@ export const toastText = {
 };
 
 export const errorLabelText = {
-  email: {
-    duplicate: '이미 가입된 이메일입니다.',
-  },
   password: {
     invalidPasswordFormat: '비밀번호 형식이 맞지 않습니다.',
   },
-  nickname: {
-    duplicate: '이미 사용 중인 닉네임입니다.',
-  },
+  error: '잘못된 접근입니다.',
 };

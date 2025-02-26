@@ -1,7 +1,8 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {
   getAuthInfo,
-  getCheckDuplicateNickname,
+  postCheckDuplicateEmail,
+  postCheckDuplicateNickname,
   postEmailLogin,
   postSignup,
   postSocialLogin,
@@ -40,6 +41,12 @@ export const usePostSignup = () => {
 
 export const usePostCheckDuplicateNickname = () => {
   return useMutation({
-    mutationFn: (nickname: string) => getCheckDuplicateNickname(nickname),
+    mutationFn: (nickname: string) => postCheckDuplicateNickname(nickname),
+  });
+};
+
+export const usePostCheckDuplicateEmail = () => {
+  return useMutation({
+    mutationFn: (email: string) => postCheckDuplicateEmail(email),
   });
 };

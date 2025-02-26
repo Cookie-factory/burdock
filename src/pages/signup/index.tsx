@@ -1,7 +1,11 @@
 import _, {debounce} from 'lodash';
 import React, {useCallback, useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {usePostCheckDuplicateNickname, usePostSignup} from '~/apis/auth/hook';
+import {
+  usePostCheckDuplicateEmail,
+  usePostCheckDuplicateNickname,
+  usePostSignup,
+} from '~/apis/auth/hook';
 import ActiveButton from '~/components/common/button/ActiveButton';
 import FormStatusMessage from '~/components/common/input/FormStatusMessage';
 import FormInput from '~/components/common/input/FormInput';
@@ -11,7 +15,7 @@ import CustomSelector from '~/components/common/selector/Selector';
 import CustomSelectorActionSheet from '~/components/common/selector/SelectorModal';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
 import {regrex} from '~/constants/regEx';
-import {toastText} from '~/constants/text';
+import {errorLabelText, toastText} from '~/constants/text';
 import useActionsheet from '~/hooks/actionsheet/useActionsheet';
 import useNavigate from '~/hooks/navigator/useNavigation';
 import useToastShow from '~/hooks/toast/useToastShow';
@@ -103,6 +107,8 @@ function Signup() {
   const {mutateAsync: checkDuplicateNicknameMutate} =
     usePostCheckDuplicateNickname();
 
+  const {mutateAsync: checkDuplicateEmailMutate} = usePostCheckDuplicateEmail();
+
   /**
    *@description 회원가입 이벤트
    */
@@ -180,6 +186,54 @@ function Signup() {
     Boolean(genderSelectedItem) &&
     Boolean(ageSelectedItem);
 
+  const onChangeEmail = useCallback(
+    debounce(email => {
+      console.log(email);
+      console.log(regrex.email.test(email));
+      if (!regrex.email.test(email)) {
+        setStatusForm(prev => ({
+          ...prev,
+          email: initStatusForm.email,
+        }));
+      } else {
+        checkDuplicateEmailMutate(email)
+          .then(response => {
+            if (response.data) {
+              setStatusForm(prev => ({
+                ...prev,
+                email: {
+                  isShow: true,
+                  text: response.data,
+                  type: 'SUCCESS',
+                },
+              }));
+            }
+          })
+          .catch(error => {
+            let errorMessage = '';
+
+            if (isApiErrorWithMessage(error)) {
+              //
+              errorMessage = error?.message;
+            } else {
+              // 문법 오류거나 다른 서버에서 받아오는 특정 양식 api 오류일 경우
+              errorMessage = errorLabelText.error;
+            }
+
+            setStatusForm(prev => ({
+              ...prev,
+              email: {
+                isShow: true,
+                text: errorMessage,
+                type: 'ERROR',
+              },
+            }));
+          });
+      }
+    }, 500),
+    [],
+  );
+
   const onChangeNickname = useCallback(
     debounce(nickname => {
       if (nickname.length < 2) {
@@ -202,18 +256,25 @@ function Signup() {
             }
           })
           .catch(error => {
+            let errorMessage = '';
+
             if (isApiErrorWithMessage(error)) {
-              setStatusForm(prev => ({
-                ...prev,
-                nickname: {
-                  isShow: true,
-                  text: error?.message,
-                  type: 'ERROR',
-                },
-              }));
+              //
+              errorMessage = error?.message;
             } else {
               // 문법 오류거나 다른 서버에서 받아오는 특정 양식 api 오류일 경우
+              errorMessage = errorLabelText.error;
             }
+            //
+
+            setStatusForm(prev => ({
+              ...prev,
+              nickname: {
+                isShow: true,
+                text: errorMessage,
+                type: 'ERROR',
+              },
+            }));
           });
       }
     }, 500),
@@ -227,7 +288,11 @@ function Signup() {
           <FormLabel>이메일</FormLabel>
           <FormInput
             placeholder="이메일"
-            onChangeText={text => setForm(prev => ({...prev, email: text}))}
+            onChangeText={text => {
+              onChangeEmail(text);
+
+              setForm(prev => ({...prev, email: text}));
+            }}
           />
           <FormStatusMessage
             isShow={statusForm.email.isShow}

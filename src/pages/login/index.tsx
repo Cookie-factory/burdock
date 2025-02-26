@@ -31,6 +31,10 @@ function Login() {
     navigate('Signup');
   };
 
+  const onMovePasswordFindPage = () => {
+    navigate('PasswordFind');
+  };
+
   const onSubmit = () => {
     postEmailLogin
       .mutateAsync(form)
@@ -135,15 +139,15 @@ function Login() {
 
         <Center>
           <HStack width={'auto'} justifyContent="space-between">
-            <CenterButton width={'auto'} onPress={onLoginWithKakao}>
+            {/* <CenterButton width={'auto'} onPress={onLoginWithKakao}>
               <Text color={colors.gray[70]} fontSize={14}>
                 이메일 찾기
               </Text>
-            </CenterButton>
+            </CenterButton> */}
 
             <VStack h={10} mx={12} w={1} bgColor={colors.gray[70]} />
 
-            <CenterButton width={'auto'} onPress={onLoginWithKakao}>
+            <CenterButton width={'auto'} onPress={onMovePasswordFindPage}>
               <Text color={colors.gray[70]} fontSize={14}>
                 비밀번호 찾기
               </Text>
