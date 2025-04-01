@@ -33,7 +33,7 @@ function MypageMain() {
   const {data: getAuthInfoData} = useGetAuthInfo();
 
   return (
-    <WhiteSafeAreaView bgColor={colors.blue[30]}>
+    <WhiteSafeAreaView bgColor={colors.positive[30]}>
       <CenterButton pt={34} pb={54} px={18}>
         <HStack>
           <Icon source="account-circle-outline" size={50} />

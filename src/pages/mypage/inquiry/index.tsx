@@ -110,7 +110,7 @@ function Inquiry() {
             flex: 1,
             borderWidth: 1,
             borderRadius: 12,
-            borderColor: colors.blue[30],
+            borderColor: colors.positive[30],
             transform: [{scaleY: -1}],
           }}>
           <VStack>

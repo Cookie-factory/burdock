@@ -22,9 +22,9 @@ function FormStatusMessage(
     ? props.type === 'DEFAULT'
       ? colors.gray[70]
       : props.type === 'SUCCESS'
-      ? colors.blue[50]
-      : colors.red[50]
-    : colors.red[50];
+      ? colors.positive[10]
+      : colors.negative[10]
+    : colors.negative[20];
 
   return props.isShow ? (
     <VStack
