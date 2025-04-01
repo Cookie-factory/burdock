@@ -24,12 +24,16 @@ function SelectorItem({data, selectedItem, onSelectItem}: Props) {
       justifyContent="flex-start"
       borderBottomWidth={1}
       borderBottomColor={
-        selectedItem?.value === data.value ? colors.red[50] : colors.gray[40]
+        selectedItem?.value === data.value
+          ? colors.negative[20]
+          : colors.gray[40]
       }
       onPress={() => onSelectItem(data)}>
       <Icon
         color={
-          selectedItem?.value === data.value ? colors.red[50] : colors.gray[40]
+          selectedItem?.value === data.value
+            ? colors.negative[20]
+            : colors.gray[40]
         }
         source={
           selectedItem?.value === data.value
