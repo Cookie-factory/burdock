@@ -18,7 +18,8 @@ export const postEmailLogin = (data: PostEmailLoginData) => {
   return apiCall<PostLoginResponse>({
     method: 'POST',
     url: 'auth/login',
-    data: testData2,
+    data,
+    // data: testData2,
   });
 };
 

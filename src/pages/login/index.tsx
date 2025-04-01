@@ -17,11 +17,14 @@ import {config} from '~/utils/config';
 import {APP_WIDTH} from '~/utils/dimension';
 import {removeSecurityData, setSecurityData} from '~/utils/storage';
 import Image from '~/components/common/image/Image';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import useToastShow from '~/hooks/toast/useToastShow';
 
 function Login() {
   const {reset, navigate} = useNavigate();
   const postEmailLogin = usePostEmailLogin();
   const postSocialLogin = usePostSocialLogin();
+  const {onShowToast} = useToastShow();
 
   const [form, setForm] = useState<PostEmailLoginData>({
     email: '',
@@ -45,7 +48,29 @@ function Login() {
         }
       })
       .catch(error => {
-        console.log(error);
+        if (
+          error.statusCode === 404 &&
+          error.message === '계정 정보를 찾을 수 없습니다.'
+        ) {
+          // 회원 정보를 찾을 수 없는 경우
+          onShowToast({
+            text1: '잘못된 이메일 주소입니다.',
+            text2: '이메일을 다시 확인해주세요.',
+          });
+        } else if (
+          error.statusCode === 401 &&
+          error.message === '비밀번호를 확인해주세요.'
+        ) {
+          // 비밀번호가 틀렸습니다.
+          onShowToast({
+            text1: '잘못된 비밀번호입니다.',
+            text2: '비밀번호를 다시 확인해주세요.',
+          });
+        } else {
+          onShowToast({
+            text1: '로그인 오류입니다.',
+          });
+        }
       });
   };
 
@@ -84,94 +109,103 @@ function Login() {
   };
   return (
     <WhiteSafeAreaView>
-      <InnerLayout>
-        <Image
-          mb={45}
-          width={APP_WIDTH - 40}
-          height={APP_WIDTH - 40}
-          source={require('../../assets/images/ImageMainLogo.webp')}
-        />
-
-        <VStack mb={24}>
-          <FormInput
-            label="이메일"
-            containerStyle={{
-              marginBottom: 16,
-            }}
-            placeholder="이메일"
-            onChangeText={text => setForm(prev => ({...prev, email: text}))}
-            value={form.email}
+      <KeyboardAwareScrollView
+        style={{width: '100%'}}
+        enableOnAndroid={true}
+        extraScrollHeight={200} // 키보드와의 여유 공간
+        keyboardShouldPersistTaps="handled"
+        bounces={false}>
+        <InnerLayout>
+          <Image
+            mb={45}
+            width={APP_WIDTH - 40}
+            height={APP_WIDTH - 40}
+            source={require('../../assets/images/ImageMainLogo.webp')}
           />
 
-          <FormInput
-            label="비밀번호"
-            placeholder="비밀번호"
-            secureTextEntry
-            onChangeText={text => setForm(prev => ({...prev, password: text}))}
-            value={form.password}
-          />
-        </VStack>
+          <VStack mb={24}>
+            <FormInput
+              label="이메일"
+              containerStyle={{
+                marginBottom: 16,
+              }}
+              placeholder="이메일"
+              onChangeText={text => setForm(prev => ({...prev, email: text}))}
+              value={form.email}
+            />
 
-        <ActiveButton onPress={onSubmit} buttonType="blue" text="로그인" />
+            <FormInput
+              label="비밀번호"
+              placeholder="비밀번호"
+              secureTextEntry
+              onChangeText={text =>
+                setForm(prev => ({...prev, password: text}))
+              }
+              value={form.password}
+            />
+          </VStack>
 
-        <Center mt={28} mb={20}>
-          <HStack w={176} justifyContent="space-between">
-            <CenterButton
-              w={62}
-              h={62}
-              borderRadius={62}
-              borderWidth={1}
-              onPress={onLoginWithKakao}>
-              <Image
+          <ActiveButton onPress={onSubmit} buttonType="blue" text="로그인" />
+
+          <Center mt={28} mb={20}>
+            <HStack w={176} justifyContent="space-between">
+              <CenterButton
                 w={62}
                 h={62}
-                source={require('../../assets/images/ImageKakaoLogin.webp')}
-              />
-            </CenterButton>
+                borderRadius={62}
+                borderWidth={1}
+                onPress={onLoginWithKakao}>
+                <Image
+                  w={62}
+                  h={62}
+                  source={require('../../assets/images/ImageKakaoLogin.webp')}
+                />
+              </CenterButton>
 
-            <VStack h={36} w={1} bgColor={colors.gray[90]} />
+              <VStack h={36} w={1} bgColor={colors.gray[90]} />
 
-            <CenterButton
-              w={62}
-              h={62}
-              borderRadius={62}
-              borderWidth={1}
-              onPress={onLoginWithKakao}>
-              <Image
+              <CenterButton
                 w={62}
                 h={62}
-                source={require('../../assets/images/ImageAppleLogin.webp')}
-              />
-            </CenterButton>
-          </HStack>
-        </Center>
+                borderRadius={62}
+                borderWidth={1}
+                onPress={onLoginWithKakao}>
+                <Image
+                  w={62}
+                  h={62}
+                  source={require('../../assets/images/ImageAppleLogin.webp')}
+                />
+              </CenterButton>
+            </HStack>
+          </Center>
 
-        <Center>
-          <HStack width={'auto'} justifyContent="space-between">
-            <CenterButton width={'auto'} onPress={onLoginWithKakao}>
-              <Text color={colors.gray[70]} fontSize={14}>
-                이메일 찾기
-              </Text>
-            </CenterButton>
+          <Center>
+            <HStack width={'auto'} justifyContent="space-between">
+              <CenterButton width={'auto'} onPress={onLoginWithKakao}>
+                <Text color={colors.gray[70]} fontSize={14}>
+                  이메일 찾기
+                </Text>
+              </CenterButton>
 
-            <VStack h={10} mx={16} w={1} bgColor={colors.gray[70]} />
+              <VStack h={10} mx={16} w={1} bgColor={colors.gray[70]} />
 
-            <CenterButton width={'auto'} onPress={onMovePasswordFindPage}>
-              <Text color={colors.gray[70]} fontSize={14}>
-                비밀번호 찾기
-              </Text>
-            </CenterButton>
+              <CenterButton width={'auto'} onPress={onMovePasswordFindPage}>
+                <Text color={colors.gray[70]} fontSize={14}>
+                  비밀번호 찾기
+                </Text>
+              </CenterButton>
 
-            <VStack h={10} mx={16} w={1} bgColor={colors.gray[70]} />
+              <VStack h={10} mx={16} w={1} bgColor={colors.gray[70]} />
 
-            <CenterButton width={'auto'} onPress={onMoveSignupPage}>
-              <Text color={colors.gray[70]} fontSize={14}>
-                회원가입
-              </Text>
-            </CenterButton>
-          </HStack>
-        </Center>
-      </InnerLayout>
+              <CenterButton width={'auto'} onPress={onMoveSignupPage}>
+                <Text color={colors.gray[70]} fontSize={14}>
+                  회원가입
+                </Text>
+              </CenterButton>
+            </HStack>
+          </Center>
+        </InnerLayout>
+      </KeyboardAwareScrollView>
     </WhiteSafeAreaView>
   );
 }
