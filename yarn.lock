@@ -4038,6 +4038,7 @@ __metadata:
     react-native-toast-message: ^2.2.1
     react-native-uuid: ^2.0.2
     react-native-vector-icons: ^10.1.0
+    react-native-webp-format: ^1.2.1
     react-query-native-devtools: ^4.0.0
     react-test-renderer: 18.2.0
     socket.io-client: ^4.8.0
@@ -9358,6 +9359,13 @@ __metadata:
     fa6-upgrade: bin/fa6-upgrade.sh
     generate-icon: bin/generate-icon.js
   checksum: fda930df4e63f12533268f5b339ebe4c77c691eae43503328466b3087ed868a06a4593fd246e75ac6b5ec955543eec35608c7922191bdcc3b3a94ed7f3575ef0
+  languageName: node
+  linkType: hard
+
+"react-native-webp-format@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "react-native-webp-format@npm:1.2.1"
+  checksum: c86008361be7b40c96b40706d864e9ff232889519c06f0fc79af590dfec8da81b434d32c385f2175597bc8131e5083dbb9afc3b5e5dafa4c8f0766c96f0ac035
   languageName: node
   linkType: hard
 
