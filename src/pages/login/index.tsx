@@ -16,6 +16,7 @@ import {PostEmailLoginData} from '~/types/api/auth/data';
 import {config} from '~/utils/config';
 import {APP_WIDTH} from '~/utils/dimension';
 import {removeSecurityData, setSecurityData} from '~/utils/storage';
+import Image from '~/components/common/image/Image';
 
 function Login() {
   const {reset, navigate} = useNavigate();
@@ -84,11 +85,11 @@ function Login() {
   return (
     <WhiteSafeAreaView>
       <InnerLayout>
-        <VStack
+        <Image
           mb={45}
           width={APP_WIDTH - 40}
           height={APP_WIDTH - 40}
-          bgColor={colors.gray[40]}
+          source={require('../../assets/images/ImageMainLogo.webp')}
         />
 
         <VStack mb={24}>
@@ -106,7 +107,7 @@ function Login() {
             label="비밀번호"
             placeholder="비밀번호"
             secureTextEntry
-            onChangeText={text => setForm(prev => ({...prev, passwords: text}))}
+            onChangeText={text => setForm(prev => ({...prev, password: text}))}
             value={form.password}
           />
         </VStack>
@@ -121,7 +122,11 @@ function Login() {
               borderRadius={62}
               borderWidth={1}
               onPress={onLoginWithKakao}>
-              <Text>카</Text>
+              <Image
+                w={62}
+                h={62}
+                source={require('../../assets/images/ImageKakaoLogin.webp')}
+              />
             </CenterButton>
 
             <VStack h={36} w={1} bgColor={colors.gray[90]} />
@@ -132,20 +137,24 @@ function Login() {
               borderRadius={62}
               borderWidth={1}
               onPress={onLoginWithKakao}>
-              <Text>애</Text>
+              <Image
+                w={62}
+                h={62}
+                source={require('../../assets/images/ImageAppleLogin.webp')}
+              />
             </CenterButton>
           </HStack>
         </Center>
 
         <Center>
           <HStack width={'auto'} justifyContent="space-between">
-            {/* <CenterButton width={'auto'} onPress={onLoginWithKakao}>
+            <CenterButton width={'auto'} onPress={onLoginWithKakao}>
               <Text color={colors.gray[70]} fontSize={14}>
                 이메일 찾기
               </Text>
-            </CenterButton> */}
+            </CenterButton>
 
-            <VStack h={10} mx={12} w={1} bgColor={colors.gray[70]} />
+            <VStack h={10} mx={16} w={1} bgColor={colors.gray[70]} />
 
             <CenterButton width={'auto'} onPress={onMovePasswordFindPage}>
               <Text color={colors.gray[70]} fontSize={14}>
@@ -153,7 +162,7 @@ function Login() {
               </Text>
             </CenterButton>
 
-            <VStack h={10} mx={12} w={1} bgColor={colors.gray[70]} />
+            <VStack h={10} mx={16} w={1} bgColor={colors.gray[70]} />
 
             <CenterButton width={'auto'} onPress={onMoveSignupPage}>
               <Text color={colors.gray[70]} fontSize={14}>

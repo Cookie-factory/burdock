@@ -17,8 +17,8 @@ function ActiveButton(props: CustomUIProps<PressableProps> & Props) {
   const styles = {
     blue: {
       button: {
-        borderColor: colors.positive[30],
-        backgroundColor: colors.positive[20],
+        borderColor: colors.positive[-20],
+        backgroundColor: colors.positive[0],
       },
       text: {
         color: colors.gray[0],
@@ -56,7 +56,7 @@ function ActiveButton(props: CustomUIProps<PressableProps> & Props) {
       <CustomText
         {...props.textStyle}
         color={styles[props.buttonType].text.color}
-        fontSize={16}
+        fontSize={14}
         fontWeight={'bold'}>
         {props.text}
       </CustomText>
