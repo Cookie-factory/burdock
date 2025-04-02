@@ -43,22 +43,22 @@ function Signup() {
     email: {
       isShow: false,
       text: '',
-      type: 'ERROR' as FormStatus,
+      type: 'DEFAULT' as FormStatus,
     },
     password: {
       isShow: false,
       text: '',
-      type: 'ERROR' as FormStatus,
+      type: 'DEFAULT' as FormStatus,
     },
-    confirmPassword: {
+    passwordConfirm: {
       isShow: false,
       text: '',
-      type: 'ERROR' as FormStatus,
+      type: 'DEFAULT' as FormStatus,
     },
     nickname: {
       isShow: false,
       text: '',
-      type: 'ERROR' as FormStatus,
+      type: 'DEFAULT' as FormStatus,
     },
   };
 
@@ -126,6 +126,23 @@ function Signup() {
   const onSubmit = () => {
     if (!isActiveSubmitButton) return;
 
+    if (
+      statusForm.passwordConfirm.type === 'ERROR' ||
+      statusForm.email.type === 'ERROR' ||
+      statusForm.nickname.type === 'ERROR' ||
+      statusForm.password.type === 'ERROR'
+    )
+      return;
+
+    if (form.password.length < 8 || form.password.length > 20) {
+      toastShow.onShowToast({
+        text1: toastText.error.invalidPassword,
+        type: 'error',
+      });
+
+      return;
+    }
+
     if (passwordConfirm !== form.password) {
       toastShow.onShowToast({
         text1: toastText.error.noMatchPassword,
@@ -177,7 +194,9 @@ function Signup() {
         }
       })
       .catch(error => {
-        console.log(error);
+        toastShow.onShowToast({
+          text1: '회원가입 과정에서 오류가 발생했습니다.',
+        });
       });
   };
 
@@ -185,6 +204,26 @@ function Signup() {
     if (isConfirm) {
       // 비밀번호 확인 입력일 경우
       setPasswordConfirm(_password);
+      if (_password !== form.password && _password.length >= 8) {
+        // 비밀번호가 같지 않는 경우
+        setStatusForm(prev => ({
+          ...prev,
+          passwordConfirm: {
+            isShow: true,
+            text: '비밀번호가 일치하지 않습니다.',
+            type: 'ERROR',
+          },
+        }));
+      } else if (_password === form.password) {
+        setStatusForm(prev => ({
+          ...prev,
+          passwordConfirm: {
+            isShow: false,
+            text: '',
+            type: 'DEFAULT',
+          },
+        }));
+      }
     } else {
       setForm(prev => ({...prev, password: _password}));
     }
@@ -340,9 +379,9 @@ function Signup() {
             value={passwordConfirm}
           />
           <FormStatusMessage
-            isShow={statusForm.confirmPassword.isShow}
-            type={statusForm.confirmPassword.type}>
-            {statusForm.confirmPassword.text}
+            isShow={statusForm.passwordConfirm.isShow}
+            type={statusForm.passwordConfirm.type}>
+            {statusForm.passwordConfirm.text}
           </FormStatusMessage>
 
           <FormLabel>닉네임 (*2~16자)</FormLabel>
