@@ -27,8 +27,8 @@ function ActiveButton(props: CustomUIProps<PressableProps> & Props) {
 
     red: {
       button: {
-        borderColor: colors.negative[30],
-        backgroundColor: colors.negative[10],
+        borderColor: colors.yellow[30],
+        backgroundColor: colors.orange[10],
       },
       text: {
         color: colors.gray[0],
