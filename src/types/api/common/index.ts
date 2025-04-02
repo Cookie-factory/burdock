@@ -3,11 +3,13 @@ export interface ErrorResponse {
   message: string | string[];
   statusCode: number;
   path: string;
+  data: object;
 }
 
-export interface ErrorData {
+export interface ErrorData<T = undefined> {
   message: string;
   statusCode: number;
+  data: T;
 }
 
 /**

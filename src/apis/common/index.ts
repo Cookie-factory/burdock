@@ -114,20 +114,23 @@ export const apiCall = async <ResponseType = any>(
         if (__DEV__) {
           console.log('@ API ERROR RESPONSE @');
           console.log(data);
+
+          // {"data": {"email": ""}, "message": "계정 정보를 찾을 수 없습니다."}
         }
 
         throw {
+          data: data?.data,
           message: _.isString(data)
             ? data
             : _.isArray(data.message)
             ? data.message[0]
             : data.message,
-          statusCode: data?.statusCode || 500,
+          statusCode: error.response?.status || 500,
         };
       } else {
         throw {
           message: error?.message ?? '',
-          statusCode: error.response?.status,
+          statusCode: error.response?.status || 500,
         };
       }
     });
