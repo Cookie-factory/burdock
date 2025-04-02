@@ -29,4 +29,6 @@ export interface PostSignupData {
   age: number;
 
   gender: GenderType;
+
+  privacyAgree: boolean;
 }

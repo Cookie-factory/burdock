@@ -1,5 +1,5 @@
 import _, {debounce} from 'lodash';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {
   usePostCheckDuplicateEmail,
@@ -23,11 +23,21 @@ import {GenderType} from '~/types/api/auth';
 import {PostSignupData} from '~/types/api/auth/data';
 import {FormStatus, SelectorItem} from '~/types/components/common/selector';
 import {isApiErrorWithMessage} from '~/utils/api';
+import useParam from '~/hooks/navigator/useParam';
+import HStack from '~/components/common/view/HStack';
+import IconUncheck18 from '~/assets/icons/IconUncheck18.svg';
+import IconCheck18 from '~/assets/icons/IconCheck18.svg';
+import CustomText from '~/components/common/text/Text';
+import {colors} from '~/constants/style';
+import PrivacyModal from '~/components/signup/PrivacyModal';
+import CenterButton from '~/components/common/button/CenterButton';
 
 function Signup() {
   const postSignup = usePostSignup();
   const navigate = useNavigate();
   const toastShow = useToastShow();
+  const route = useParam('Signup');
+  const [isPrivacyModalOpen, setPrivacyModalOpen] = useState(false);
 
   const initStatusForm = {
     email: {
@@ -98,6 +108,7 @@ function Signup() {
     email: '',
     password: '',
     nickname: '',
+    privacyAgree: false,
   });
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
@@ -184,12 +195,11 @@ function Signup() {
     !_.isEmpty(form?.nickname) &&
     !_.isEmpty(form?.password) &&
     Boolean(genderSelectedItem) &&
-    Boolean(ageSelectedItem);
+    Boolean(ageSelectedItem) &&
+    form.privacyAgree;
 
   const onChangeEmail = useCallback(
     debounce(email => {
-      console.log(email);
-      console.log(regrex.email.test(email));
       if (!regrex.email.test(email)) {
         setStatusForm(prev => ({
           ...prev,
@@ -281,6 +291,12 @@ function Signup() {
     [],
   );
 
+  useEffect(() => {
+    if (route?.email && route?.email !== '') {
+      setForm(prev => ({...prev, email: route?.email ?? ''}));
+    }
+  }, []);
+
   return (
     <WhiteSafeAreaView>
       <KeyboardAwareScrollView style={{width: '100%'}} bounces={false}>
@@ -293,6 +309,7 @@ function Signup() {
 
               setForm(prev => ({...prev, email: text}));
             }}
+            value={form.email}
           />
           <FormStatusMessage
             isShow={statusForm.email.isShow}
@@ -306,6 +323,7 @@ function Signup() {
             textContentType="password"
             placeholder="비밀번호"
             onChangeText={onChangePassword}
+            value={form.password}
           />
           <FormStatusMessage
             isShow={statusForm.password.isShow}
@@ -319,6 +337,7 @@ function Signup() {
             placeholder="비밀번호 확인"
             textContentType="password"
             onChangeText={text => onChangePassword(text, true)}
+            value={passwordConfirm}
           />
           <FormStatusMessage
             isShow={statusForm.confirmPassword.isShow}
@@ -334,6 +353,7 @@ function Signup() {
 
               setForm(prev => ({...prev, nickname: text}));
             }}
+            value={form.nickname}
           />
           <FormStatusMessage
             isShow={statusForm.nickname.isShow}
@@ -355,14 +375,42 @@ function Signup() {
             text={genderSelectedItem?.text ?? ''}
           />
 
+          <CenterButton
+            onPress={() => {
+              setForm(prev => ({...prev, privacyAgree: !prev.privacyAgree}));
+              setPrivacyModalOpen(true);
+            }}>
+            <HStack mt={22} px={4} py={6}>
+              {form.privacyAgree ? (
+                <IconCheck18 />
+              ) : (
+                <IconUncheck18 fill={colors.gray[10]} />
+              )}
+
+              <CustomText
+                pl={10}
+                fontWeight={'bold'}
+                color={
+                  form.privacyAgree ? colors.positive[-10] : colors.gray[50]
+                }>
+                개인정보 처리방침 동의
+              </CustomText>
+            </HStack>
+          </CenterButton>
+
           <ActiveButton
             mt={32}
-            buttonType={isActiveSubmitButton ? 'red' : 'gray'}
+            buttonType={isActiveSubmitButton ? 'blue' : 'gray'}
             text="확인"
             onPress={onSubmit}
           />
         </InnerLayout>
       </KeyboardAwareScrollView>
+
+      <PrivacyModal
+        isOpen={isPrivacyModalOpen}
+        onClose={() => setPrivacyModalOpen(false)}
+      />
 
       <CustomSelectorActionSheet
         isOpen={genderSelectorOpen.isOpen}
