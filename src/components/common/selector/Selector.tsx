@@ -19,7 +19,7 @@ function CustomSelector(props: CustomUIProps<PressableProps> & Props) {
     <CenterButton
       h={48}
       borderWidth={3}
-      borderColor={colors.mint[50]}
+      borderColor={colors.gray[40]}
       borderRadius={16}
       px={22}
       flexDirection="row"
