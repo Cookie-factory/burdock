@@ -41,7 +41,9 @@ export type RootStackParamList = {
   EventList: undefined;
   EventContent: {id: string};
   SearchPage: undefined;
-  Signup: undefined;
+  Signup: {
+    email: string;
+  };
   PasswordFind: undefined;
 };
 

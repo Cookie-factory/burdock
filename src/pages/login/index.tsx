@@ -19,6 +19,7 @@ import {removeSecurityData, setSecurityData} from '~/utils/storage';
 import Image from '~/components/common/image/Image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import useToastShow from '~/hooks/toast/useToastShow';
+import {ErrorData} from '~/types/api/common';
 
 function Login() {
   const {reset, navigate} = useNavigate();
@@ -31,8 +32,8 @@ function Login() {
     password: '',
   });
 
-  const onMoveSignupPage = () => {
-    navigate('Signup');
+  const onMoveSignupPage = (_email: string) => {
+    navigate('Signup', {email: _email});
   };
 
   const onMovePasswordFindPage = () => {
@@ -88,8 +89,14 @@ function Login() {
         onLoginComplete(response.data);
       }
     } catch (error) {
-      console.log('@@@E ERROR');
-      console.log(error);
+      const _error = error as unknown as ErrorData<{email?: string}>;
+
+      if (
+        _error.statusCode === 404 &&
+        _error.message === '계정 정보를 찾을 수 없습니다.'
+      ) {
+        onMoveSignupPage(_error.data.email ?? '');
+      }
     }
   };
 
@@ -197,7 +204,7 @@ function Login() {
 
               <VStack h={10} mx={16} w={1} bgColor={colors.gray[70]} />
 
-              <CenterButton width={'auto'} onPress={onMoveSignupPage}>
+              <CenterButton width={'auto'} onPress={() => onMoveSignupPage('')}>
                 <Text color={colors.gray[70]} fontSize={14}>
                   회원가입
                 </Text>
