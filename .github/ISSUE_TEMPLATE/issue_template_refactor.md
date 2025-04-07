@@ -1,7 +1,7 @@
 ---
 name: '🛠️ Refactor'
 about: '새로운 기능 및 디자인 수정'
-title: '[Fefactor] '
+title: '[Refactor] '
 labels: ['refactor']
 assignees: ['yunyami0605']
 ---
