@@ -1,23 +1,28 @@
-name: "🛠️ Refactor"
-description: "이전 기능 혹은 디자인 개발"
-labels: ["refactor"]
-body:
+---
+name: '🛠️ Refactor'
+about: '새로운 기능 및 디자인 수정'
+title: '[Fefactor] '
+labels: ['refactor']
+assignees: ['yunyami0605']
+---
 
-- type: textarea
-  attributes:
-  label: 📄 설명
-  description: 기능에 대한 설명을 작성해 주세요.
-  placeholder: 자세히 적을수록 좋습니다!
-  validations:
-  required: true
-- type: textarea
-  attributes:
-  label: ✅ 작업할 내용
-  description: 할 일을 체크박스 형태로 작성해주세요.
-  placeholder: 최대한 세분화 해서 적어주세요!
-  validations:
-  required: true
-- type: textarea
-  attributes:
-  label: 🙋🏻 참고 자료
-  description: 참고 자료가 있다면 작성해 주세요.
+## 📄 설명
+
+수정된 기능이나 디자인에 대한 설명을 작성해주세요.  
+\_예: 간략히 수정된 기능이나 디자인 부분, 사진
+
+---
+
+## ✅ 작업할 내용
+
+할 일을 체크박스 형태로 작성해주세요. 최대한 세분화해 주세요.
+
+- [ ] 예시 작업 1
+- [ ] 예시 작업 2
+
+---
+
+## 🙋🏻 참고 자료
+
+관련 문서, 링크, 이슈 등이 있다면 적어주세요.  
+_예: PR 링크, Notion 문서 등_

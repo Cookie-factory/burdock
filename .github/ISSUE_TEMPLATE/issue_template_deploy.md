@@ -1,23 +1,28 @@
-name: "🔥 Deploy"
-description: "배포 내역"
-labels: ["deploy"]
-body:
+---
+name: '📲 Deploy'
+about: '배포 내역 작성용 템플릿'
+title: '[Deploy] '
+labels: ['deploy']
+assignees: ['yunyami0605']
+---
 
-- type: textarea
-  attributes:
-  label: 📄 설명
-  description: 배포에 대한 설명을 작성해 주세요.
-  placeholder: 자세히 적을수록 좋습니다!
-  validations:
-  required: true
-- type: textarea
-  attributes:
-  label: ✅ 작업할 내용
-  description: 할 일을 체크박스 형태로 작성해주세요.
-  placeholder: 최대한 세분화 해서 적어주세요!
-  validations:
-  required: true
-- type: textarea
-  attributes:
-  label: 🙋🏻 참고 자료
-  description: 참고 자료가 있다면 작성해 주세요.
+## 📄 설명
+
+배포에 대한 설명을 작성해주세요.  
+_예: 어떤 기능이 배포되었는지, 버전 정보 등_
+
+---
+
+## ✅ 작업할 내용
+
+할 일을 체크박스 형태로 작성해주세요. 최대한 세분화해 주세요.
+
+- [ ] 예시 작업 1
+- [ ] 예시 작업 2
+
+---
+
+## 🙋🏻 참고 자료
+
+관련 문서, 링크, 이슈 등이 있다면 적어주세요.  
+_예: PR 링크, Notion 문서 등_

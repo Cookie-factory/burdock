@@ -1,15 +1,15 @@
 ---
-name: '✨ Feature'
-about: '새로운 기능 및 디자인 추가'
-title: '[Feature] '
-labels: ['feature']
+name: '📕 Document'
+about: '문서 작업 관련 템플릿'
+title: '[Document] '
+labels: ['document']
 assignees: ['yunyami0605']
 ---
 
 ## 📄 설명
 
-새로 추가된 기능이나 디자인에 대한 설명을 작성해주세요.  
-\_예: 간략히 추가된 기능이나 디자인 부분, 사진
+새로 추가된 문서에 대한 설명을 작성해주세요.  
+\_예: 문서에 대한 간략 설명
 
 ---
 
