@@ -20,6 +20,7 @@ export type RootTabParamList = {
   CommunityList: undefined;
   VoteMain: undefined;
   MypageMain: undefined;
+  MainPage: undefined;
 };
 
 export type RootStackParamList = {
