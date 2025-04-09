@@ -46,6 +46,7 @@ export type RootStackParamList = {
     email: string;
   };
   PasswordFind: undefined;
+  MenuMain: undefined;
 };
 
 // export type RouteList = RootStackParamList;

@@ -25,7 +25,7 @@ function Header({title, rightButton, leftButton, isRemoveTopPosition}: Props) {
       alignItems={'center'}
       height={uiStyle.header.height}
       bgColor={colors.gray[0]}>
-      <HStack left={18} position={'absolute'} zIndex={1}>
+      <HStack left={20} position={'absolute'} zIndex={1}>
         {leftButton}
       </HStack>
 
@@ -35,7 +35,7 @@ function Header({title, rightButton, leftButton, isRemoveTopPosition}: Props) {
         </Text>
       </Center>
 
-      <HStack right={18} position={'absolute'} zIndex={1}>
+      <HStack right={20} position={'absolute'} zIndex={1}>
         {rightButton}
       </HStack>
     </HStack>

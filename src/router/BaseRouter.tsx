@@ -17,6 +17,7 @@ import EventContent from '~/pages/mypage/event/content';
 import SearchPage from '~/pages/search';
 import Signup from '~/pages/signup';
 import PasswordFind from '~/pages/passwordFind';
+import MenuMain from '~/pages/menu/main';
 
 const stack = createNativeStackNavigator<RouteList>();
 
@@ -151,6 +152,15 @@ function BaseRouter() {
         <stack.Screen
           name="PasswordFind"
           component={PasswordFind}
+          options={{
+            headerShown: true,
+            header: () => <Header title="" leftButton={<BackButton />} />,
+          }}
+        />
+
+        <stack.Screen
+          name="MenuMain"
+          component={MenuMain}
           options={{
             headerShown: true,
             header: () => <Header title="" leftButton={<BackButton />} />,

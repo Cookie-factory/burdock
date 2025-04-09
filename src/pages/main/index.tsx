@@ -5,6 +5,7 @@ import SearchNaviBar from '~/components/common/searchBar/SearchNaviBar';
 import Text from '~/components/common/text/Text';
 import VStack from '~/components/common/view/VStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
+import MainHeader from '~/components/main/MainHeader';
 import VoteModal from '~/components/vote/main/VoteModal';
 
 function MainPage() {
@@ -21,9 +22,7 @@ function MainPage() {
   return (
     <WhiteSafeAreaView>
       <VStack flex={1} px={20}>
-        <VStack pb={30}>
-          <Text>메인 페이지</Text>
-        </VStack>
+        <MainHeader />
 
         <SearchNaviBar />
 

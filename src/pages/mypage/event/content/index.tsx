@@ -1,7 +1,7 @@
 import React from 'react';
-import {ScrollView} from 'react-native-gesture-handler';
 import {useGetNotice} from '~/apis/notice/hook';
 import InnerLayout from '~/components/common/layout/InnerLayout';
+import ScrollView from '~/components/common/scrollView/ScrollView';
 import Text from '~/components/common/text/Text';
 import HStack from '~/components/common/view/HStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
@@ -18,7 +18,7 @@ function EventContent() {
 
   return (
     <WhiteSafeAreaView>
-      <ScrollView bounces={false}>
+      <ScrollView>
         <HStack
           py={20}
           px={20}
