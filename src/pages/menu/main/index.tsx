@@ -2,7 +2,7 @@ import React from 'react';
 import InnerLayout from '~/components/common/layout/InnerLayout';
 import VStack from '~/components/common/view/VStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
-import MenuItem from '~/components/mypage/main/MenuItem';
+import MenuItem from '~/components/menu/MenuItem';
 import {colors} from '~/constants/style';
 
 /**

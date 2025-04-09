@@ -7,53 +7,28 @@ import CustomText from '~/components/common/text/Text';
 import HStack from '~/components/common/view/HStack';
 import VStack from '~/components/common/view/VStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
-import MenuItem from '~/components/mypage/main/MenuItem';
-import {colors} from '~/constants/style';
+import MenuItem from '~/components/menu/MenuItem';
+import MyInfoListView from '~/components/mypage/main/MyInfoListView';
+import MyInfoView from '~/components/mypage/main/MyInfoView';
+import {colors, uiStyle} from '~/constants/style';
 
+/**
+ *@description 내 계정 페이지
+ */
 function MypageMain() {
-  const tmp = [
-    {
-      name: '공지사항',
-      url: 'NoticeList',
-    },
-    {
-      name: '이벤트',
-      url: 'EventList',
-    },
-    {
-      name: '1:1 문의',
-      url: 'Inquiry',
-    },
-    {
-      name: '설정',
-      url: 'Setting',
-    },
-  ];
-
   const {data: getAuthInfoData} = useGetAuthInfo();
 
   return (
-    <WhiteSafeAreaView bgColor={colors.positive[30]}>
-      <CenterButton pt={34} pb={54} px={18}>
-        <HStack>
-          <Icon source="account-circle-outline" size={50} />
+    <WhiteSafeAreaView>
+      <InnerLayout
+        bgColor={colors.gray[0]}
+        pt={32}
+        pb={uiStyle.tab.height + 10}>
+        {/* // 상단 정보뷰 */}
+        <MyInfoView />
 
-          <VStack ml={16} flex={1} alignItems="flex-start">
-            <CustomText fontWeight={'bold'} fontSize={16} mb={6}>
-              {getAuthInfoData?.data.nickname ?? ''}
-            </CustomText>
-
-            <CustomText fontSize={12}>내정보 수정하기</CustomText>
-          </VStack>
-        </HStack>
-      </CenterButton>
-
-      <InnerLayout bgColor={colors.gray[0]}>
-        <VStack py={4}>
-          {tmp.map(item => (
-            <MenuItem key={item.name} name={item.name} url={item.url} />
-          ))}
-        </VStack>
+        {/* 하단 리스트 뷰 */}
+        <MyInfoListView />
       </InnerLayout>
     </WhiteSafeAreaView>
   );

@@ -3,10 +3,13 @@ import VStack from '~/components/common/view/VStack';
 import {BoardItem as BoardItemType} from '~/types/api/board';
 import CenterButton from '~/components/common/button/CenterButton';
 import HStack from '~/components/common/view/HStack';
-import dayjs from 'dayjs';
 import Text from '~/components/common/text/Text';
 import useNavigate from '~/hooks/navigator/useNavigation';
 import {colors} from '~/constants/style';
+import IconDefaultHeart12 from '~/assets/icons/IconDefaultHeart12.svg';
+import IconSpeechBubble13 from '~/assets/icons/IconSpeechBubble13.svg';
+import IconDefaultBookmark9 from '~/assets/icons/IconDefaultBookmark9.svg';
+import getTimeFromNow from '~/utils/time';
 
 interface Props {
   data: BoardItemType;
@@ -18,6 +21,11 @@ interface Props {
 function BoardItem({data}: Props) {
   const {navigate} = useNavigate();
 
+  const infoTextStyle = {
+    color: colors.gray[80],
+    fontSzie: 10,
+  };
+
   const onMoveContent = (id: string) => {
     navigate('CommunityContent', {id});
   };
@@ -25,23 +33,55 @@ function BoardItem({data}: Props) {
   return (
     <CenterButton
       onPress={() => onMoveContent(data.id)}
-      my={10}
       w="100%"
       borderBottomColor={colors.gray[30]}
       borderBottomWidth={2}>
-      <HStack py={12} px={14} justifyContent="space-between">
-        <VStack flex={1}>
-          <Text w="100%" mb={8}>
-            {data.title}
-          </Text>
+      <HStack my={12} h={80}>
+        <VStack h={80} flex={1} justifyContent="space-between">
+          <VStack alignItems="flex-start">
+            <HStack marginBottom={4} width={'auto'} alignItems="center">
+              <VStack
+                mr={15}
+                w={24}
+                h={24}
+                borderRadius={24}
+                bgColor={colors.gray[80]}
+              />
 
-          <HStack justifyContent="flex-start">
-            <Text mr={20}>{data.author.nickname}</Text>
-            <Text>{dayjs(data.updatedAt).format('YY.MM.DD hh:mm')}</Text>
+              <Text fontSize={10} fontWeight={'bold'}>
+                {data.author.nickname}
+              </Text>
+            </HStack>
+
+            <Text fontSize={11} color={colors.gray[90]}>
+              {data.title}
+            </Text>
+          </VStack>
+
+          <HStack justifyContent="flex-start" gap={12}>
+            <HStack w="auto" gap={6}>
+              <IconDefaultHeart12 />
+
+              <Text {...infoTextStyle}>120</Text>
+            </HStack>
+
+            <HStack w="auto" gap={6}>
+              <IconSpeechBubble13 />
+
+              <Text {...infoTextStyle}>120</Text>
+            </HStack>
+
+            <HStack w="auto" gap={6}>
+              <IconDefaultBookmark9 />
+
+              <Text {...infoTextStyle}>120</Text>
+            </HStack>
+
+            <Text {...infoTextStyle}>{getTimeFromNow(data.updatedAt)}</Text>
           </HStack>
         </VStack>
 
-        <VStack w={48} h={48} bgColor={colors.gray[30]}></VStack>
+        <VStack w={80} h={80} bgColor={colors.gray[30]}></VStack>
       </HStack>
     </CenterButton>
   );
