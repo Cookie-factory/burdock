@@ -3,9 +3,13 @@ import {useGetVoteRanking} from '~/apis/vote/hook';
 import CenterButton from '~/components/common/button/CenterButton';
 import SearchNaviBar from '~/components/common/searchBar/SearchNaviBar';
 import Text from '~/components/common/text/Text';
+import BinStack from '~/components/common/view/BinStack';
+import Center from '~/components/common/view/Center';
 import VStack from '~/components/common/view/VStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
+import MainCurrentVoteView from '~/components/main/MainCurrentVoteView';
 import MainHeader from '~/components/main/MainHeader';
+import MainTodayVoteRankView from '~/components/main/MainTodayVoteRankView';
 import VoteModal from '~/components/vote/main/VoteModal';
 
 function MainPage() {
@@ -24,22 +28,19 @@ function MainPage() {
       <VStack flex={1} px={20}>
         <MainHeader />
 
-        <SearchNaviBar />
+        <MainTodayVoteRankView />
 
-        <VStack>
-          {(data?.data ?? []).map(item => (
-            <CenterButton
-              onPress={() => onVoteModalOpen(item.celebrityId)}
-              key={item.celebrityId}
-              py={20}
-              mb={4}
-              flexDirection="row"
-              justifyContent="space-between">
-              <Text>{item.celebrityName}</Text>
-              <Text>{item.totalVotes}</Text>
-            </CenterButton>
-          ))}
+        <VStack borderWidth={1} h={72} justifyContent="space-between">
+          <BinStack h={20} />
+
+          <Center>
+            <Text fontSize={20}>광고</Text>
+          </Center>
+
+          <BinStack h={20} />
         </VStack>
+
+        <MainCurrentVoteView />
       </VStack>
 
       <VoteModal

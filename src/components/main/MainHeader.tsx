@@ -23,8 +23,7 @@ function MainHeader() {
     <HStack
       justifyContent="space-between"
       alignItems={'center'}
-      height={80}
-      borderWidth={1}
+      height={72}
       bgColor={colors.gray[0]}>
       <ImagesMainHeaderLogo />
 
