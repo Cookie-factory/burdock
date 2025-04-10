@@ -19,6 +19,7 @@ import Signup from '~/pages/signup';
 import PasswordFind from '~/pages/passwordFind';
 import MenuMain from '~/pages/menu/main';
 import MyPageModification from '~/pages/mypage/myInfoModification';
+import FollowPage from '~/pages/mypage/follow';
 
 const stack = createNativeStackNavigator<RouteList>();
 
@@ -171,6 +172,15 @@ function BaseRouter() {
         <stack.Screen
           name="MyPageModification"
           component={MyPageModification}
+          options={{
+            headerShown: true,
+            header: () => <Header title="" leftButton={<BackButton />} />,
+          }}
+        />
+
+        <stack.Screen
+          name="FollowPage"
+          component={FollowPage}
           options={{
             headerShown: true,
             header: () => <Header title="" leftButton={<BackButton />} />,

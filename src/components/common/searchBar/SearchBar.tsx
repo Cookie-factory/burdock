@@ -1,10 +1,8 @@
 import React from 'react';
 import HStack from '../view/HStack';
-import CustomInput from '../input/Input';
-import CustomText from '../text/Text';
-import {useGetCelebrityList} from '~/apis/celebrity/hook';
-import CenterButton from '../button/CenterButton';
-import {APP_WIDTH} from '~/utils/dimension';
+import FormInput from '../input/FormInput';
+import IconSearch24 from '~/assets/icons/IconSearch24.svg';
+import Center from '../view/Center';
 
 interface Props {
   searchText: string;
@@ -16,14 +14,12 @@ interface Props {
  */
 function SearchBar({searchText, onChangeText}: Props) {
   return (
-    <HStack borderWidth={1}>
-      <HStack flex={1}>
-        <CustomInput value={searchText} onChangeText={onChangeText} />
-      </HStack>
+    <HStack>
+      <FormInput placeholder="검색" paddingRight={40} />
 
-      <CenterButton w={54} h={34} borderWidth={1}>
-        <CustomText>검색</CustomText>
-      </CenterButton>
+      <Center w={24} h={24} position="absolute" right={12}>
+        <IconSearch24 />
+      </Center>
     </HStack>
   );
 }

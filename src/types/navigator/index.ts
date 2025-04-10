@@ -48,6 +48,7 @@ export type RootStackParamList = {
   PasswordFind: undefined;
   MenuMain: undefined;
   MyPageModification: undefined;
+  FollowPage: undefined;
 };
 
 // export type RouteList = RootStackParamList;

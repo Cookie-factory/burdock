@@ -25,6 +25,10 @@ function MyInfoView() {
   const onMoveMyInfoModification = () => {
     navigate('MyPageModification');
   };
+
+  const onMoveFollowPage = () => {
+    navigate('FollowPage');
+  };
   return (
     <HStack marginBottom={16} gap={32}>
       <VStack w="auto">
@@ -71,15 +75,23 @@ function MyInfoView() {
             <CustomText {...mainTextStyle}>게시물</CustomText>
           </VStack>
 
-          <VStack gap={4} w={'auto'} alignItems="flex-start">
+          <CenterButton
+            onPress={onMoveFollowPage}
+            gap={4}
+            w={'auto'}
+            alignItems="flex-start">
             <CustomText {...subTextStyle}>0</CustomText>
             <CustomText {...mainTextStyle}>팔로워</CustomText>
-          </VStack>
+          </CenterButton>
 
-          <VStack gap={4} w={'auto'} alignItems="flex-start">
+          <CenterButton
+            onPress={onMoveFollowPage}
+            gap={4}
+            w={'auto'}
+            alignItems="flex-start">
             <CustomText {...subTextStyle}>0</CustomText>
             <CustomText {...mainTextStyle}>팔로잉</CustomText>
-          </VStack>
+          </CenterButton>
         </HStack>
       </VStack>
     </HStack>
