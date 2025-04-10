@@ -8,16 +8,17 @@ import {RouteList} from '~/types/navigator';
 import Header from '~/components/common/header/Header';
 import BackButton from '~/components/common/button/BackButton';
 import TabRouter from './TabRouter';
-import Inquiry from '~/pages/mypage/inquiry';
-import Setting from '~/pages/mypage/setting';
-import NoticeList from '~/pages/mypage/notice/list';
-import NoticeContent from '~/pages/mypage/notice/content';
-import EventList from '~/pages/mypage/event/list';
-import EventContent from '~/pages/mypage/event/content';
+import Inquiry from '~/pages/menu/inquiry';
+import Setting from '~/pages/menu/setting';
+import NoticeList from '~/pages/menu/notice/list';
+import NoticeContent from '~/pages/menu/notice/content';
+import EventList from '~/pages/menu/event/list';
+import EventContent from '~/pages/menu/event/content';
 import SearchPage from '~/pages/search';
 import Signup from '~/pages/signup';
 import PasswordFind from '~/pages/passwordFind';
 import MenuMain from '~/pages/menu/main';
+import MyPageModification from '~/pages/mypage/myInfoModification';
 
 const stack = createNativeStackNavigator<RouteList>();
 
@@ -161,6 +162,15 @@ function BaseRouter() {
         <stack.Screen
           name="MenuMain"
           component={MenuMain}
+          options={{
+            headerShown: true,
+            header: () => <Header title="" leftButton={<BackButton />} />,
+          }}
+        />
+
+        <stack.Screen
+          name="MyPageModification"
+          component={MyPageModification}
           options={{
             headerShown: true,
             header: () => <Header title="" leftButton={<BackButton />} />,

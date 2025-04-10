@@ -7,8 +7,10 @@ import VStack from '~/components/common/view/VStack';
 import {colors} from '~/constants/style';
 import ImageDefaultProfile72 from '~/assets/images/ImageDefaultProfile72.svg';
 import IconPlus16 from '~/assets/icons/IconPlus16.svg';
+import useNavigate from '~/hooks/navigator/useNavigation';
 
 function MyInfoView() {
+  const {navigate} = useNavigate();
   const subTextStyle = {
     fontSize: 10,
     color: colors.gray[70],
@@ -18,6 +20,10 @@ function MyInfoView() {
     fontWeight: 'bold' as TextStyle['fontWeight'],
     fontSize: 14,
     color: colors.gray[80],
+  };
+
+  const onMoveMyInfoModification = () => {
+    navigate('MyPageModification');
   };
   return (
     <HStack marginBottom={16} gap={32}>
@@ -36,6 +42,7 @@ function MyInfoView() {
         </CenterButton>
 
         <CenterButton
+          onPress={onMoveMyInfoModification}
           w={79}
           h={35}
           borderRadius={8}
