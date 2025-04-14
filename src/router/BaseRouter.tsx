@@ -66,9 +66,7 @@ function BaseRouter() {
           component={CommunityContent}
           options={{
             headerShown: true,
-            header: () => (
-              <Header title="게시글 내용" leftButton={<BackButton />} />
-            ),
+            header: () => <Header title="" leftButton={<BackButton />} />,
           }}
         />
         <stack.Screen
