@@ -58,9 +58,7 @@ function BaseRouter() {
           component={CommunityRegister}
           options={{
             headerShown: true,
-            header: () => (
-              <Header title="게시글 등록" leftButton={<BackButton />} />
-            ),
+            header: () => <Header title="" leftButton={<BackButton />} />,
           }}
         />
         <stack.Screen

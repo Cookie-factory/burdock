@@ -21,6 +21,7 @@ function FilterSelector({setFilterSelectorOpen}: Props) {
       borderColor={colors.gray[40]}
       h={35}
       px={18}
+      mb={18}
       justifyContent="space-between">
       <HStack w="auto" justifyContent="flex-start">
         <CustomText color={colors.gray[80]} marginRight={12}>

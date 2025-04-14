@@ -2,7 +2,7 @@ import React from 'react';
 import CenterButton from '~/components/common/button/CenterButton';
 import CustomText from '~/components/common/text/Text';
 import HStack from '~/components/common/view/HStack';
-import {colors} from '~/constants/style';
+import {colors, uiStyle} from '~/constants/style';
 import {CommunityListTabFilter} from '~/types/api/community';
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
  */
 function TabList({onSelect, value}: Props) {
   return (
-    <HStack>
+    <HStack h={uiStyle.header.height}>
       <CenterButton h={34} w={56} onPress={() => onSelect('total')}>
         <CustomText
           fontWeight={'bold'}
