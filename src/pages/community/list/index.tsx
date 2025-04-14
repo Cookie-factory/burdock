@@ -1,18 +1,29 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useGetBoardList} from '~/apis/board/hook';
 import useNavigate from '~/hooks/navigator/useNavigation';
 import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 import {BoardItem as BoardItemType} from '~/types/api/board';
-import CenterButton from '~/components/common/button/CenterButton';
-import Text from '~/components/common/text/Text';
 import BoardItem from '~/components/community/board/BoardItem';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
 import useFocusScreen from '~/hooks/navigator/useFocusScreen';
 import InnerLayout from '~/components/common/layout/InnerLayout';
-import HStack from '~/components/common/view/HStack';
+import TabList from '~/components/community/list/TabList';
+import {CommunityListTabFilter} from '~/types/api/community';
+import FilterSelector from '~/components/community/list/FilterSelector';
+import CustomSelectorActionSheet from '~/components/common/selector/SelectorModal';
+import RegisterButton from '~/components/community/list/RegisterButton';
 
 function CommunityList() {
   const {navigate} = useNavigate();
+  const [communityListTab, setCommunityTab] =
+    useState<CommunityListTabFilter>('total');
+
+  const [isFilterSelectorOpen, setFilterSelectorOpen] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState({
+    text: '차애',
+    value: '1',
+  });
+
   const {
     refetch,
     data,
@@ -51,15 +62,9 @@ function CommunityList() {
   return (
     <WhiteSafeAreaView>
       <InnerLayout>
-        <HStack mb={18} px={12} justifyContent="flex-end">
-          <CenterButton
-            w={74}
-            borderBottomWidth={1}
-            h={44}
-            onPress={() => navigate('CommunityRegister')}>
-            <Text>글 추가</Text>
-          </CenterButton>
-        </HStack>
+        <TabList onSelect={setCommunityTab} value={communityListTab} />
+
+        <FilterSelector setFilterSelectorOpen={setFilterSelectorOpen} />
 
         <KeyboardAwareFlatList
           style={{flex: 1, width: '100%'}}
@@ -75,6 +80,22 @@ function CommunityList() {
           }}
         />
       </InnerLayout>
+
+      <RegisterButton onPress={() => navigate('CommunityRegister')} />
+
+      <CustomSelectorActionSheet
+        isOpen={isFilterSelectorOpen}
+        onClose={() => setFilterSelectorOpen(false)}
+        list={[
+          {
+            value: '1',
+            text: '차애',
+          },
+        ]}
+        selectedItem={selectedFilter}
+        onSelect={setSelectedFilter}
+        height={120}
+      />
     </WhiteSafeAreaView>
   );
 }
