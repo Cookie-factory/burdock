@@ -10,6 +10,7 @@ import IconDefaultHeart12 from '~/assets/icons/IconDefaultHeart12.svg';
 import IconSpeechBubble13 from '~/assets/icons/IconSpeechBubble13.svg';
 import IconDefaultBookmark9 from '~/assets/icons/IconDefaultBookmark9.svg';
 import getTimeFromNow from '~/utils/time';
+import Image from '~/components/common/image/Image';
 
 interface Props {
   data: BoardItemType;
@@ -62,26 +63,33 @@ function BoardItem({data}: Props) {
             <HStack w="auto" gap={6}>
               <IconDefaultHeart12 />
 
-              <Text {...infoTextStyle}>120</Text>
+              <Text {...infoTextStyle}>{data._count.like}</Text>
             </HStack>
 
             <HStack w="auto" gap={6}>
               <IconSpeechBubble13 />
 
-              <Text {...infoTextStyle}>120</Text>
+              <Text {...infoTextStyle}>{data._count.comment}</Text>
             </HStack>
 
             <HStack w="auto" gap={6}>
               <IconDefaultBookmark9 />
 
-              <Text {...infoTextStyle}>120</Text>
+              <Text {...infoTextStyle}>{data._count.bookmark}</Text>
             </HStack>
 
             <Text {...infoTextStyle}>{getTimeFromNow(data.updatedAt)}</Text>
           </HStack>
         </VStack>
 
-        <VStack w={80} h={80} bgColor={colors.gray[30]}></VStack>
+        <Image
+          w={80}
+          h={80}
+          source={{
+            uri: data.images[0] ?? null,
+            // uri: 'https://i.namu.wiki/i/Q--xh7Fdq_iGi_wFeW0v2FqiN11HrWHPDiLADLPZXL0dqlNwmVGIj6U-FQwhCyurszC9TXO6WXfhlXa1Nb06E-k6F3kYyA91mpFZ35mHyg2N8MHS9Y4NCkJ-pgfdb3jmj1hYpIk-bLNlQtfWjOSCOg.webp',
+          }}
+        />
       </HStack>
     </CenterButton>
   );

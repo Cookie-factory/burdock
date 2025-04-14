@@ -45,6 +45,8 @@ function CommunityList() {
 
   if (data) {
     console.log('@ DATA');
+    console.log('@ DATA');
+    console.log('@ DATA');
     console.log(boardList);
   }
   // const isContentLoading = isFetching || isLoading || isInitialLoading;

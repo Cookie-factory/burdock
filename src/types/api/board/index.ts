@@ -10,4 +10,9 @@ export type BoardItem = {
     id: string;
     nickname: string;
   };
+  _count: {
+    bookmark: number;
+    comment: number;
+    like: number;
+  };
 };
