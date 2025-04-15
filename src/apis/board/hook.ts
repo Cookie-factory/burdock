@@ -1,10 +1,12 @@
 import {useInfiniteQuery, useMutation, useQuery} from '@tanstack/react-query';
 import {
+  postBookmarkBoard,
   deleteBoard,
   getBoard,
   getBoardList,
   patchBoard,
   postBoard,
+  postBoardLike,
 } from './api';
 import {queryKeys} from '~/constants/queryKeys';
 import {GetBoardListQuery} from '~/types/api/board/query';
@@ -75,5 +77,23 @@ export const usePatchBoard = () => {
   return useMutation({
     mutationFn: (param: PatchBoardParam) =>
       patchBoard({id: param.id}, param.data),
+  });
+};
+
+/**
+ *@description 게시글 북마크 api 훅
+ */
+export const usePostBookmarkBoard = () => {
+  return useMutation({
+    mutationFn: (boardId: string) => postBookmarkBoard(boardId),
+  });
+};
+
+/**
+ *@description 게시글 좋아요 api 훅
+ */
+export const usePostBoardLike = () => {
+  return useMutation({
+    mutationFn: (boardId: string) => postBoardLike(boardId),
   });
 };

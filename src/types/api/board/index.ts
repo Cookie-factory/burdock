@@ -1,3 +1,9 @@
+export type BoardInfoCount = {
+  bookmark: number;
+  comment: number;
+  like: number;
+};
+
 export type BoardItem = {
   id: string;
   title: string;
@@ -6,13 +12,12 @@ export type BoardItem = {
   images: string[];
   createdAt: string;
   updatedAt: string;
+  isBookmark: boolean;
+  isLike: boolean;
   author: {
     id: string;
     nickname: string;
+    profile?: string;
   };
-  _count: {
-    bookmark: number;
-    comment: number;
-    like: number;
-  };
+  _count: BoardInfoCount;
 };

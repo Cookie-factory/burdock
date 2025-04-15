@@ -1,5 +1,10 @@
 import React, {useState} from 'react';
-import {useDeleteBoard, useGetBoard} from '~/apis/board/hook';
+import {
+  usePostBookmarkBoard,
+  useDeleteBoard,
+  useGetBoard,
+  usePostBoardLike,
+} from '~/apis/board/hook';
 import ActiveButton from '~/components/common/button/ActiveButton';
 import CenterButton from '~/components/common/button/CenterButton';
 import Image from '~/components/common/image/Image';
@@ -33,6 +38,8 @@ function CommunityContent() {
 
   const {data, refetch} = useGetBoard({id: param?.id});
   const deleteBoard = useDeleteBoard();
+  const {mutateAsync: bookmarkBoardMutate} = usePostBookmarkBoard();
+  const {mutateAsync: postBoardLike} = usePostBoardLike();
 
   const [comment, setComment] = useState('');
 
@@ -55,6 +62,26 @@ function CommunityContent() {
     });
   };
 
+  const onLike = () => {
+    if (param?.id) {
+      postBoardLike(param.id).then(response => {
+        if (response.statusCode === 201) {
+          refetch();
+        }
+      });
+    }
+  };
+
+  const onBookmark = () => {
+    if (param?.id) {
+      bookmarkBoardMutate(param?.id).then(response => {
+        if (response.statusCode === 201) {
+          refetch();
+        }
+      });
+    }
+  };
+
   useFocusScreen(() => {
     refetch();
   });
@@ -63,7 +90,7 @@ function CommunityContent() {
     <WhiteSafeAreaView>
       <ScrollView>
         <VStack flex={1} pt={20}>
-          <ContentTopView />
+          <ContentTopView authorData={data?.data.author} />
 
           <HStack borderWidth={1} h={320} bgColor={colors.gray[60]}>
             {(data?.data.images ?? []).map((item, i) => {
@@ -84,7 +111,14 @@ function CommunityContent() {
           </HStack>
 
           <InnerLayout>
-            <ContentHelperView />
+            <ContentHelperView
+              onBookmark={onBookmark}
+              boardInfoCount={data?.data._count}
+              updatedAt={data?.data.updatedAt}
+              isBookmark={data?.data.isBookmark}
+              onLike={onLike}
+              isLike={data?.data.isLike}
+            />
 
             <ContentTitle title={data?.data.title ?? ''} />
 

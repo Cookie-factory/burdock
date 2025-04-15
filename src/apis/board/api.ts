@@ -60,3 +60,29 @@ export const patchBoard = (query: IDQuery, data: Partial<PostBoardData>) => {
     data,
   });
 };
+
+/**
+ *@description 게시글 북마크 api
+ */
+export const postBookmarkBoard = (boardId: string) => {
+  return apiCall<{bookmark: boolean}>({
+    method: 'POST',
+    url: 'bookmark',
+    data: {
+      boardId,
+    },
+  });
+};
+
+/**
+ *@description 게시판 좋아요 api
+ */
+export const postBoardLike = (boardId: string) => {
+  return apiCall<{boardLike: boolean}>({
+    method: 'POST',
+    url: 'board-like',
+    data: {
+      boardId,
+    },
+  });
+};

@@ -12,6 +12,7 @@ import {CommunityListTabFilter} from '~/types/api/community';
 import FilterSelector from '~/components/community/list/FilterSelector';
 import CustomSelectorActionSheet from '~/components/common/selector/SelectorModal';
 import RegisterButton from '~/components/community/list/RegisterButton';
+import {uiStyle} from '~/constants/style';
 
 function CommunityList() {
   const {navigate} = useNavigate();
@@ -69,7 +70,11 @@ function CommunityList() {
         <FilterSelector setFilterSelectorOpen={setFilterSelectorOpen} />
 
         <KeyboardAwareFlatList
-          style={{flex: 1, width: '100%'}}
+          style={{
+            flex: 1,
+            width: '100%',
+            marginBottom: uiStyle.tab.height + 20,
+          }}
           showsVerticalScrollIndicator={false}
           data={boardList ?? []}
           bounces={false}

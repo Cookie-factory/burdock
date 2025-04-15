@@ -41,12 +41,16 @@ function BoardItem({data}: Props) {
         <VStack h={80} flex={1} justifyContent="space-between">
           <VStack alignItems="flex-start">
             <HStack marginBottom={4} width={'auto'} alignItems="center">
-              <VStack
+              <Image
+                borderWidth={1}
                 mr={15}
                 w={24}
                 h={24}
                 borderRadius={24}
-                bgColor={colors.gray[80]}
+                source={{
+                  uri: data.author.profile ?? '',
+                  // uri: 'https://i.namu.wiki/i/Q--xh7Fdq_iGi_wFeW0v2FqiN11HrWHPDiLADLPZXL0dqlNwmVGIj6U-FQwhCyurszC9TXO6WXfhlXa1Nb06E-k6F3kYyA91mpFZ35mHyg2N8MHS9Y4NCkJ-pgfdb3jmj1hYpIk-bLNlQtfWjOSCOg.webp',
+                }}
               />
 
               <Text fontSize={10} fontWeight={'bold'}>
