@@ -23,4 +23,8 @@ export const queryKeys = {
   vote: {
     getVoteRank: 'get vote rank',
   },
+
+  comment: {
+    getCommentList: 'get comment list',
+  },
 } as const;
