@@ -10,6 +10,8 @@ import VoteModal from '~/components/vote/main/VoteModal';
 function VoteMain() {
   const {data, refetch} = useGetVoteRanking({});
 
+  console.log(data);
+
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCelebrityId, setSelectedCelebrityId] = useState<string>();
 
@@ -27,7 +29,7 @@ function VoteMain() {
 
         <SearchNaviBar />
 
-        <VStack>
+        {/* <VStack>
           {(data?.data ?? []).map(item => (
             <CenterButton
               onPress={() => onVoteModalOpen(item.celebrityId)}
@@ -40,7 +42,7 @@ function VoteMain() {
               <Text>{item.totalVotes}</Text>
             </CenterButton>
           ))}
-        </VStack>
+        </VStack> */}
       </VStack>
 
       <VoteModal

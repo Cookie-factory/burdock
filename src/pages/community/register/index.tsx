@@ -134,7 +134,6 @@ function CommunityRegister() {
 
                   <CenterButton
                     onPress={() => onDeleteImage(i)}
-                    borderWidth={1}
                     position="absolute"
                     top={0}
                     right={0}
@@ -149,8 +148,8 @@ function CommunityRegister() {
             <CenterButton
               onPress={onImagePicker}
               borderWidth={1}
-              w={64}
-              h={64}
+              w={80}
+              h={80}
               borderColor={colors.gray[50]}>
               <IconPlus29 />
             </CenterButton>

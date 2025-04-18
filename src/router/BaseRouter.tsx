@@ -20,6 +20,7 @@ import PasswordFind from '~/pages/passwordFind';
 import MenuMain from '~/pages/menu/main';
 import MyPageModification from '~/pages/mypage/myInfoModification';
 import FollowPage from '~/pages/mypage/follow';
+import CharacterSearch from '~/pages/character/search';
 
 const stack = createNativeStackNavigator<RouteList>();
 
@@ -177,6 +178,15 @@ function BaseRouter() {
         <stack.Screen
           name="FollowPage"
           component={FollowPage}
+          options={{
+            headerShown: true,
+            header: () => <Header title="" leftButton={<BackButton />} />,
+          }}
+        />
+
+        <stack.Screen
+          name="CharacterSearch"
+          component={CharacterSearch}
           options={{
             headerShown: true,
             header: () => <Header title="" leftButton={<BackButton />} />,

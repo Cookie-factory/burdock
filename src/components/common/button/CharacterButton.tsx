@@ -1,15 +1,23 @@
-import React, {useState} from 'react';
+import React from 'react';
 import CustomText from '../text/Text';
 import CenterButton from './CenterButton';
 import {colors} from '~/constants/style';
+import useNavigate from '~/hooks/navigator/useNavigation';
 
 interface Props {
   placeHolder: string;
   text?: string;
 }
+
+/**
+ *@description 캐릭터 검색 페이지 이동 버튼
+ */
 function CharacterPageMoveButton({placeHolder, text}: Props) {
+  const {navigate} = useNavigate();
+
   return (
     <CenterButton
+      onPress={() => navigate('CharacterSearch')}
       alignItems="flex-start"
       pl={16}
       h={48}

@@ -49,6 +49,7 @@ export type RootStackParamList = {
   MenuMain: undefined;
   MyPageModification: undefined;
   FollowPage: undefined;
+  CharacterSearch: undefined;
 };
 
 // export type RouteList = RootStackParamList;
