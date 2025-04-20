@@ -15,7 +15,12 @@ interface Props {
 function SearchBar({searchText, onChangeText}: Props) {
   return (
     <HStack>
-      <FormInput placeholder="검색" paddingRight={40} />
+      <FormInput
+        placeholder="검색"
+        paddingRight={40}
+        onChangeText={onChangeText}
+        value={searchText}
+      />
 
       <Center w={24} h={24} position="absolute" right={12}>
         <IconSearch24 />

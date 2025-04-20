@@ -19,6 +19,7 @@ import {colors} from '~/constants/style';
 import IconPlus29 from '~/assets/icons/IconPlus29.svg';
 import ActiveButton from '~/components/common/button/ActiveButton';
 import ScrollView from '~/components/common/scrollView/ScrollView';
+import {useAppSelector} from '~/hooks/redux';
 
 /**
  *@description 커뮤니티 게시글 등록 페이지
@@ -26,6 +27,9 @@ import ScrollView from '~/components/common/scrollView/ScrollView';
 function CommunityRegister() {
   const {goBack} = useNavigate();
   const param = useParam('CommunityRegister');
+  const selectedCharacters = useAppSelector(
+    state => state.counter.selectedCharacters,
+  );
 
   const {data: beforeBoardData} = useGetBoard({id: param?.id});
   const [isSubmitFormLoading, setSubmitFormLoading] = useState(false);
@@ -35,7 +39,9 @@ function CommunityRegister() {
   const postBoard = usePostBoard();
   const patchBoard = usePatchBoard();
 
-  const [form, setForm] = useState<Omit<PostBoardData, 'images'>>({
+  const [form, setForm] = useState<
+    Omit<PostBoardData, 'images' | 'characterIds'>
+  >({
     title: '',
     content: '',
   });
@@ -71,6 +77,7 @@ function CommunityRegister() {
         .mutateAsync({
           ...form,
           images: imageDatas.map(item => item.cloudImageName),
+          characterIds: selectedCharacters.map(item => item.id),
         })
         .then(postResponse => {
           if (postResponse.statusCode === 201) {
@@ -112,7 +119,10 @@ function CommunityRegister() {
           />
 
           <FormLabel pt={38}>캐릭터</FormLabel>
-          <CharacterPageMoveButton placeHolder="무슨 캐릭터 내용인가요?" />
+          <CharacterPageMoveButton
+            placeHolder="무슨 캐릭터 내용인가요?"
+            text={selectedCharacters}
+          />
 
           <FormLabel pt={38}>사진</FormLabel>
 

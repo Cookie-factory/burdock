@@ -5,9 +5,10 @@ import HStack from '~/components/common/view/HStack';
 import VStack from '~/components/common/view/VStack';
 import {colors} from '~/constants/style';
 import Center from '../common/view/Center';
+import {SelectedCharactersData} from '~/types/api/character';
 
 interface Props {
-  onPress: (id: string) => void;
+  onPress: (data: SelectedCharactersData) => void;
   isActive: boolean;
   name: string;
   id: string;
@@ -20,7 +21,7 @@ interface Props {
  */
 function CharacterItem({onPress, isActive, name, id, source, profile}: Props) {
   return (
-    <CenterButton onPress={() => onPress(id)}>
+    <CenterButton onPress={() => onPress({name, id})}>
       <HStack mb={12} justifyContent="space-between">
         <HStack w="auto" gap={18}>
           <VStack

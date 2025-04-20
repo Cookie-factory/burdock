@@ -1,15 +1,15 @@
 import {useInfiniteQuery} from '@tanstack/react-query';
-import {getCelebrityList} from './api';
+import {getCharacterList} from './api';
 import {queryKeys} from '~/constants/queryKeys';
-import {GetCelebrityListQuery} from '~/types/api/celebrity/query';
+import {GetCharacterListQuery} from '~/types/api/character/query';
 
 /**
- *@description 유명인사 리스트 조회 api 훅
+ *@description 캐릭터 리스트 조회 api 훅
  */
-export const useGetCelebrityList = (query: GetCelebrityListQuery) => {
+export const useGetCharacterList = (query: GetCharacterListQuery) => {
   return useInfiniteQuery({
-    queryKey: [queryKeys.celebrity.getCelebrityList, query],
-    queryFn: ({pageParam}) => getCelebrityList(pageParam),
+    queryKey: [queryKeys.character.getCharacterList, query],
+    queryFn: ({pageParam}) => getCharacterList(pageParam),
     initialPageParam: query,
     getNextPageParam: (lastPage, __, lastPageParam) => {
       const previousData = [...lastPage.data];
@@ -17,7 +17,7 @@ export const useGetCelebrityList = (query: GetCelebrityListQuery) => {
         return {
           ...lastPageParam,
           cursor: previousData.reverse()[0].id,
-        } as GetCelebrityListQuery;
+        } as GetCharacterListQuery;
       } else {
         return null;
       }

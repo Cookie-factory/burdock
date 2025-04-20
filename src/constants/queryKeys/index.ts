@@ -17,8 +17,8 @@ export const queryKeys = {
     getNotice: 'get notice',
     getNoticeList: 'get notice list',
   },
-  celebrity: {
-    getCelebrityList: 'get celebrity list',
+  character: {
+    getCharacterList: 'get character list',
   },
   vote: {
     getVoteRank: 'get vote rank',
