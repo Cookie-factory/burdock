@@ -20,6 +20,8 @@ import IconPlus29 from '~/assets/icons/IconPlus29.svg';
 import ActiveButton from '~/components/common/button/ActiveButton';
 import ScrollView from '~/components/common/scrollView/ScrollView';
 import {useAppSelector} from '~/hooks/redux';
+import {useDispatch} from 'react-redux';
+import {clearSelectedCharacter} from '~/store/slices/characterSlice';
 
 /**
  *@description 커뮤니티 게시글 등록 페이지
@@ -30,6 +32,7 @@ function CommunityRegister() {
   const selectedCharacters = useAppSelector(
     state => state.counter.selectedCharacters,
   );
+  const dispatch = useDispatch();
 
   const {data: beforeBoardData} = useGetBoard({id: param?.id});
   const [isSubmitFormLoading, setSubmitFormLoading] = useState(false);
@@ -107,6 +110,10 @@ function CommunityRegister() {
     }
   }, [beforeBoardData?.data]);
 
+  useEffect(() => {
+    dispatch(clearSelectedCharacter());
+  }, []);
+
   return (
     <WhiteSafeAreaView>
       <ScrollView>
@@ -124,46 +131,47 @@ function CommunityRegister() {
             text={selectedCharacters}
           />
 
-          <FormLabel pt={38}>사진</FormLabel>
+          <FormLabel pt={38}>사진 (*최대 5개)</FormLabel>
 
-          <HStack borderWidth={1} h={80}>
-            {imageDatas.map((item, i) => {
-              return (
-                <Center borderWidth={1} w={80} h={80} key={i}>
-                  <Image
-                    borderWidth={1}
-                    w={80}
-                    h={80}
-                    key={i}
-                    source={{
-                      uri:
-                        item.localImageName ??
-                        `${config.IMAGE_BASE_URL}${item.cloudImageName}`,
-                    }}
-                  />
+          <ScrollView horizontal>
+            <HStack h={80}>
+              {imageDatas.map((item, i) => {
+                return (
+                  <Center w={80} h={80} key={i}>
+                    <Image
+                      w={80}
+                      h={80}
+                      key={i}
+                      source={{
+                        uri:
+                          item.localImageName ??
+                          `${config.IMAGE_BASE_URL}${item.cloudImageName}`,
+                      }}
+                    />
 
-                  <CenterButton
-                    onPress={() => onDeleteImage(i)}
-                    position="absolute"
-                    top={0}
-                    right={0}
-                    w={38}
-                    h={38}>
-                    <IconCircleDelete24 />
-                  </CenterButton>
-                </Center>
-              );
-            })}
+                    <CenterButton
+                      onPress={() => onDeleteImage(i)}
+                      position="absolute"
+                      top={0}
+                      right={0}
+                      w={38}
+                      h={38}>
+                      <IconCircleDelete24 />
+                    </CenterButton>
+                  </Center>
+                );
+              })}
 
-            <CenterButton
-              onPress={onImagePicker}
-              borderWidth={1}
-              w={80}
-              h={80}
-              borderColor={colors.gray[50]}>
-              <IconPlus29 />
-            </CenterButton>
-          </HStack>
+              <CenterButton
+                onPress={onImagePicker}
+                borderWidth={1}
+                w={80}
+                h={80}
+                borderColor={colors.gray[50]}>
+                <IconPlus29 />
+              </CenterButton>
+            </HStack>
+          </ScrollView>
 
           <FormLabel pt={38}>내용</FormLabel>
 
