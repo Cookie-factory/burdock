@@ -1,17 +1,15 @@
 import React, {useState} from 'react';
+import {useGetAuthInfo} from '~/apis/auth/hook';
 import {
   usePostBookmarkBoard,
-  useDeleteBoard,
   useGetBoard,
   usePostBoardLike,
 } from '~/apis/board/hook';
 import ActiveButton from '~/components/common/button/ActiveButton';
-import CenterButton from '~/components/common/button/CenterButton';
 import Image from '~/components/common/image/Image';
 import FormInput from '~/components/common/input/FormInput';
 import InnerLayout from '~/components/common/layout/InnerLayout';
 import ScrollView from '~/components/common/scrollView/ScrollView';
-import Text from '~/components/common/text/Text';
 import Center from '~/components/common/view/Center';
 import HStack from '~/components/common/view/HStack';
 import VStack from '~/components/common/view/VStack';
@@ -37,30 +35,17 @@ function CommunityContent() {
   const param = useParam('CommunityContent');
 
   const {data, refetch} = useGetBoard({id: param?.id});
-  const deleteBoard = useDeleteBoard();
+  const {data: userData} = useGetAuthInfo();
+
+  console.log('@ user data');
+  console.log('@ user data');
+  console.log('@ user data');
+  console.log(userData);
+
   const {mutateAsync: bookmarkBoardMutate} = usePostBookmarkBoard();
   const {mutateAsync: postBoardLike} = usePostBoardLike();
 
   const [comment, setComment] = useState('');
-
-  const onDelete = () => {
-    if (!data?.data.id) return;
-
-    deleteBoard.mutateAsync({id: data?.data.id}).then(response => {
-      if (response.statusCode === 200) {
-        console.log('@ 삭제완료');
-        goBack();
-      }
-    });
-  };
-
-  const onMoveModifyPage = () => {
-    if (!data?.data.id) return;
-
-    navigate('CommunityRegister', {
-      id: data?.data.id,
-    });
-  };
 
   const onLike = () => {
     if (param?.id) {
@@ -90,7 +75,11 @@ function CommunityContent() {
     <WhiteSafeAreaView>
       <ScrollView>
         <VStack flex={1} pt={20}>
-          <ContentTopView authorData={data?.data.author} />
+          <ContentTopView
+            boardId={data?.data.id}
+            authorData={data?.data.author}
+            userId={userData?.data.id}
+          />
 
           <HStack borderWidth={1} h={320} bgColor={colors.gray[60]}>
             {(data?.data.images ?? []).map((item, i) => {
