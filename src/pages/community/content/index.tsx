@@ -1,13 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useGetAuthInfo} from '~/apis/auth/hook';
 import {
   usePostBookmarkBoard,
   useGetBoard,
   usePostBoardLike,
 } from '~/apis/board/hook';
-import ActiveButton from '~/components/common/button/ActiveButton';
 import Image from '~/components/common/image/Image';
-import FormInput from '~/components/common/input/FormInput';
 import InnerLayout from '~/components/common/layout/InnerLayout';
 import ScrollView from '~/components/common/scrollView/ScrollView';
 import Center from '~/components/common/view/Center';
@@ -37,15 +35,8 @@ function CommunityContent() {
   const {data, refetch} = useGetBoard({id: param?.id});
   const {data: userData} = useGetAuthInfo();
 
-  console.log('@ user data');
-  console.log('@ user data');
-  console.log('@ user data');
-  console.log(userData);
-
   const {mutateAsync: bookmarkBoardMutate} = usePostBookmarkBoard();
   const {mutateAsync: postBoardLike} = usePostBoardLike();
-
-  const [comment, setComment] = useState('');
 
   const onLike = () => {
     if (param?.id) {
@@ -115,26 +106,9 @@ function CommunityContent() {
 
             <VStack>
               <CommentTopView />
-
-              <FormInput
-                p={16}
-                h={132}
-                multiline
-                label="댓글"
-                placeholder="댓글 작성하기"
-                onChangeText={text => setComment(text)}
-                value={comment}
-              />
-
-              <ActiveButton
-                my={20}
-                onPress={() => {}}
-                buttonType="blue"
-                text="등록하기"
-              />
             </VStack>
 
-            <CommentList />
+            <CommentList boardId={param?.id} />
           </InnerLayout>
         </VStack>
       </ScrollView>

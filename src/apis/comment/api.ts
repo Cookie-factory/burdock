@@ -2,6 +2,8 @@ import queryString from 'query-string';
 import {apiCall} from '../common';
 import {GetCommentListQuery} from '~/types/api/comment/query';
 import {GetCommentListResponse} from '~/types/api/comment/response';
+import {PatchCommentData, PostCommentData} from '~/types/api/comment/data';
+import {MutationResponse} from '~/types/api/common/response';
 
 /**
  *@description 댓글 리스트 api 조회
@@ -22,5 +24,41 @@ export const postCommentLike = (commentId: string) => {
     method: 'POST',
     url: 'comment-like',
     data: {commentId},
+  });
+};
+
+/**
+ *@description 댓글 등록 api
+ */
+export const postComment = (data: PostCommentData) => {
+  return apiCall<MutationResponse>({
+    method: 'POST',
+    url: `comment/${data.boardId}`,
+    data: {
+      content: data.content,
+    },
+  });
+};
+
+/**
+ *@description 댓글 수정 api
+ */
+export const patchComment = (data: PatchCommentData) => {
+  return apiCall<MutationResponse>({
+    method: 'PATCH',
+    url: `comment/${data.id}`,
+    data: {
+      content: data.content,
+    },
+  });
+};
+
+/**
+ *@description 댓글 삭제 api
+ */
+export const deleteComment = (id: string) => {
+  return apiCall<MutationResponse>({
+    method: 'DELETE',
+    url: `comment/${id}`,
   });
 };

@@ -16,3 +16,7 @@ export type CommentItem = {
     profile?: string;
   };
 };
+
+export type SelectedCommentType = {
+  type: 'DEFAULT' | 'MODIFY' | 'DELETE';
+} & Partial<CommentItem>;

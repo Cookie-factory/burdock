@@ -8,14 +8,20 @@ import IconDefaultHeart12 from '~/assets/icons/IconDefaultHeart12.svg';
 import IconActiveHeart12 from '~/assets/icons/IconActiveHeart12.svg';
 import CenterButton from '~/components/common/button/CenterButton';
 import Text from '~/components/common/text/Text';
-import {CommentItem as CommentItemType} from '~/types/api/comment';
+import {
+  CommentItem as CommentItemType,
+  SelectedCommentType,
+} from '~/types/api/comment';
 import {usePostCommentLike} from '~/apis/comment/hook';
 
 interface Props {
   refetch: () => void;
+  onSelectedComment: (selectedComment: SelectedCommentType) => void;
 }
+
 function CommentItem(props: Props & CommentItemType) {
   const {mutateAsync: postCommentLike} = usePostCommentLike();
+
   const infoTextStyle = {
     color: colors.gray[80],
     fontSize: 10,
@@ -74,8 +80,28 @@ function CommentItem(props: Props & CommentItemType) {
             <Text {...infoTextStyle}>답글</Text>
           </CenterButton>
 
-          <CenterButton width={32} h={32}>
+          <CenterButton
+            width={32}
+            h={32}
+            onPress={() =>
+              props.onSelectedComment({
+                type: 'DELETE',
+                ...props,
+              })
+            }>
             <Text {...infoTextStyle}>삭제</Text>
+          </CenterButton>
+
+          <CenterButton
+            width={32}
+            h={32}
+            onPress={() =>
+              props.onSelectedComment({
+                type: 'MODIFY',
+                ...props,
+              })
+            }>
+            <Text {...infoTextStyle}>수정</Text>
           </CenterButton>
 
           <CenterButton width={32} h={32}>
