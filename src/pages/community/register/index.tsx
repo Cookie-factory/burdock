@@ -21,7 +21,10 @@ import ActiveButton from '~/components/common/button/ActiveButton';
 import ScrollView from '~/components/common/scrollView/ScrollView';
 import {useAppSelector} from '~/hooks/redux';
 import {useDispatch} from 'react-redux';
-import {clearSelectedCharacter} from '~/store/slices/characterSlice';
+import {
+  addSelectedCharacterList,
+  clearSelectedCharacter,
+} from '~/store/slices/characterSlice';
 
 /**
  *@description 커뮤니티 게시글 등록 페이지
@@ -65,6 +68,7 @@ function CommunityRegister() {
           data: {
             ...form,
             images: imageDatas.map(item => item.cloudImageName),
+            characterIds: selectedCharacters.map(item => item.id),
           },
           id: param.id,
         })
@@ -107,11 +111,14 @@ function CommunityRegister() {
           cloudImageName: item,
         })),
       );
+      dispatch(addSelectedCharacterList(beforeBoardData.data.character));
     }
   }, [beforeBoardData?.data]);
 
   useEffect(() => {
-    dispatch(clearSelectedCharacter());
+    if (!param?.id) {
+      dispatch(clearSelectedCharacter());
+    }
   }, []);
 
   return (

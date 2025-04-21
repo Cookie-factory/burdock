@@ -13,6 +13,12 @@ const characterSlice = createSlice({
   name: 'character',
   initialState,
   reducers: {
+    addSelectedCharacterList(
+      state,
+      action: PayloadAction<SelectedCharactersData[]>,
+    ) {
+      state.selectedCharacters = [...action.payload];
+    },
     addSelectedCharacter(state, action: PayloadAction<SelectedCharactersData>) {
       state.selectedCharacters.push(action.payload);
     },
@@ -34,5 +40,6 @@ export const {
   addSelectedCharacter,
   removeSelectedCharacter,
   clearSelectedCharacter,
+  addSelectedCharacterList,
 } = characterSlice.actions;
 export default characterSlice.reducer;

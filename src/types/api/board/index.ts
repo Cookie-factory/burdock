@@ -20,4 +20,8 @@ export type BoardItem = {
     profile?: string;
   };
   _count: BoardInfoCount;
+  character: {
+    id: string;
+    name: string;
+  }[];
 };
