@@ -6,6 +6,7 @@ export type CommentItem = {
   deletedAt: string | null;
   updatedAt: string;
   userId: string;
+  parentId?: string;
   isLike: boolean;
   _count: {
     commentLike: number;
@@ -15,8 +16,14 @@ export type CommentItem = {
     nickname: string;
     profile?: string;
   };
+  targetUser?: {
+    nickname: string;
+  };
+  recomment: CommentItem[];
+  isAuth: boolean;
 };
 
 export type SelectedCommentType = {
-  type: 'DEFAULT' | 'MODIFY' | 'DELETE';
+  targetUserId?: string;
+  type: 'DEFAULT' | 'MODIFY' | 'DELETE' | 'RECOMMENT';
 } & Partial<CommentItem>;

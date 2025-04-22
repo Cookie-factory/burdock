@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import VStack from '~/components/common/view/VStack';
 import CommentItem from './CommentItem';
 import {
@@ -16,6 +16,8 @@ import {
 import Popup from '~/components/common/popup/Popup';
 import FormInput from '~/components/common/input/FormInput';
 import ActiveButton from '~/components/common/button/ActiveButton';
+import CommentTopView from './CommentTopView';
+import {TextInput} from 'react-native';
 
 interface Props {
   boardId?: string;
@@ -34,6 +36,7 @@ function CommentList({boardId}: Props) {
   const {mutateAsync: deleteCommentMutate} = useDeleteComment();
   const {mutateAsync: postCommentMutate} = usePostComment();
   const {mutateAsync: patchCommentMutate} = usePatchComment();
+  const ref = useRef<TextInput>(null);
 
   const defaultSelectedComment = {
     type: 'DEFAULT',
@@ -50,8 +53,6 @@ function CommentList({boardId}: Props) {
         return item.data;
       })
     : [];
-
-  // const isContentLoading = isFetching || isLoading || isInitialLoading;
 
   /**
    *@description 댓글 선택 함수
@@ -76,7 +77,7 @@ function CommentList({boardId}: Props) {
             refetch();
           }
         });
-      } else {
+      } else if (selectedComment.type === 'MODIFY') {
         // 수정
 
         if (selectedComment.id) {
@@ -87,6 +88,24 @@ function CommentList({boardId}: Props) {
             console.log(response.statusCode);
 
             if (response.statusCode === 200) {
+              setSelectedComment(defaultSelectedComment);
+              setComment('');
+              refetch();
+            }
+          });
+        }
+      } else if (selectedComment.type === 'RECOMMENT') {
+        // 답글
+        if (selectedComment.id) {
+          postCommentMutate({
+            parentId: selectedComment.id,
+            content: comment,
+            boardId,
+            targetUserId: selectedComment.userId,
+          }).then(response => {
+            console.log(response.statusCode);
+
+            if (response.statusCode === 201) {
               setSelectedComment(defaultSelectedComment);
               setComment('');
               refetch();
@@ -126,21 +145,37 @@ function CommentList({boardId}: Props) {
 
   useEffect(() => {
     if (selectedComment.type === 'MODIFY') {
+      // ref.current.focus();
       setComment(selectedComment.content ?? '');
     } else if (selectedComment.type === 'DELETE') {
-      //
+      // 삭제
       setShowDeletePopup(true);
+    } else if (selectedComment.type === 'RECOMMENT') {
+      // ref.current.focus();
+      setComment('');
     }
   }, [selectedComment]);
 
   return (
     <VStack>
+      <CommentTopView
+        commentType={selectedComment.type}
+        targetName={selectedComment.user?.nickname ?? ''}
+      />
+
       <FormInput
+        ref={ref}
         p={16}
         h={132}
         multiline
         label="댓글"
-        placeholder="댓글 작성하기"
+        placeholder={
+          selectedComment.type === 'MODIFY'
+            ? '댓글 수정하기'
+            : selectedComment.type === 'RECOMMENT'
+            ? '답글달기'
+            : '댓글달기'
+        }
         onChangeText={text => setComment(text)}
         value={comment}
       />
@@ -149,7 +184,13 @@ function CommentList({boardId}: Props) {
         my={20}
         onPress={onRegisterModifyComment}
         buttonType="blue"
-        text={selectedComment.type === 'MODIFY' ? '수정하기' : '등록하기'}
+        text={
+          selectedComment.type === 'MODIFY'
+            ? '수정하기'
+            : selectedComment.type === 'RECOMMENT'
+            ? '답글달기'
+            : '등록하기'
+        }
       />
 
       <VStack>
@@ -167,11 +208,21 @@ function CommentList({boardId}: Props) {
           renderItem={({item}) => {
             const _item = item as CommentItemType;
             return (
-              <CommentItem
-                {..._item}
-                refetch={refetch}
-                onSelectedComment={onSelectedComment}
-              />
+              <VStack>
+                <CommentItem
+                  {..._item}
+                  refetch={refetch}
+                  onSelectedComment={onSelectedComment}
+                />
+                {_item.recomment.map(_recommentItem => (
+                  <CommentItem
+                    {..._recommentItem}
+                    refetch={refetch}
+                    onSelectedComment={onSelectedComment}
+                    isRecomment={true}
+                  />
+                ))}
+              </VStack>
             );
           }}
         />

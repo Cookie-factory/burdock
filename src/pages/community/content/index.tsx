@@ -13,7 +13,6 @@ import HStack from '~/components/common/view/HStack';
 import VStack from '~/components/common/view/VStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
 import CommentList from '~/components/community/content/comment/CommentList';
-import CommentTopView from '~/components/community/content/comment/CommentTopView';
 import ContentHelperView from '~/components/community/content/ContentHelperView';
 import ContentText from '~/components/community/content/ContentText';
 import ContentTitle from '~/components/community/content/ContentTitle';
@@ -103,10 +102,6 @@ function CommunityContent() {
             <ContentTitle title={data?.data.title ?? ''} />
 
             <ContentText content={data?.data.content ?? ''} />
-
-            <VStack>
-              <CommentTopView />
-            </VStack>
 
             <CommentList boardId={param?.id} />
           </InnerLayout>

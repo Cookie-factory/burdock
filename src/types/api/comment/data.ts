@@ -4,6 +4,8 @@
 export type PostCommentData = {
   content: string;
   boardId: string;
+  parentId?: string; // 부모 댓글(답글일때)
+  targetUserId?: string; // 답글일 때, 대상 댓글
 };
 
 /**

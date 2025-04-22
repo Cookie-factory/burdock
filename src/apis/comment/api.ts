@@ -34,9 +34,7 @@ export const postComment = (data: PostCommentData) => {
   return apiCall<MutationResponse>({
     method: 'POST',
     url: `comment/${data.boardId}`,
-    data: {
-      content: data.content,
-    },
+    data,
   });
 };
 

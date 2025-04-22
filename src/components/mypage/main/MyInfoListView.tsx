@@ -48,11 +48,6 @@ function MyInfoListView() {
       })
     : [];
 
-  if (data) {
-    console.log('@ DATA');
-    console.log(boardList);
-  }
-
   const onExpandList = () => {
     //
     if (hasNextPage && !isFetchingNextPage) {

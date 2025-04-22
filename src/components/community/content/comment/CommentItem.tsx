@@ -17,6 +17,7 @@ import {usePostCommentLike} from '~/apis/comment/hook';
 interface Props {
   refetch: () => void;
   onSelectedComment: (selectedComment: SelectedCommentType) => void;
+  isRecomment?: boolean;
 }
 
 function CommentItem(props: Props & CommentItemType) {
@@ -39,6 +40,7 @@ function CommentItem(props: Props & CommentItemType) {
     <HStack
       alignItems="flex-start"
       py={16}
+      pl={props.isRecomment ? 20 : 0}
       borderBottomWidth={1}
       borderBottomColor={colors.gray[40]}>
       <HStack
@@ -49,69 +51,115 @@ function CommentItem(props: Props & CommentItemType) {
         borderRadius={28}
       />
 
-      <VStack alignItems="flex-start" w="auto">
+      <VStack alignItems="flex-start" w="auto" gap={14}>
         <HStack justifyContent="space-between" py={8} mb={0}>
           <HStack w="auto">
             <CustomText fontWeight={'bold'} fontSize={10} mr={8}>
               {props.user?.nickname ?? ''}
             </CustomText>
 
-            <CustomText fontSize={10}>{getTimeFromNow('20250404')}</CustomText>
+            <CustomText fontSize={10}>
+              {getTimeFromNow(props.updatedAt)}
+            </CustomText>
           </HStack>
         </HStack>
 
-        <HStack my={10} alignItems="flex-start" minH={32} w={'auto'}>
-          <Text {...infoTextStyle}>{props.content}</Text>
-        </HStack>
+        <VStack
+          alignItems="flex-start"
+          borderLeftWidth={props.isRecomment ? 2 : 0}
+          borderLeftColor={colors.gray[30]}
+          pl={props.isRecomment ? 16 : 0}>
+          {props.deletedAt ? (
+            <CustomText {...infoTextStyle} py={12}>
+              삭제된 댓글입니다.
+            </CustomText>
+          ) : (
+            <VStack alignItems="flex-start">
+              <HStack my={10} alignItems="flex-start" minH={32} w={'auto'}>
+                <Text {...infoTextStyle}>
+                  {props.isRecomment && (
+                    <Text {...infoTextStyle} color={colors.positive[0]}>
+                      @{props.targetUser?.nickname}
+                      <Text> </Text>
+                    </Text>
+                  )}
+                  {props.content}
+                </Text>
+              </HStack>
 
-        <HStack w={'auto'} gap={20}>
-          <CenterButton
-            flexDirection="row"
-            w="auto"
-            gap={6}
-            width={32}
-            onPress={onLike}>
-            {props.isLike ? <IconActiveHeart12 /> : <IconDefaultHeart12 />}
+              <HStack w={'auto'} gap={20}>
+                <CenterButton
+                  flexDirection="row"
+                  w="auto"
+                  gap={6}
+                  width={32}
+                  onPress={onLike}>
+                  {props.isLike ? (
+                    <IconActiveHeart12 />
+                  ) : (
+                    <IconDefaultHeart12 />
+                  )}
 
-            <Text {...infoTextStyle}>{props._count.commentLike}</Text>
-          </CenterButton>
+                  <Text {...infoTextStyle}>{props._count.commentLike}</Text>
+                </CenterButton>
 
-          <CenterButton width={32} h={32}>
-            <Text {...infoTextStyle}>답글</Text>
-          </CenterButton>
+                <CenterButton
+                  width={32}
+                  h={32}
+                  onPress={() =>
+                    props.onSelectedComment({
+                      type: 'RECOMMENT',
+                      ...props,
+                      targetUserId: props.userId,
+                      id: props.parentId ?? props.id,
+                    })
+                  }>
+                  <Text {...infoTextStyle}>답글</Text>
+                </CenterButton>
 
-          <CenterButton
-            width={32}
-            h={32}
-            onPress={() =>
-              props.onSelectedComment({
-                type: 'DELETE',
-                ...props,
-              })
-            }>
-            <Text {...infoTextStyle}>삭제</Text>
-          </CenterButton>
+                {props.isAuth && (
+                  <CenterButton
+                    width={32}
+                    h={32}
+                    onPress={() =>
+                      props.onSelectedComment({
+                        type: 'DELETE',
+                        ...props,
+                      })
+                    }>
+                    <Text {...infoTextStyle}>삭제</Text>
+                  </CenterButton>
+                )}
 
-          <CenterButton
-            width={32}
-            h={32}
-            onPress={() =>
-              props.onSelectedComment({
-                type: 'MODIFY',
-                ...props,
-              })
-            }>
-            <Text {...infoTextStyle}>수정</Text>
-          </CenterButton>
+                {props.isAuth && (
+                  <CenterButton
+                    width={32}
+                    h={32}
+                    onPress={() =>
+                      props.onSelectedComment({
+                        type: 'MODIFY',
+                        ...props,
+                      })
+                    }>
+                    <Text {...infoTextStyle}>수정</Text>
+                  </CenterButton>
+                )}
 
-          <CenterButton width={32} h={32}>
-            <Text {...infoTextStyle}>차단</Text>
-          </CenterButton>
+                {!props.isAuth && (
+                  <CenterButton width={32} h={32}>
+                    <Text {...infoTextStyle}>차단</Text>
+                  </CenterButton>
+                )}
 
-          <CenterButton width={32} h={32}>
-            <Text {...infoTextStyle}>신고</Text>
-          </CenterButton>
-        </HStack>
+                {!props.isAuth && (
+                  <CenterButton width={32} h={32}>
+                    <Text {...infoTextStyle}>신고</Text>
+                  </CenterButton>
+                )}
+              </HStack>
+            </VStack>
+          )}
+        </VStack>
       </VStack>
     </HStack>
   );
