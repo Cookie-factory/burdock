@@ -80,10 +80,10 @@ function VoteMain() {
         </HStack>
 
         <VStack>
-          <VoteItem index={0} />
-          <VoteItem index={1} />
-          <VoteItem index={2} />
-          <VoteItem index={3} />
+          <VoteItem index={0} onVote={onVoteModalOpen} />
+          <VoteItem index={1} onVote={onVoteModalOpen} />
+          <VoteItem index={2} onVote={onVoteModalOpen} />
+          <VoteItem index={3} onVote={onVoteModalOpen} />
         </VStack>
       </InnerLayout>
 

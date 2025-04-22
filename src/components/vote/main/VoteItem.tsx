@@ -12,8 +12,9 @@ import IconBronzeCrown21 from '~/assets/icons/IconBronzeCrown21.svg';
 
 interface Props {
   index: number;
+  onVote: (id: string) => void;
 }
-function VoteItem({index}: Props) {
+function VoteItem({index, onVote}: Props) {
   const crowns = [
     <IconGoldCrown21 />,
     <IconSilverCrown21 />,
@@ -51,7 +52,7 @@ function VoteItem({index}: Props) {
         <CustomText color={colors.gray[70]}>947표</CustomText>
       </HStack>
 
-      <CenterButton w="auto" flexDirection="row">
+      <CenterButton w="auto" flexDirection="row" onPress={() => onVote('')}>
         <CustomText>투표</CustomText>
 
         <IconRight16 />
