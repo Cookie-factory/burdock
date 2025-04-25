@@ -31,7 +31,7 @@ function RoundTab({
       borderColor={colors.gray[20]}
       bgColor={colors.gray[30]}
       borderRadius={52}
-      mb={56}>
+      my={16}>
       <CenterButton
         w={141}
         h={44}

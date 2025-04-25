@@ -1,6 +1,6 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
-import {getVoteRank, postVote} from './api';
-import {PostVoteData} from '~/types/api/vote/data';
+import {getVoteRank, postDailyVote, postVote} from './api';
+import {PostDailyVoteData, PostVoteData} from '~/types/api/vote/data';
 import {queryKeys} from '~/constants/queryKeys';
 import {GetVoteRankQuery} from '~/types/api/vote/query';
 
@@ -10,6 +10,15 @@ import {GetVoteRankQuery} from '~/types/api/vote/query';
 export const usePostVote = () => {
   return useMutation({
     mutationFn: (data: PostVoteData) => postVote(data),
+  });
+};
+
+/**
+ *@description [일간 투표 등록] 훅
+ */
+export const usePostDailyVote = () => {
+  return useMutation({
+    mutationFn: (data: PostDailyVoteData) => postDailyVote(data),
   });
 };
 

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {usePostVote} from '~/apis/vote/hook';
+import {usePostDailyVote, usePostVote} from '~/apis/vote/hook';
 import CenterButton from '~/components/common/button/CenterButton';
 import CustomInput from '~/components/common/input/Input';
 import CustomModal from '~/components/common/modal/Modal';
@@ -17,38 +17,86 @@ import IconPlus14 from '~/assets/icons/IconPlus14.svg';
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  celebrityId?: string;
+  candidateId?: string;
   refetch: () => void;
+  type: 'DAILY_VOTE' | 'THEME_VOTE';
+  voteSubjectId?: string;
 }
-function VoteModal({isOpen, onClose, celebrityId, refetch}: Props) {
+
+/**
+ *@description 투표 모달
+ */
+function VoteModal({
+  isOpen,
+  onClose,
+  candidateId,
+  refetch,
+  type,
+  voteSubjectId,
+}: Props) {
   const [count, setCount] = useState(0);
   const postVote = usePostVote();
+  const postDailyVote = usePostDailyVote();
+
+  const onCount = (variantCount: number) => {
+    setCount(prev => {
+      const result = prev + variantCount;
+      if (result < 0) return 0;
+      return prev + variantCount;
+    });
+  };
+
+  const onModalClose = () => {
+    setCount(0);
+    onClose();
+  };
 
   const onRegister = () => {
-    if (!postVote.isPending && celebrityId) {
-      postVote
-        .mutateAsync({
-          celebrityId,
-          count,
-        })
-        .then(response => {
-          if (response.statusCode === 201) {
-            console.log('@@@ VoteModal');
-            console.log('등록이 되었습니다.');
-            console.log(
-              '%c등록이 되었습니다.',
-              'color: red; font-weight: bold; font-size: 50px;',
-            );
-            refetch();
-            onClose();
-          }
-        })
-        .catch(error => {
-          //
-          console.log(error);
-        });
+    if (type === 'THEME_VOTE') {
+      if (!postVote.isPending && candidateId && voteSubjectId) {
+        postVote
+          .mutateAsync({
+            candidateId,
+            count,
+            voteSubjectId,
+          })
+          .then(response => {
+            if (response.statusCode === 201) {
+              console.log('@@@ VoteModal');
+              console.log('등록이 되었습니다.');
+              console.log(
+                '%c등록이 되었습니다.',
+                'color: red; font-weight: bold; font-size: 50px;',
+              );
+              refetch();
+              onModalClose();
+            }
+          })
+          .catch(error => {
+            //
+            console.log(error);
+          });
+      } else {
+        console.log('잘못된 접근입니다.');
+      }
     } else {
-      console.log('잘못된 접근입니다.');
+      if (!postDailyVote.isPending && candidateId) {
+        // 일간/주간/월간 투표
+        postDailyVote
+          .mutateAsync({
+            candidateId,
+            count,
+          })
+          .then(response => {
+            if (response.statusCode === 201) {
+              refetch();
+              onModalClose();
+            }
+          });
+      } else {
+        console.log(candidateId);
+        console.log('잘못된 접근입니다.');
+      }
     }
   };
 
@@ -60,7 +108,7 @@ function VoteModal({isOpen, onClose, celebrityId, refetch}: Props) {
       alignItems="center">
       <CustomModalContent w={APP_WIDTH - 40} h={260} py={30}>
         <VStack flex={1} justifyContent="space-between">
-          <VStack>
+          <VStack borderWidth={1}>
             <CustomText mb={12}>나루토에게 투표하기</CustomText>
 
             <HStack mb={44} gap={6} justifyContent="center">
@@ -83,22 +131,22 @@ function VoteModal({isOpen, onClose, celebrityId, refetch}: Props) {
               </Center>
             </HStack>
 
-            <HStack w="auto" mb={26}>
+            <HStack w={200} mb={26}>
               <CenterButton
                 borderTopLeftRadius={44}
                 borderBottomLeftRadius={44}
                 w={44}
                 h={44}
-                bgColor={colors.gray[40]}>
+                bgColor={colors.gray[40]}
+                onPress={() => onCount(-1)}>
                 <IconMinus14 />
               </CenterButton>
 
               <CustomInput
                 containerStyle={{
-                  width: 'auto',
+                  width: 112,
                 }}
                 textAlign="center"
-                w={200}
                 h={44}
                 borderTopWidth={1}
                 borderBottomWidth={1}
@@ -114,7 +162,8 @@ function VoteModal({isOpen, onClose, celebrityId, refetch}: Props) {
                 borderBottomRightRadius={44}
                 w={44}
                 h={44}
-                bgColor={colors.gray[40]}>
+                bgColor={colors.gray[40]}
+                onPress={() => onCount(1)}>
                 <IconPlus14 />
               </CenterButton>
             </HStack>
@@ -126,7 +175,7 @@ function VoteModal({isOpen, onClose, celebrityId, refetch}: Props) {
               w={94}
               h={35}
               bgColor={colors.gray[50]}
-              onPress={onClose}>
+              onPress={onModalClose}>
               <CustomText fontWeight={'bold'} color={colors.gray[0]}>
                 취소
               </CustomText>

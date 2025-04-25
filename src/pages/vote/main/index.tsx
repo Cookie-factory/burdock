@@ -1,10 +1,7 @@
 import React, {useState} from 'react';
-import {useGetVoteRanking} from '~/apis/vote/hook';
-import CenterButton from '~/components/common/button/CenterButton';
+import {useGetVoteRanking, usePostDailyVote} from '~/apis/vote/hook';
 import InnerLayout from '~/components/common/layout/InnerLayout';
-import SearchNaviBar from '~/components/common/searchBar/SearchNaviBar';
 import RoundTab from '~/components/common/tab/RoundTab';
-import Text from '~/components/common/text/Text';
 import HStack from '~/components/common/view/HStack';
 import VStack from '~/components/common/view/VStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
@@ -15,22 +12,26 @@ import VoteItem from '~/components/vote/main/VoteItem';
 import VoteModal from '~/components/vote/main/VoteModal';
 import {FixedVoteDateFilter, FixedVoteGenderFilter} from '~/types/api/vote';
 
+/**
+ *@description 투표 메인 페이지
+ */
 function VoteMain() {
-  const {data, refetch} = useGetVoteRanking({});
-  const [topTab, setTopTab] = useState(1);
-  const [dateFilter, setDateFilter] = useState<FixedVoteDateFilter>('daily');
-
-  console.log(data);
-
+  const [dateFilter, setDateFilter] = useState<FixedVoteDateFilter>('일간');
   const [isFilterVoteSelectorOpen, setFilterVoteSelectorOpen] = useState(false);
   const [fixedVoteFilter, setFixedVoteFilter] =
     useState<FixedVoteGenderFilter>('total');
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedCelebrityId, setSelectedCelebrityId] = useState<string>();
+  const [selectedCandidateId, setSelectedCandidateId] = useState<string>();
+  const [topTab, setTopTab] = useState(1);
+
+  const {data, refetch} = useGetVoteRanking({
+    voteSubjectTitle: dateFilter,
+    take: 10,
+  });
 
   const onVoteModalOpen = (_id: string) => {
     setIsOpen(true);
-    setSelectedCelebrityId(_id);
+    setSelectedCandidateId(_id);
   };
 
   const onTabChange = (num: number) => {
@@ -59,38 +60,40 @@ function VoteMain() {
               borderTopLeftRadius={12}
               borderBottomLeftRadius={12}
               text={'일간'}
-              onPress={() => setDateFilter('daily')}
-              isActive={dateFilter === 'daily'}
+              onPress={() => setDateFilter('일간')}
+              isActive={dateFilter === '일간'}
             />
 
             <DateToggleButton
               text={'주간'}
-              onPress={() => setDateFilter('weekly')}
-              isActive={dateFilter === 'weekly'}
+              onPress={() => setDateFilter('주간')}
+              isActive={dateFilter === '주간'}
             />
 
             <DateToggleButton
               text={'월간'}
               borderTopRightRadius={12}
               borderBottomRightRadius={12}
-              onPress={() => setDateFilter('monthly')}
-              isActive={dateFilter === 'monthly'}
+              onPress={() => setDateFilter('월간')}
+              isActive={dateFilter === '월간'}
             />
           </HStack>
         </HStack>
 
         <VStack>
-          <VoteItem index={0} onVote={onVoteModalOpen} />
-          <VoteItem index={1} onVote={onVoteModalOpen} />
-          <VoteItem index={2} onVote={onVoteModalOpen} />
-          <VoteItem index={3} onVote={onVoteModalOpen} />
+          {data?.data.map(item => (
+            <React.Fragment key={item.id}>
+              <VoteItem onVoteModalOpen={onVoteModalOpen} data={item} />
+            </React.Fragment>
+          ))}
         </VStack>
       </InnerLayout>
 
       <VoteModal
+        type="DAILY_VOTE"
         refetch={refetch}
+        candidateId={selectedCandidateId}
         isOpen={isOpen}
-        celebrityId={selectedCelebrityId}
         onClose={() => setIsOpen(false)}
       />
       <FilterVoteSelectorMenu
