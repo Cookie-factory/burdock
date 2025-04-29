@@ -16,10 +16,10 @@ function MoreView({text, onPress}: Props) {
         {text}
       </Text>
 
-      <CenterButton width={48} h={34} onPress={onPress}>
+      <CenterButton width={60} h={34} onPress={onPress}>
         <HStack>
           <Text fontWeight={'bold'} fontSize={12} color={colors.gray[80]}>
-            더보기
+            투표 랭킹
           </Text>
 
           <IconRight16 />

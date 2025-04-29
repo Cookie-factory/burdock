@@ -18,6 +18,7 @@ export type Ranking3PerThemesItem = {
   id: string;
   title: string;
   description: string;
+  imgUrl?: string;
   topCandidates: {
     character: {characterSource: {name: string}; name: string; profile: string};
     id: string;

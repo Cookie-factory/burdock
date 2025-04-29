@@ -48,6 +48,7 @@ export const useGetVoteRanking = (query: GetVoteRankQuery) => {
       pages: data.pages.flatMap(page => page.data.items),
       pageParams: data.pageParams,
       subjectInfo: data.pages[0].data?.subjectInfo,
+      totalVotesOfSubject: data.pages[0].data?.totalVotesOfSubject,
     }),
   });
 };

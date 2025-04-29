@@ -6,7 +6,7 @@ export type GetRankVoteResponse = {
     totalVotes: number;
     candidateId: string;
   } | null;
-  title: string;
+  totalVotesOfSubject: number;
   subjectInfo: {
     title: string;
     description: string;

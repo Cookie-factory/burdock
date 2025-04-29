@@ -5,28 +5,41 @@ import HStack from '../common/view/HStack';
 import CustomText from '../common/text/Text';
 import {colors} from '~/constants/style';
 import CustomImage from '../common/image/Image';
+import useNavigate from '~/hooks/navigator/useNavigation';
+import {useGetRanking3PerThemes} from '~/apis/vote/hook';
 
 /**
- *@description 금일 인기 있는 투표 요약 뷰
+ *@description 금일 테마 투표
  */
 function MainCurrentVoteView() {
+  const {navigate} = useNavigate();
+
+  const {data} = useGetRanking3PerThemes();
+
+  const firstTheme = data?.data[0];
+
+  if (!firstTheme) return <></>;
+
   return (
     <VStack>
-      <MoreView text="진행 중인 투표" onPress={() => {}} />
+      <MoreView
+        text="진행 중인 테마 보기"
+        onPress={() => navigate('VoteMain')}
+      />
 
       <HStack mb={12}>
         <CustomImage
           w={'100%'}
           h={128}
           source={{
-            uri: 'https://i.namu.wiki/i/Q--xh7Fdq_iGi_wFeW0v2FqiN11HrWHPDiLADLPZXL0dqlNwmVGIj6U-FQwhCyurszC9TXO6WXfhlXa1Nb06E-k6F3kYyA91mpFZ35mHyg2N8MHS9Y4NCkJ-pgfdb3jmj1hYpIk-bLNlQtfWjOSCOg.webp',
+            uri: firstTheme.imgUrl,
           }}
         />
       </HStack>
 
       <HStack>
         <CustomText fontWeight={'bold'} color={colors.gray[80]} mr={29}>
-          원피스 최강 캐릭터 투표
+          {firstTheme?.title}
         </CustomText>
 
         <CustomText
@@ -36,7 +49,9 @@ function MainCurrentVoteView() {
           color={colors.orange[0]}>
           1위
         </CustomText>
-        <CustomText color={colors.gray[70]}>루피</CustomText>
+        <CustomText color={colors.gray[70]}>
+          {firstTheme ? firstTheme?.topCandidates[0].character.name : ''}
+        </CustomText>
       </HStack>
     </VStack>
   );
