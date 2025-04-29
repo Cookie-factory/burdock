@@ -1,4 +1,4 @@
-import {VoteType} from '.';
+import {FixedVoteDateFilter} from '.';
 
 export type GetVoteRankQuery =
   | {
@@ -6,6 +6,7 @@ export type GetVoteRankQuery =
       voteSubjectId: string;
       search?: string;
       take: number;
+      date?: FixedVoteDateFilter;
       cursor?: {
         totalVotes: number;
         candidateId: string;
@@ -16,6 +17,7 @@ export type GetVoteRankQuery =
       voteSubjectId?: string;
       search?: string;
       take: number;
+      date?: FixedVoteDateFilter;
       cursor?: {
         totalVotes: number;
         candidateId: string;

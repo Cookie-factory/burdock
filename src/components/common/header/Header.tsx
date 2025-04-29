@@ -10,13 +10,20 @@ interface Props {
   rightButton?: JSX.Element;
   leftButton?: JSX.Element;
   isRemoveTopPosition?: boolean;
+  bgColor?: string;
 }
 /**
  *@description 페이지 헤더
  *@param {JSX.Element} rightButton - 헤더 기준 좌쪽 위치 버튼
  *@param {JSX.Element} leftButton - 헤더 기준 우쪽 위치 버튼
  */
-function Header({title, rightButton, leftButton, isRemoveTopPosition}: Props) {
+function Header({
+  title,
+  rightButton,
+  leftButton,
+  isRemoveTopPosition,
+  bgColor,
+}: Props) {
   const insets = useSafeAreaInsets();
 
   return (
@@ -24,7 +31,7 @@ function Header({title, rightButton, leftButton, isRemoveTopPosition}: Props) {
       top={isRemoveTopPosition ? undefined : insets.top}
       alignItems={'center'}
       height={uiStyle.header.height}
-      bgColor={colors.gray[0]}>
+      bgColor={bgColor ?? colors.gray[0]}>
       <HStack left={20} position={'absolute'} zIndex={1}>
         {leftButton}
       </HStack>

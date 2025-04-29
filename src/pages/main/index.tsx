@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import {useGetVoteRanking} from '~/apis/vote/hook';
-import CenterButton from '~/components/common/button/CenterButton';
-import SearchNaviBar from '~/components/common/searchBar/SearchNaviBar';
 import Text from '~/components/common/text/Text';
 import BinStack from '~/components/common/view/BinStack';
 import Center from '~/components/common/view/Center';
@@ -13,7 +11,10 @@ import MainTodayVoteRankView from '~/components/main/MainTodayVoteRankView';
 import VoteModal from '~/components/vote/main/VoteModal';
 
 function MainPage() {
-  const {data, refetch} = useGetVoteRanking({});
+  const {data, refetch} = useGetVoteRanking({
+    voteSubjectTitle: '일간',
+    take: 3,
+  });
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCelebrityId, setSelectedCelebrityId] = useState<string>();
@@ -44,9 +45,10 @@ function MainPage() {
       </VStack>
 
       <VoteModal
+        type="DAILY_VOTE"
         refetch={refetch}
         isOpen={isOpen}
-        celebrityId={selectedCelebrityId}
+        candidateId={selectedCelebrityId}
         onClose={() => setIsOpen(false)}
       />
     </WhiteSafeAreaView>

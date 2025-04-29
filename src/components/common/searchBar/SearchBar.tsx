@@ -7,16 +7,17 @@ import Center from '../view/Center';
 interface Props {
   searchText: string;
   onChangeText: (text: string) => void;
+  placeholder?: string;
 }
 
 /**
  *@description 검색 기능 & 공용 컴포넌트
  */
-function SearchBar({searchText, onChangeText}: Props) {
+function SearchBar({searchText, onChangeText, placeholder}: Props) {
   return (
     <HStack>
       <FormInput
-        placeholder="검색"
+        placeholder={placeholder ?? '검색'}
         paddingRight={40}
         onChangeText={onChangeText}
         value={searchText}

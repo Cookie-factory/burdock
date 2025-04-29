@@ -21,6 +21,8 @@ import MenuMain from '~/pages/menu/main';
 import MyPageModification from '~/pages/mypage/myInfoModification';
 import FollowPage from '~/pages/mypage/follow';
 import CharacterSearch from '~/pages/character/search';
+import VoteRankingList from '~/pages/vote/rankingList';
+import {colors} from '~/constants/style';
 
 const stack = createNativeStackNavigator<RouteList>();
 
@@ -190,6 +192,21 @@ function BaseRouter() {
           options={{
             headerShown: true,
             header: () => <Header title="" leftButton={<BackButton />} />,
+          }}
+        />
+
+        <stack.Screen
+          name="VoteRankingList"
+          component={VoteRankingList}
+          options={{
+            headerShown: true,
+            header: () => (
+              <Header
+                bgColor={colors.gray[10]}
+                title=""
+                leftButton={<BackButton />}
+              />
+            ),
           }}
         />
       </stack.Navigator>

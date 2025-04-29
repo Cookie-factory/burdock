@@ -22,6 +22,8 @@ export const queryKeys = {
   },
   vote: {
     getVoteRank: 'get vote rank',
+    getVoteSubjectList: 'get vote subject list',
+    getRanking3PerThemes: 'get ranking 3 per themes',
   },
 
   comment: {

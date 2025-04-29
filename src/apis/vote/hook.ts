@@ -1,5 +1,11 @@
-import {useMutation, useQuery} from '@tanstack/react-query';
-import {getVoteRank, postDailyVote, postVote} from './api';
+import {useInfiniteQuery, useMutation, useQuery} from '@tanstack/react-query';
+import {
+  getRanking3PerThemes,
+  getVoteRank,
+  getVoteSubjectList,
+  postDailyVote,
+  postVote,
+} from './api';
 import {PostDailyVoteData, PostVoteData} from '~/types/api/vote/data';
 import {queryKeys} from '~/constants/queryKeys';
 import {GetVoteRankQuery} from '~/types/api/vote/query';
@@ -25,10 +31,43 @@ export const usePostDailyVote = () => {
 /**
  *@description [투표 랭킹 조회] 훅
  */
-
 export const useGetVoteRanking = (query: GetVoteRankQuery) => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: [queryKeys.vote.getVoteRank, query],
-    queryFn: () => getVoteRank(query),
+    queryFn: ({pageParam}) => getVoteRank(pageParam ?? query),
+    initialPageParam: query,
+    getNextPageParam: lastPage => {
+      return lastPage?.data.nextCursor
+        ? {
+            ...query,
+            cursor: lastPage.data.nextCursor,
+          }
+        : null;
+    },
+    select: data => ({
+      pages: data.pages.flatMap(page => page.data.items),
+      pageParams: data.pageParams,
+      subjectInfo: data.pages[0].data?.subjectInfo,
+    }),
+  });
+};
+
+/**
+ *@description [투표 주제 목록 조회] 훅
+ */
+export const useGetVoteSubjectList = () => {
+  return useQuery({
+    queryKey: [queryKeys.vote.getVoteSubjectList],
+    queryFn: () => getVoteSubjectList(),
+  });
+};
+
+/**
+ *@description [테마별 탑 3 랭킹 조회] 훅
+ */
+export const useGetRanking3PerThemes = () => {
+  return useQuery({
+    queryKey: [queryKeys.vote.getRanking3PerThemes],
+    queryFn: () => getRanking3PerThemes(),
   });
 };

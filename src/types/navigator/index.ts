@@ -50,6 +50,9 @@ export type RootStackParamList = {
   MyPageModification: undefined;
   FollowPage: undefined;
   CharacterSearch: undefined;
+  VoteRankingList: {
+    voteSubjectId: string;
+  };
 };
 
 // export type RouteList = RootStackParamList;

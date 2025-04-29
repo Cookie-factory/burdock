@@ -28,7 +28,7 @@ function RoundTab({
       w={300}
       h={58}
       borderWidth={1}
-      borderColor={colors.gray[20]}
+      borderColor={colors.gray[40]}
       bgColor={colors.gray[30]}
       borderRadius={52}
       my={16}>
@@ -37,7 +37,7 @@ function RoundTab({
         h={44}
         borderRadius={43}
         borderWidth={tabStatus === 1 ? 1 : 0}
-        borderColor={colors.gray[20]}
+        borderColor={colors.gray[30]}
         bgColor={tabStatus === 1 ? colors.gray[0] : 'transparent'}
         onPress={onFirstTabPress}>
         <CustomText fontWeight={'bold'}>{firstTabName}</CustomText>
@@ -48,7 +48,7 @@ function RoundTab({
         h={44}
         borderRadius={43}
         borderWidth={tabStatus === 2 ? 1 : 0}
-        borderColor={colors.gray[20]}
+        borderColor={colors.gray[30]}
         bgColor={tabStatus === 2 ? colors.gray[0] : 'transparent'}
         onPress={onSecondTabPress}>
         <CustomText fontWeight={'bold'}>{secondTabName}</CustomText>
