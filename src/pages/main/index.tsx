@@ -11,12 +11,12 @@ import MainCurrentVoteView from '~/components/main/MainCurrentVoteView';
 import MainHeader from '~/components/main/MainHeader';
 import MainTodayVoteRankView from '~/components/main/MainTodayVoteRankView';
 import VoteModal from '~/components/vote/main/VoteModal';
-import {
-  BannerAd,
-  BannerAdSize,
-  TestIds,
-  useForeground,
-} from 'react-native-google-mobile-ads';
+// import {
+//   BannerAd,
+//   BannerAdSize,
+//   TestIds,
+//   useForeground,
+// } from 'react-native-google-mobile-ads';
 import {Platform} from 'react-native';
 
 function MainPage() {
@@ -26,11 +26,11 @@ function MainPage() {
     date: 'month',
     // date: 'day',
   });
-  const bannerRef = useRef<BannerAd>(null);
+  // const bannerRef = useRef<BannerAd>(null);
 
-  const adUnitId = __DEV__
-    ? TestIds.ADAPTIVE_BANNER
-    : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy';
+  // const adUnitId = __DEV__
+  //   ? TestIds.ADAPTIVE_BANNER
+  //   : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy';
 
   const ranks = rankList ? rankList?.pages : [];
 
@@ -49,9 +49,9 @@ function MainPage() {
     setSelectedCelebrityId(_id);
   };
 
-  useForeground(() => {
-    Platform.OS === 'ios' && bannerRef.current?.load();
-  });
+  // useForeground(() => {
+  //   Platform.OS === 'ios' && bannerRef.current?.load();
+  // });
 
   return (
     <WhiteSafeAreaView>
@@ -74,11 +74,11 @@ function MainPage() {
                 <Text fontSize={20}>광고</Text>
               </Center> */}
 
-              <BannerAd
+              {/* <BannerAd
                 ref={bannerRef}
                 unitId={adUnitId}
                 size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-              />
+              /> */}
 
               <BinStack h={20} />
             </VStack>
