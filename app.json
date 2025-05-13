@@ -1,4 +1,8 @@
 {
   "name": "burdock",
-  "displayName": "burdock"
+  "displayName": "burdock",
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-4125702313914116~6259315224",
+    "ios_app_id": "ca-app-pub-4125702313914116~4103925172"
+  }
 }

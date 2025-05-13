@@ -51,6 +51,7 @@
     "react-native-config": "^1.5.3",
     "react-native-encrypted-storage": "^4.0.3",
     "react-native-gesture-handler": "^2.20.2",
+    "react-native-google-mobile-ads": "14.11.0",
     "react-native-image-crop-picker": "^0.41.2",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-modal": "^14.0.0-rc.1",
