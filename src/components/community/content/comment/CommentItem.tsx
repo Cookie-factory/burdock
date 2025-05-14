@@ -51,7 +51,7 @@ function CommentItem(props: Props & CommentItemType) {
         borderRadius={28}
       />
 
-      <VStack alignItems="flex-start" w="auto" gap={14}>
+      <VStack alignItems="flex-start" w="auto">
         <HStack justifyContent="space-between" py={8} mb={0}>
           <HStack w="auto">
             <CustomText fontWeight={'bold'} fontSize={10} mr={8}>
