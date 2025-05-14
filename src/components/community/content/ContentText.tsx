@@ -1,6 +1,7 @@
 import React from 'react';
 import Text from '~/components/common/text/Text';
 import HStack from '~/components/common/view/HStack';
+import {colors} from '~/constants/style';
 
 interface Props {
   content: string;
@@ -11,8 +12,8 @@ interface Props {
  */
 function ContentText({content}: Props) {
   return (
-    <HStack minH={120} borderWidth={1} py={10} alignItems="flex-start">
-      <Text fontSize={11} w={'100%'} borderWidth={1}>
+    <HStack minH={80} py={10} alignItems="flex-start">
+      <Text fontSize={11} w={'100%'} color={colors.gray[80]}>
         {content}
       </Text>
     </HStack>

@@ -11,8 +11,8 @@ interface Props {
  */
 function ContentTitle({title}: Props) {
   return (
-    <HStack borderWidth={1} h={48} mb={6}>
-      <Text w={'100%'} borderWidth={1}>
+    <HStack h={18} mb={6}>
+      <Text w={'100%'} fontWeight={'bold'}>
         {title}
       </Text>
     </HStack>
