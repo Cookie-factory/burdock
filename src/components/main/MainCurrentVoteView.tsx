@@ -21,7 +21,7 @@ function MainCurrentVoteView() {
   if (!firstTheme) return <></>;
 
   return (
-    <VStack>
+    <VStack borderWidth={1}>
       <MoreView
         text="진행 중인 테마 보기"
         onPress={() => navigate('VoteMain')}

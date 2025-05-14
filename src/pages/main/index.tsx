@@ -18,6 +18,8 @@ import {
   useForeground,
 } from 'react-native-google-mobile-ads';
 import {Platform} from 'react-native';
+import HStack from '~/components/common/view/HStack';
+import {APP_HEIGHT} from '~/utils/dimension';
 
 function MainPage() {
   const {data: rankList, refetch} = useGetVoteRanking({
@@ -59,7 +61,7 @@ function MainPage() {
         <MainHeader />
 
         <ScrollView>
-          <VStack>
+          <VStack borderWidth={1} h={APP_HEIGHT - 250}>
             <MainTodayVoteRankView
               onVoteModalOpen={onVoteModalOpen}
               voteSubjectId={voteSubjectId}
@@ -67,23 +69,17 @@ function MainPage() {
               subjectTotalVotes={subjectTotalVotes}
             />
 
-            <VStack borderWidth={1} h={72} justifyContent="space-between">
-              <BinStack h={20} />
-
-              {/* <Center>
-                <Text fontSize={20}>광고</Text>
-              </Center> */}
-
-              <BannerAd
-                ref={bannerRef}
-                unitId={adUnitId}
-                size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-              />
-
-              <BinStack h={20} />
-            </VStack>
-
             <MainCurrentVoteView />
+
+            <VStack borderWidth={1} h={72}>
+              <HStack borderWidth={1}>
+                <BannerAd
+                  ref={bannerRef}
+                  unitId={adUnitId}
+                  size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                />
+              </HStack>
+            </VStack>
           </VStack>
         </ScrollView>
       </VStack>
