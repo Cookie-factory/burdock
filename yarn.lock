@@ -4732,6 +4732,7 @@ __metadata:
     react-native-actions-sheet: ^0.9.7
     react-native-config: ^1.5.3
     react-native-encrypted-storage: ^4.0.3
+    react-native-gallery-swiper: ^1.26.5
     react-native-gesture-handler: ^2.20.2
     react-native-google-mobile-ads: 14.11.0
     react-native-image-crop-picker: ^0.41.2
@@ -9932,6 +9933,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-easy-guesture-responder@npm:^1.1.2, react-native-easy-guesture-responder@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "react-native-easy-guesture-responder@npm:1.1.3"
+  dependencies:
+    prop-types: ^15.6.2
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: c9188d09cedc7ca846ae160b57de952ff9afe0182946a7b30842dd9ae3f6945567497ee4f02b1b1b44e18e7428f1e130aa8f4011c27421826d140fdd6394b318
+  languageName: node
+  linkType: hard
+
+"react-native-easy-view-transformer@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "react-native-easy-view-transformer@npm:1.2.1"
+  dependencies:
+    prop-types: ^15.6.2
+    react-native-easy-guesture-responder: ^1.1.2
+    react-native-scrolling: ^1.0.2
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 5e10cd670530ede9158c86e406c2d620f5ac26bd962c0ea642f13db2579622c6530cee2ecba62ea6404be2f2a45d37a2d48cc28e361f45bbabcdbdbdf2930dc2
+  languageName: node
+  linkType: hard
+
 "react-native-encrypted-storage@npm:^4.0.3":
   version: 4.0.3
   resolution: "react-native-encrypted-storage@npm:4.0.3"
@@ -9939,6 +9966,21 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 9d2999c58559f1e4f66d1baf2c3edeff96cf42027900850d94c6bbea24ac9715047ce69bf6e8a73b68aff4508cf35dd88ac494ad5905933286ef3b75cd123e30
+  languageName: node
+  linkType: hard
+
+"react-native-gallery-swiper@npm:^1.26.5":
+  version: 1.26.5
+  resolution: "react-native-gallery-swiper@npm:1.26.5"
+  dependencies:
+    prop-types: ^15.6.2
+    react-native-easy-guesture-responder: ^1.1.3
+    react-native-image-transformer: ^1.5.2
+    react-native-page-list: ^1.1.4
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 25475429805e12ada34d159642d394e7e8b0e7d0adeec669ae140cc333aaebcf191da7bc3426ea63052d30529ab345186cee722785a8478ff2712b6f3b61e004
   languageName: node
   linkType: hard
 
@@ -9981,6 +10023,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-image-transformer@npm:^1.5.2":
+  version: 1.5.3
+  resolution: "react-native-image-transformer@npm:1.5.3"
+  dependencies:
+    prop-types: ^15.6.2
+    react-native-easy-view-transformer: ^1.2.1
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 0459cd4455e2788c767fc7a94060a5fc8f08c2bc8c81e39ce7f2b77d8e934e218073d71353e936fb9d22319d3a521f64e3d637ce823034166604486515c3a3e6
+  languageName: node
+  linkType: hard
+
 "react-native-iphone-x-helper@npm:^1.0.3":
   version: 1.3.1
   resolution: "react-native-iphone-x-helper@npm:1.3.1"
@@ -10011,6 +10066,20 @@ __metadata:
     react: "*"
     react-native: ">=0.70.0"
   checksum: 19bca96dde148c14ed4cc0e52fedd0a12ca952815e4dcbea31d0a98962d75dc3c011c677f5f9cd15f2b88f78ccd03134647b280724bc6de148c25e28eea1a7e4
+  languageName: node
+  linkType: hard
+
+"react-native-page-list@npm:^1.1.4":
+  version: 1.1.4
+  resolution: "react-native-page-list@npm:1.1.4"
+  dependencies:
+    prop-types: ^15.6.2
+    react-native-easy-guesture-responder: ^1.1.2
+    react-native-scrolling: ^1.0.2
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 656ab1f817422c834e32526bac3df82c4e701294f2a6f44ecced8628b800444f36c97a38b1df18af19fa716ce5af320cc458f537c7533ce31385762f8c48255d
   languageName: node
   linkType: hard
 
@@ -10050,6 +10119,18 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 84d1e4697ab7afccf42111d13b7c7e68d382b136f4f4d9cd8fd077b0984ada3114e8c7459a69159983a538fe35db1cf4296075e72fc8cb45341e0feb5080d3dc
+  languageName: node
+  linkType: hard
+
+"react-native-scrolling@npm:^1.0.2":
+  version: 1.0.3
+  resolution: "react-native-scrolling@npm:1.0.3"
+  dependencies:
+    prop-types: ^15.6.2
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 2d1115c4b2cea3a8bc308b22a90ffcbf435d3477b249b99af6a28818ad5a4396eb966334dc7b9c4274e1b7f8730879f5a9be1ee19d67b49e32c41fee2f4c7f26
   languageName: node
   linkType: hard
 

@@ -50,6 +50,7 @@
     "react-native-actions-sheet": "^0.9.7",
     "react-native-config": "^1.5.3",
     "react-native-encrypted-storage": "^4.0.3",
+    "react-native-gallery-swiper": "^1.26.5",
     "react-native-gesture-handler": "^2.20.2",
     "react-native-google-mobile-ads": "14.11.0",
     "react-native-image-crop-picker": "^0.41.2",
