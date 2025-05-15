@@ -37,7 +37,7 @@ function ContentHelperView({
   };
 
   return (
-    <HStack pt={16} pb={12}>
+    <HStack pb={12}>
       <HStack justifyContent="flex-start" gap={12}>
         <CenterButton flexDirection="row" w="auto" gap={6} onPress={onLike}>
           {isLike ? <IconActiveHeart12 /> : <IconDefaultHeart12 />}

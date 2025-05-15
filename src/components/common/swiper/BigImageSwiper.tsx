@@ -18,6 +18,8 @@ function BigImageSwiper({images}: Props) {
   const [swiperIndex, setSwiperIndex] = useState(0);
   const totalImageLength = images.length ?? 0;
 
+  if (totalImageLength === 0) return <></>;
+
   return (
     <VStack>
       <HStack h={320} bgColor={colors.gray[60]}>
@@ -47,7 +49,7 @@ function BigImageSwiper({images}: Props) {
         </HStack>
       </HStack>
 
-      <Center flexDirection="row" gap={10} marginBlock={12}>
+      <Center flexDirection="row" gap={10} marginBlock={15}>
         {Array.from({length: totalImageLength}).map((_, i) => (
           <HStack
             key={i}
