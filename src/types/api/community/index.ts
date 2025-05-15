@@ -1,1 +1,1 @@
-export type CommunityListTabFilter = 'total' | 'best' | 'bookmark';
+export type CommunityListTabFilter = 'total' | 'best';

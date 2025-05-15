@@ -59,9 +59,9 @@ function CommunityList() {
   return (
     <WhiteSafeAreaView>
       <InnerLayout>
-        <TabList onSelect={setCommunityTab} value={communityListTab} />
+        {/* <TabList onSelect={setCommunityTab} value={communityListTab} /> */}
 
-        <FilterSelector setFilterSelectorOpen={setFilterSelectorOpen} />
+        {/* <FilterSelector setFilterSelectorOpen={setFilterSelectorOpen} /> */}
 
         <KeyboardAwareFlatList
           style={{

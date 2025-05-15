@@ -2,6 +2,7 @@ export const queryKeys = {
   board: {
     getBoardList: 'get board list',
     getBoard: 'get board',
+    getPopularBoardList: 'get popular board list',
   },
   chatroom: {
     getChatroomList: 'get chatroom list',

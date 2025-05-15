@@ -19,6 +19,18 @@ export const getBoardList = (query: GetBoardListQuery) => {
 };
 
 /**
+ *@description 인기글 리스트 조회 api
+ */
+export const getPopularBoardList = (query: GetBoardListQuery) => {
+  const _query = queryString.stringify({...query});
+
+  return apiCall<GetBoardListResopnse>({
+    method: 'GET',
+    url: `board/popular?${_query}`,
+  });
+};
+
+/**
  *@description 게시글 등록 api
  */
 export const postBoard = (data: PostBoardData) => {

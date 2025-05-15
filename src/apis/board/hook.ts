@@ -7,6 +7,7 @@ import {
   patchBoard,
   postBoard,
   postBoardLike,
+  getPopularBoardList,
 } from './api';
 import {queryKeys} from '~/constants/queryKeys';
 import {GetBoardListQuery} from '~/types/api/board/query';
@@ -20,6 +21,28 @@ export const useGetBoardList = (query: GetBoardListQuery) => {
   return useInfiniteQuery({
     queryKey: [queryKeys.board.getBoardList, query],
     queryFn: ({pageParam}) => getBoardList(pageParam),
+    initialPageParam: query,
+    getNextPageParam: (lastPage, __, lastPageParam) => {
+      const previousData = [...lastPage.data];
+      if (previousData.length !== 0) {
+        return {
+          cursor: previousData.reverse()[0].id,
+          take: lastPageParam.take,
+        } as GetBoardListQuery;
+      } else {
+        return null;
+      }
+    },
+  });
+};
+
+/**
+ *@description 인기글 리스트 조회 api 훅
+ */
+export const useGetPopularBoardList = (query: GetBoardListQuery) => {
+  return useInfiniteQuery({
+    queryKey: [queryKeys.board.getPopularBoardList, query],
+    queryFn: ({pageParam}) => getPopularBoardList(pageParam),
     initialPageParam: query,
     getNextPageParam: (lastPage, __, lastPageParam) => {
       const previousData = [...lastPage.data];

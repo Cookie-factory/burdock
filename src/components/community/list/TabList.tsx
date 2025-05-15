@@ -28,15 +28,7 @@ function TabList({onSelect, value}: Props) {
         <CustomText
           fontWeight={'bold'}
           color={colors.gray[value === 'best' ? 90 : 60]}>
-          베스트
-        </CustomText>
-      </CenterButton>
-
-      <CenterButton h={34} w={56} onPress={() => onSelect('bookmark')}>
-        <CustomText
-          fontWeight={'bold'}
-          color={colors.gray[value === 'bookmark' ? 90 : 60]}>
-          즐겨찾기
+          인기글
         </CustomText>
       </CenterButton>
     </HStack>
