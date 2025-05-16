@@ -21,6 +21,9 @@ export type GetAuthInfoResponse = {
     id: string;
     name: string;
   };
+  _count: {
+    Board: number;
+  };
 };
 
 /**
