@@ -4,10 +4,12 @@ import {
 } from '~/types/api/auth/response';
 import {apiCall} from '../common';
 import {
+  PatchUserInfoBody,
   PostEmailLoginData,
   PostSignupData,
   PostSocialLoginData,
 } from '~/types/api/auth/data';
+import {MutationResponse} from '~/types/api/common/response';
 
 export const postEmailLogin = (data: PostEmailLoginData) => {
   const testData2 = {
@@ -59,5 +61,16 @@ export const postCheckDuplicateEmail = (email: string) => {
     method: 'POST',
     url: 'auth/email/duplicate',
     data: {email},
+  });
+};
+
+/**
+ *@description 자기정보 수정 api
+ */
+export const patchUserInfo = (data: PatchUserInfoBody) => {
+  return apiCall<MutationResponse>({
+    method: 'PATCH',
+    url: 'auth',
+    data,
   });
 };

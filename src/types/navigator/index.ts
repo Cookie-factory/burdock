@@ -49,7 +49,9 @@ export type RootStackParamList = {
   MenuMain: undefined;
   MyPageModification: undefined;
   FollowPage: undefined;
-  CharacterSearch: undefined;
+  CharacterSearch: {
+    isOne: boolean;
+  };
   VoteRankingList: {
     voteSubjectId: string;
   };

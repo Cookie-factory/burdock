@@ -43,6 +43,7 @@ function BoardItem({data}: Props) {
             <HStack marginBottom={4} width={'auto'} alignItems="center">
               <Image
                 borderWidth={1}
+                borderColor={colors.gray[30]}
                 mr={15}
                 w={24}
                 h={24}

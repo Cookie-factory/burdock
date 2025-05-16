@@ -9,9 +9,12 @@ import SearchBar from '~/components/common/searchBar/SearchBar';
 import VStack from '~/components/common/view/VStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
 import useNavigate from '~/hooks/navigator/useNavigation';
+import useParam from '~/hooks/navigator/useParam';
 import {useAppDispatch, useAppSelector} from '~/hooks/redux';
 import {
   addSelectedCharacter,
+  addSelectedCharacterList,
+  clearSelectedCharacter,
   removeSelectedCharacter,
 } from '~/store/slices/characterSlice';
 import {
@@ -25,9 +28,12 @@ import {
 function CharacterSearch() {
   const {goBack} = useNavigate();
   const dispatch = useAppDispatch();
+  const param = useParam('CharacterSearch');
+
   const selectedCharacters = useAppSelector(
     state => state.counter.selectedCharacters,
   );
+
   const [searchText, setSearchText] = useState('');
   const {data} = useGetCharacterList({
     search: searchText,
@@ -35,15 +41,22 @@ function CharacterSearch() {
   const [searchList, setSearchList] = useState<CharacterItemType[]>([]);
 
   const onSelectCharacter = (_data: SelectedCharactersData) => {
-    if (selectedCharacters.length < 3) {
-      if (checkContainCharacter(_data.id)) {
-        dispatch(removeSelectedCharacter(_data));
-      } else {
-        dispatch(addSelectedCharacter(_data));
-      }
+    if (param?.isOne) {
+      //
+      dispatch(clearSelectedCharacter());
+      dispatch(addSelectedCharacter(_data));
     } else {
-      if (checkContainCharacter(_data.id)) {
-        dispatch(removeSelectedCharacter(_data));
+      //
+      if (selectedCharacters.length < 3) {
+        if (checkContainCharacter(_data.id)) {
+          dispatch(removeSelectedCharacter(_data));
+        } else {
+          dispatch(addSelectedCharacter(_data));
+        }
+      } else {
+        if (checkContainCharacter(_data.id)) {
+          dispatch(removeSelectedCharacter(_data));
+        }
       }
     }
   };

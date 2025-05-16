@@ -1,6 +1,7 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {
   getAuthInfo,
+  patchUserInfo,
   postCheckDuplicateEmail,
   postCheckDuplicateNickname,
   postEmailLogin,
@@ -8,6 +9,7 @@ import {
   postSocialLogin,
 } from './api';
 import {
+  PatchUserInfoBody,
   PostEmailLoginData,
   PostSignupData,
   PostSocialLoginData,
@@ -48,5 +50,14 @@ export const usePostCheckDuplicateNickname = () => {
 export const usePostCheckDuplicateEmail = () => {
   return useMutation({
     mutationFn: (email: string) => postCheckDuplicateEmail(email),
+  });
+};
+
+/**
+ *@description 자기 정보 수정 api 훅
+ */
+export const usePatchUserInfo = () => {
+  return useMutation({
+    mutationFn: (data: PatchUserInfoBody) => patchUserInfo(data),
   });
 };

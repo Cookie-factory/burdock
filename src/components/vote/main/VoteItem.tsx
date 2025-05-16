@@ -10,6 +10,7 @@ import IconGoldCrown21 from '~/assets/icons/IconGoldCrown21.svg';
 import IconSilverCrown21 from '~/assets/icons/IconSilverCrown21.svg';
 import IconBronzeCrown21 from '~/assets/icons/IconBronzeCrown21.svg';
 import {RankVoteItem} from '~/types/api/vote';
+import CustomImage from '~/components/common/image/Image';
 
 interface Props {
   onVoteModalOpen: (id: string) => void;
@@ -44,12 +45,14 @@ function VoteItem({onVoteModalOpen, data}: Props) {
             }>{`${rank} 위`}</CustomText>
         </Center>
 
-        <VStack
+        <CustomImage
+          borderWidth={1}
+          borderColor={colors.gray[30]}
           mr={19}
           w={28}
           h={28}
           borderRadius={28}
-          bgColor={colors.gray[60]}
+          source={{uri: data.profile}}
         />
 
         <CustomText mr={6} fontWeight={'bold'}>

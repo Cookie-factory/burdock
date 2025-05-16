@@ -88,6 +88,7 @@ function ContentTopView({authorData, userId, boardId}: Props) {
       <HStack w="auto">
         <Image
           borderWidth={1}
+          borderColor={colors.gray[30]}
           w={28}
           h={28}
           mr={15}

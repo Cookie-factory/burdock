@@ -1,10 +1,6 @@
 import _ from 'lodash';
 import React, {useRef, useState} from 'react';
 import {useGetVoteRanking} from '~/apis/vote/hook';
-import ScrollView from '~/components/common/scrollView/ScrollView';
-import Text from '~/components/common/text/Text';
-import BinStack from '~/components/common/view/BinStack';
-import Center from '~/components/common/view/Center';
 import VStack from '~/components/common/view/VStack';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
 import MainCurrentVoteView from '~/components/main/MainCurrentVoteView';
@@ -18,7 +14,6 @@ import {
   useForeground,
 } from 'react-native-google-mobile-ads';
 import {Platform} from 'react-native';
-import HStack from '~/components/common/view/HStack';
 import {APP_HEIGHT} from '~/utils/dimension';
 
 function MainPage() {
@@ -57,11 +52,11 @@ function MainPage() {
 
   return (
     <WhiteSafeAreaView>
-      <VStack flex={1} px={20}>
-        <MainHeader />
+      <VStack h={APP_HEIGHT - 162}>
+        <VStack flex={1} px={20}>
+          <MainHeader />
 
-        <ScrollView>
-          <VStack borderWidth={1} h={APP_HEIGHT - 250}>
+          <VStack>
             <MainTodayVoteRankView
               onVoteModalOpen={onVoteModalOpen}
               voteSubjectId={voteSubjectId}
@@ -70,18 +65,16 @@ function MainPage() {
             />
 
             <MainCurrentVoteView />
-
-            <VStack borderWidth={1} h={72}>
-              <HStack borderWidth={1}>
-                <BannerAd
-                  ref={bannerRef}
-                  unitId={adUnitId}
-                  size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-                />
-              </HStack>
-            </VStack>
           </VStack>
-        </ScrollView>
+        </VStack>
+
+        <VStack h={54}>
+          <BannerAd
+            ref={bannerRef}
+            unitId={adUnitId}
+            size={BannerAdSize.BANNER}
+          />
+        </VStack>
       </VStack>
 
       <VoteModal

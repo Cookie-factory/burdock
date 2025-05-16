@@ -30,6 +30,7 @@ function RankItem({data, onVoteModalOpen, subjectTotalVotes = 1}: Props) {
         <HStack w="auto">
           <CustomImage
             borderWidth={1}
+            borderColor={colors.gray[30]}
             mr={32}
             w={64}
             h={64}

@@ -1,4 +1,4 @@
-import {AuthInfo} from '.';
+import {AuthInfo, GenderType} from '.';
 
 /**
  *@description 이메일 로그인 api 응답
@@ -13,6 +13,14 @@ export type GetAuthInfoResponse = {
   email: string;
   id: string;
   nickname: string;
+  introduce?: string;
+  profile?: string;
+  age: number;
+  gender: GenderType;
+  firstCharacter: {
+    id: string;
+    name: string;
+  };
 };
 
 /**

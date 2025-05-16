@@ -32,3 +32,14 @@ export interface PostSignupData {
 
   privacyAgree: boolean;
 }
+
+/**
+ *@description 자기 정보 수정 api body
+ */
+export type PatchUserInfoBody = Partial<{
+  nickname: string;
+  age: number;
+  gender: GenderType;
+  introduce: string;
+  firstCharacterId: string;
+}>;

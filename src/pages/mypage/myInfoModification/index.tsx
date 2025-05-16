@@ -1,7 +1,8 @@
 import _, {debounce} from 'lodash';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
-  usePostCheckDuplicateEmail,
+  useGetAuthInfo,
+  usePatchUserInfo,
   usePostCheckDuplicateNickname,
 } from '~/apis/auth/hook';
 import ActiveButton from '~/components/common/button/ActiveButton';
@@ -12,7 +13,6 @@ import InnerLayout from '~/components/common/layout/InnerLayout';
 import CustomSelector from '~/components/common/selector/Selector';
 import CustomSelectorActionSheet from '~/components/common/selector/SelectorModal';
 import WhiteSafeAreaView from '~/components/common/view/WhiteSafeAreaView';
-import {regrex} from '~/constants/regEx';
 import {errorLabelText, toastText} from '~/constants/text';
 import useActionsheet from '~/hooks/actionsheet/useActionsheet';
 import useNavigate from '~/hooks/navigator/useNavigation';
@@ -20,10 +20,19 @@ import useToastShow from '~/hooks/toast/useToastShow';
 import {PostSignupData} from '~/types/api/auth/data';
 import {FormStatus, SelectorItem} from '~/types/components/common/selector';
 import {isApiErrorWithMessage} from '~/utils/api';
+import CharacterPageMoveButton from '~/components/common/button/CharacterButton';
+import {useAppSelector} from '~/hooks/redux';
+import {GenderType} from '~/types/api/auth';
+import {useDispatch} from 'react-redux';
+import {
+  addSelectedCharacter,
+  clearSelectedCharacter,
+} from '~/store/slices/characterSlice';
 
 function MyPageModification() {
   const navigate = useNavigate();
   const toastShow = useToastShow();
+  const dispatch = useDispatch();
 
   const initStatusForm = {
     email: {
@@ -39,6 +48,10 @@ function MyPageModification() {
   };
 
   const [statusForm, setStatusForm] = useState(initStatusForm);
+
+  const selectedCharacters = useAppSelector(
+    state => state.counter.selectedCharacters,
+  );
 
   const genderSelectorList: SelectorItem[] = [
     {
@@ -81,11 +94,20 @@ function MyPageModification() {
   const [ageSelectedItem, setAgeSelectedItem] = useState<SelectorItem>();
   const [genderSelectedItem, setGenderSelectedItem] = useState<SelectorItem>();
   const [form, setForm] = useState<
-    Omit<PostSignupData, 'privacyAgree' | 'password' | 'age' | 'gender'>
+    Omit<
+      PostSignupData,
+      'privacyAgree' | 'password' | 'email' | 'age' | 'gender'
+    > & {
+      introduce?: string;
+    }
   >({
-    email: '',
     nickname: '',
   });
+
+  const isActiveSubmitButton =
+    !_.isEmpty(form?.nickname) &&
+    Boolean(genderSelectedItem) &&
+    Boolean(ageSelectedItem);
 
   const ageSelectorOpen = useActionsheet();
   const genderSelectorOpen = useActionsheet();
@@ -93,61 +115,28 @@ function MyPageModification() {
   const {mutateAsync: checkDuplicateNicknameMutate} =
     usePostCheckDuplicateNickname();
 
-  const {mutateAsync: checkDuplicateEmailMutate} = usePostCheckDuplicateEmail();
+  // 유저 정보 가져오기
+  const {data: prevAuthData, isSuccess, refetch} = useGetAuthInfo();
+  const {mutateAsync: patchUserInfoMutate} = usePatchUserInfo();
 
-  const onSubmit = () => {};
-
-  const isActiveSubmitButton =
-    !_.isEmpty(form?.email) &&
-    !_.isEmpty(form?.nickname) &&
-    Boolean(genderSelectedItem) &&
-    Boolean(ageSelectedItem);
-
-  const onChangeEmail = useCallback(
-    debounce(email => {
-      if (!regrex.email.test(email)) {
-        setStatusForm(prev => ({
-          ...prev,
-          email: initStatusForm.email,
-        }));
-      } else {
-        checkDuplicateEmailMutate(email)
-          .then(response => {
-            if (response.data) {
-              setStatusForm(prev => ({
-                ...prev,
-                email: {
-                  isShow: true,
-                  text: response.data,
-                  type: 'SUCCESS',
-                },
-              }));
-            }
-          })
-          .catch(error => {
-            let errorMessage = '';
-
-            if (isApiErrorWithMessage(error)) {
-              //
-              errorMessage = error?.message;
-            } else {
-              // 문법 오류거나 다른 서버에서 받아오는 특정 양식 api 오류일 경우
-              errorMessage = errorLabelText.error;
-            }
-
-            setStatusForm(prev => ({
-              ...prev,
-              email: {
-                isShow: true,
-                text: errorMessage,
-                type: 'ERROR',
-              },
-            }));
-          });
+  /**
+   *@description 수정하기 이벤트
+   */
+  const onSubmit = () => {
+    patchUserInfoMutate({
+      ...form,
+      age: Number(ageSelectedItem?.value),
+      gender: genderSelectedItem?.value as GenderType,
+      firstCharacterId: selectedCharacters[0]?.id,
+    }).then(response => {
+      if (response.statusCode === 200) {
+        refetch();
+        dispatch(clearSelectedCharacter());
+        toastShow.onShowToast({text1: '자기 정보가 수정완료했습니다.'});
+        navigate.goBack();
       }
-    }, 500),
-    [],
-  );
+    });
+  };
 
   const onChangeNickname = useCallback(
     debounce(nickname => {
@@ -196,25 +185,39 @@ function MyPageModification() {
     [],
   );
 
+  useEffect(() => {
+    if (isSuccess && prevAuthData?.data) {
+      const {age, nickname, introduce, gender} = prevAuthData?.data ?? {
+        age: undefined,
+        nickname: undefined,
+        introduce: undefined,
+        gender: undefined,
+      };
+
+      if (prevAuthData?.data.firstCharacter) {
+        dispatch(addSelectedCharacter(prevAuthData?.data.firstCharacter));
+      }
+
+      setAgeSelectedItem(
+        age
+          ? ageSelectorList.find(item => item.value === age.toString())
+          : ageSelectorList[0],
+      );
+      setGenderSelectedItem(
+        gender
+          ? genderSelectorList.find(item => item.value === gender)
+          : genderSelectorList[0],
+      );
+      setForm({
+        nickname: nickname ?? '',
+        introduce: introduce ?? '',
+      });
+    }
+  }, [isSuccess]);
+
   return (
     <WhiteSafeAreaView>
       <InnerLayout>
-        <FormLabel>이메일</FormLabel>
-        <FormInput
-          placeholder="이메일"
-          onChangeText={text => {
-            onChangeEmail(text);
-
-            setForm(prev => ({...prev, email: text}));
-          }}
-          value={form.email}
-        />
-        <FormStatusMessage
-          isShow={statusForm.email.isShow}
-          type={statusForm.email.type}>
-          {statusForm.email.text}
-        </FormStatusMessage>
-
         <FormLabel>닉네임 (*2~16자)</FormLabel>
         <FormInput
           placeholder="닉네임"
@@ -232,15 +235,12 @@ function MyPageModification() {
         </FormStatusMessage>
 
         <FormLabel>최애 캐릭터</FormLabel>
-        <FormInput
-          placeholder="최애 캐릭터"
-          onChangeText={text => {
-            onChangeNickname(text);
-
-            setForm(prev => ({...prev, nickname: text}));
-          }}
-          value={form.nickname}
+        <CharacterPageMoveButton
+          placeHolder={'최애 캐릭터'}
+          text={selectedCharacters}
+          isOne
         />
+
         <FormStatusMessage
           isShow={statusForm.nickname.isShow}
           type={statusForm.nickname.type}>
@@ -251,11 +251,9 @@ function MyPageModification() {
         <FormInput
           placeholder="하고 싶은 말"
           onChangeText={text => {
-            onChangeNickname(text);
-
-            setForm(prev => ({...prev, nickname: text}));
+            setForm(prev => ({...prev, introduce: text}));
           }}
-          value={form.nickname}
+          value={form.introduce}
         />
         <FormStatusMessage
           isShow={statusForm.nickname.isShow}
