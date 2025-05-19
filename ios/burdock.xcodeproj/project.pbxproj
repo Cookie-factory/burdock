@@ -16,6 +16,8 @@
 		7699B88040F8A987B510C191 /* libPods-burdock-burdockTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-burdock-burdockTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		E9AECD5B79C3949CFC42377C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 1E018F5BA9194AC0B9DE98E0 /* PrivacyInfo.xcprivacy */; };
+		24D5B78CB0804639BBCACC71 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F6439B9F5FF48D3ABFBC694 /* BootSplash.storyboard */; };
+		76D443C3E2C44403A11DBBAD /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47540E29EAEF4A068D320E1E /* Colors.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = burdock/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-burdock-burdockTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-burdock-burdockTests.release.xcconfig"; path = "Target Support Files/Pods-burdock-burdockTests/Pods-burdock-burdockTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		2F6439B9F5FF48D3ABFBC694 /* BootSplash.storyboard */ = {isa = PBXFileReference; name = "BootSplash.storyboard"; path = "burdock/BootSplash.storyboard"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		47540E29EAEF4A068D320E1E /* Colors.xcassets */ = {isa = PBXFileReference; name = "Colors.xcassets"; path = "burdock/Colors.xcassets"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = folder.assetcatalog; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +107,8 @@
 				1E018F5BA9194AC0B9DE98E0 /* PrivacyInfo.xcprivacy */,
 				13490F6E2C9BE1A5003A5310 /* burdock-Bridging-Header.swift */,
 				13490F6D2C9BE1A5003A5310 /* burdock-Bridging-Header.h */,
+				2F6439B9F5FF48D3ABFBC694 /* BootSplash.storyboard */,
+				47540E29EAEF4A068D320E1E /* Colors.xcassets */,
 			);
 			name = burdock;
 			sourceTree = "<group>";
@@ -257,6 +263,8 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				E9AECD5B79C3949CFC42377C /* PrivacyInfo.xcprivacy in Resources */,
+				24D5B78CB0804639BBCACC71 /* BootSplash.storyboard in Resources */,
+				76D443C3E2C44403A11DBBAD /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

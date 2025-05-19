@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {PaperProvider} from 'react-native-paper';
 import BaseRouter from '~/router/BaseRouter';
 import {config} from '~/utils/config';
@@ -7,11 +7,15 @@ import {SheetProvider} from 'react-native-actions-sheet';
 import Toast from 'react-native-toast-message';
 import {Provider} from 'react-redux';
 import {store} from '~/store';
-
+import BootSplash from 'react-native-bootsplash';
 const queryClient = new QueryClient();
 
 function App(): React.JSX.Element {
   console.log(config.TEST);
+
+  useEffect(() => {
+    BootSplash.hide({fade: true});
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

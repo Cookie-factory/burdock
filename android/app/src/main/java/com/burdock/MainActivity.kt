@@ -15,6 +15,7 @@ class MainActivity : ReactActivity() {
   override fun getMainComponentName(): String = "burdock"
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    RNBootSplash.init(this, R.style.BootTheme)
     super.onCreate(null)
   }
 
