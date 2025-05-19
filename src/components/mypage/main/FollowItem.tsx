@@ -1,45 +1,51 @@
-import React, {useState} from 'react';
-import CenterButton from '~/components/common/button/CenterButton';
+import React from 'react';
+import FollowButton from '~/components/common/button/FollowButton';
+import Image from '~/components/common/image/Image';
 import CustomText from '~/components/common/text/Text';
 import HStack from '~/components/common/view/HStack';
 import VStack from '~/components/common/view/VStack';
 import {colors} from '~/constants/style';
+import {FollowItemType} from '~/types/api/follow';
 
-interface Props {}
+interface Props {
+  data: FollowItemType;
+  refetch: () => void;
+}
 
 /**
  *@description 팔로우, 팔로워, 구독자 데이터 아이템
  */
-function FollowItem() {
+function FollowItem({data, refetch}: Props) {
   return (
     <HStack mb={12} justifyContent="space-between">
       <HStack w="auto" gap={18}>
-        <VStack
+        <Image
+          borderWidth={1}
+          borderColor={colors.gray[30]}
           w={50}
           h={50}
           borderRadius={50}
-          bgColor={colors.gray[70]}></VStack>
+          source={{
+            uri: data.profile ?? '',
+          }}
+        />
 
         <VStack w="auto" gap={4} alignItems="flex-start">
           <CustomText color={colors.gray[80]} fontSize={14} fontWeight={'bold'}>
-            토토
+            {data.nickname}
           </CustomText>
 
           <CustomText color={colors.gray[70]} fontSize={10}>
-            잘 부탁드려요!~
+            {data.introduce}
           </CustomText>
         </VStack>
       </HStack>
 
-      <CenterButton
-        borderRadius={8}
-        w={106}
-        h={32}
-        bgColor={colors.positive[0]}>
-        <CustomText fontWeight={'bold'} color={colors.gray[0]}>
-          맞팔로우
-        </CustomText>
-      </CenterButton>
+      <FollowButton
+        isActive={data.check}
+        refetch={refetch}
+        targetUserId={data.id}
+      />
     </HStack>
   );
 }

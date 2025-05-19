@@ -83,22 +83,31 @@ function ContentTopView({authorData, userId, boardId}: Props) {
     }
   };
 
+  const onMoveUserInfoPage = () => {
+    if (authorData?.id) {
+      navigate('UserInfo', {
+        targetUserId: authorData?.id,
+      });
+    }
+  };
+
   return (
     <HStack justifyContent="space-between" px={20} py={8}>
       <HStack w="auto">
-        <Image
-          borderWidth={1}
-          borderColor={colors.gray[30]}
-          w={28}
-          h={28}
-          mr={15}
-          bgColor={colors.gray[60]}
-          borderRadius={28}
-          source={{
-            uri: authorData?.profile ?? '',
-            // uri: 'https://i.namu.wiki/i/Q--xh7Fdq_iGi_wFeW0v2FqiN11HrWHPDiLADLPZXL0dqlNwmVGIj6U-FQwhCyurszC9TXO6WXfhlXa1Nb06E-k6F3kYyA91mpFZ35mHyg2N8MHS9Y4NCkJ-pgfdb3jmj1hYpIk-bLNlQtfWjOSCOg.webp',
-          }}
-        />
+        <CenterButton onPress={onMoveUserInfoPage} w={28} h={28}>
+          <Image
+            borderWidth={1}
+            borderColor={colors.gray[30]}
+            w={28}
+            h={28}
+            mr={15}
+            bgColor={colors.gray[60]}
+            borderRadius={28}
+            source={{
+              uri: authorData?.profile ?? '',
+            }}
+          />
+        </CenterButton>
 
         <CustomText fontWeight={'bold'} fontSize={10}>
           {authorData?.nickname ?? ''}

@@ -30,4 +30,13 @@ export const queryKeys = {
   comment: {
     getCommentList: 'get comment list',
   },
+
+  user: {
+    getUserInfo: 'get user info',
+  },
+  follow: {
+    getFollowerList: 'get follower list',
+    getFollowingList: 'get following list',
+    getFollowInfo: 'get follow info',
+  },
 } as const;

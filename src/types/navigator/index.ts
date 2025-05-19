@@ -48,12 +48,17 @@ export type RootStackParamList = {
   PasswordFind: undefined;
   MenuMain: undefined;
   MyPageModification: undefined;
-  FollowPage: undefined;
+  FollowPage: {
+    targetUserId: string;
+  };
   CharacterSearch: {
     isOne: boolean;
   };
   VoteRankingList: {
     voteSubjectId: string;
+  };
+  UserInfo: {
+    targetUserId: string;
   };
 };
 

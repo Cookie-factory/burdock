@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {TextStyle} from 'react-native';
 import CenterButton from '~/components/common/button/CenterButton';
 import CustomText from '~/components/common/text/Text';
 import HStack from '~/components/common/view/HStack';
@@ -10,14 +9,16 @@ import IconPlus16 from '~/assets/icons/IconPlus16.svg';
 import useNavigate from '~/hooks/navigator/useNavigation';
 import {useGetAuthInfo} from '~/apis/auth/hook';
 import CustomImage from '~/components/common/image/Image';
+import MyInfoDetailView from './MyInfoDetailView';
 
 function MyInfoView() {
   const {navigate} = useNavigate();
   const {data: getAuthInfoData} = useGetAuthInfo();
   const [isProfileImageError, setProfileImageError] = useState(false);
 
-  const {nickname, profile, introduce, firstCharacter, _count} =
+  const {id, nickname, profile, introduce, firstCharacter, _count} =
     getAuthInfoData?.data ?? {
+      id: undefined,
       nickname: '',
       profile: undefined,
       introduce: '',
@@ -30,24 +31,10 @@ function MyInfoView() {
       },
     };
 
-  const subTextStyle = {
-    fontSize: 10,
-    color: colors.gray[70],
-  };
-
-  const mainTextStyle = {
-    fontWeight: 'bold' as TextStyle['fontWeight'],
-    fontSize: 14,
-    color: colors.gray[80],
-  };
-
   const onMoveMyInfoModification = () => {
     navigate('MyPageModification');
   };
 
-  const onMoveFollowPage = () => {
-    navigate('FollowPage');
-  };
   return (
     <HStack marginBottom={16} gap={32}>
       <VStack w="auto">
@@ -89,42 +76,17 @@ function MyInfoView() {
         </CenterButton>
       </VStack>
 
-      <VStack gap={12}>
-        <VStack gap={4} alignItems="flex-start">
-          <CustomText {...subTextStyle}>{introduce}</CustomText>
-          <CustomText {...mainTextStyle}>{nickname}</CustomText>
-        </VStack>
-
-        <VStack gap={4} alignItems="flex-start">
-          <CustomText {...subTextStyle}>{firstCharacter.name}</CustomText>
-          <CustomText {...mainTextStyle}>최애</CustomText>
-        </VStack>
-
-        <HStack gap={13} alignItems="flex-start">
-          <VStack gap={4} w={'auto'} alignItems="flex-start">
-            <CustomText {...subTextStyle}>{_count.Board}</CustomText>
-            <CustomText {...mainTextStyle}>게시물</CustomText>
-          </VStack>
-
-          <CenterButton
-            onPress={onMoveFollowPage}
-            gap={4}
-            w={'auto'}
-            alignItems="flex-start">
-            <CustomText {...subTextStyle}>0</CustomText>
-            <CustomText {...mainTextStyle}>팔로워</CustomText>
-          </CenterButton>
-
-          <CenterButton
-            onPress={onMoveFollowPage}
-            gap={4}
-            w={'auto'}
-            alignItems="flex-start">
-            <CustomText {...subTextStyle}>0</CustomText>
-            <CustomText {...mainTextStyle}>팔로잉</CustomText>
-          </CenterButton>
-        </HStack>
-      </VStack>
+      <MyInfoDetailView
+        targetUserId={id ?? ''}
+        introduce={introduce ?? ''}
+        nickname={nickname}
+        firstCharacter={{
+          name: firstCharacter.name,
+        }}
+        _count={{
+          Board: _count.Board,
+        }}
+      />
     </HStack>
   );
 }
