@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "250882624030",
+    "project_id": "burdock-b2d23",
+    "storage_bucket": "burdock-b2d23.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250882624030:android:9f5485f165c5688d4cfc0f",
+        "android_client_info": {
+          "package_name": "com.burdock"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0GKhYTElJSjMMDJYVaBgrzSNE6ouY1Lo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
