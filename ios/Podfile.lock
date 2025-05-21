@@ -1828,6 +1828,11 @@ PODS:
     - React-Core
     - React-RCTImage
     - TOCropViewController (~> 2.7.4)
+  - RNNotifee (9.1.8):
+    - React-Core
+    - RNNotifee/NotifeeCore (= 9.1.8)
+  - RNNotifee/NotifeeCore (9.1.8):
+    - React-Core
   - RNScreens (3.37.0):
     - DoubleConversion
     - glog
@@ -2023,6 +2028,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNGoogleMobileAds (from `../node_modules/react-native-google-mobile-ads`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
+  - "RNNotifee (from `../node_modules/@notifee/react-native`)"
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -2204,6 +2210,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-google-mobile-ads"
   RNImageCropPicker:
     :path: "../node_modules/react-native-image-crop-picker"
+  RNNotifee:
+    :path: "../node_modules/@notifee/react-native"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNSVG:
@@ -2306,6 +2314,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: de2b7ccdbf18766609fb9490c7f11c18805705a3
   RNGoogleMobileAds: 03350a88a549e0aa1173c0c097f9d2e1dc817d44
   RNImageCropPicker: 16af7b83cc65b4ce992454bfb92a4af17d59ec42
+  RNNotifee: 5e3b271e8ea7456a36eec994085543c9adca9168
   RNScreens: 3a5bdfab16deda3b06195a77438030951b88c49e
   RNSVG: d332ea2a8540218eadc5c8f31c2b58dfba6b14b5
   RNVectorIcons: 7075443f1ecfe4012b7a2f65f684baf3faa9d8c1
