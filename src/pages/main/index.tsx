@@ -31,10 +31,6 @@ function MainPage() {
 
   const ranks = rankList ? rankList?.pages : [];
 
-  console.log('@@@ rankList?.totalVotesOfSubject');
-  console.log('@@@ rankList?.totalVotesOfSubject');
-  console.log('@@@ rankList?.totalVotesOfSubject');
-  console.log(rankList?.totalVotesOfSubject);
   const voteSubjectId = _.isEmpty(ranks) ? '' : ranks[0].voteSubjectId;
   const subjectTotalVotes =
     rankList?.totalVotesOfSubject === 0 ? 1 : rankList?.totalVotesOfSubject;

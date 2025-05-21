@@ -1,5 +1,6 @@
 import {useInfiniteQuery, useMutation, useQuery} from '@tanstack/react-query';
 import {
+  getMyRemainVoteCount,
   getRanking3PerThemes,
   getVoteRank,
   getVoteSubjectList,
@@ -70,5 +71,12 @@ export const useGetRanking3PerThemes = () => {
   return useQuery({
     queryKey: [queryKeys.vote.getRanking3PerThemes],
     queryFn: () => getRanking3PerThemes(),
+  });
+};
+
+export const useGetMyRemainVoteCount = () => {
+  return useQuery({
+    queryKey: [queryKeys.vote.getMyRemainVoteCount],
+    queryFn: () => getMyRemainVoteCount(),
   });
 };

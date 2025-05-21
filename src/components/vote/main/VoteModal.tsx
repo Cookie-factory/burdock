@@ -1,5 +1,9 @@
-import React, {useState} from 'react';
-import {usePostDailyVote, usePostVote} from '~/apis/vote/hook';
+import React, {useEffect, useState} from 'react';
+import {
+  useGetMyRemainVoteCount,
+  usePostDailyVote,
+  usePostVote,
+} from '~/apis/vote/hook';
 import CenterButton from '~/components/common/button/CenterButton';
 import CustomInput from '~/components/common/input/Input';
 import CustomModal from '~/components/common/modal/Modal';
@@ -37,6 +41,9 @@ function VoteModal({
   const [count, setCount] = useState(0);
   const postVote = usePostVote();
   const postDailyVote = usePostDailyVote();
+  const {data: getMyRemainVoteCountData, refetch: getMyRemainVoteCountRefetch} =
+    useGetMyRemainVoteCount();
+  const isNotVote = getMyRemainVoteCountData?.data.remaining === 0;
 
   const onCount = (variantCount: number) => {
     setCount(prev => {
@@ -52,6 +59,8 @@ function VoteModal({
   };
 
   const onRegister = () => {
+    if (isNotVote) return;
+
     if (type === 'THEME_VOTE') {
       if (!postVote.isPending && candidateId && voteSubjectId) {
         postVote
@@ -69,6 +78,7 @@ function VoteModal({
                 'color: red; font-weight: bold; font-size: 50px;',
               );
               refetch();
+              getMyRemainVoteCountRefetch();
               onModalClose();
             }
           })
@@ -90,6 +100,7 @@ function VoteModal({
           .then(response => {
             if (response.statusCode === 201) {
               refetch();
+              getMyRemainVoteCountRefetch();
               onModalClose();
             }
           });
@@ -100,6 +111,12 @@ function VoteModal({
     }
   };
 
+  useEffect(() => {
+    if (isOpen) {
+      getMyRemainVoteCountRefetch();
+    }
+  }, [isOpen]);
+
   return (
     <CustomModal
       visible={isOpen}
@@ -108,23 +125,23 @@ function VoteModal({
       alignItems="center">
       <CustomModalContent w={APP_WIDTH - 40} h={260} py={30}>
         <VStack flex={1} justifyContent="space-between">
-          <VStack borderWidth={1}>
+          <VStack>
             <CustomText mb={12}>나루토에게 투표하기</CustomText>
 
             <HStack mb={44} gap={6} justifyContent="center">
               <IconVote20 />
               <CustomText fontWeight={'bold'} color={colors.positive[-10]}>
-                20표 보유
+                {getMyRemainVoteCountData?.data.remaining ?? 0}표 보유
               </CustomText>
 
               <Center
-                w={38}
-                h={24}
+                w={40}
+                h={26}
                 borderRadius={24}
                 bgColor={colors.orange[10]}>
                 <CustomText
-                  color={colors.gray[10]}
-                  fontSize={0}
+                  color={colors.gray[0]}
+                  fontSize={11}
                   fontWeight={'bold'}>
                   충전
                 </CustomText>
@@ -185,9 +202,13 @@ function VoteModal({
               borderRadius={16}
               w={94}
               h={35}
-              bgColor={colors.positive[-10]}
+              borderColor={colors.gray[isNotVote ? 40 : 30]}
+              borderWidth={1}
+              bgColor={isNotVote ? colors.gray[0] : colors.positive[-10]}
               onPress={onRegister}>
-              <CustomText fontWeight={'bold'} color={colors.gray[0]}>
+              <CustomText
+                fontWeight={'bold'}
+                color={colors.gray[isNotVote ? 60 : 0]}>
                 투표하기
               </CustomText>
             </CenterButton>

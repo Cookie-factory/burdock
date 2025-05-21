@@ -62,3 +62,17 @@ export const getRanking3PerThemes = () => {
     url: 'vote-subject/theme/rank3',
   });
 };
+
+/**
+ *@description 본인 남은 투표권 수 조회 api
+ */
+export const getMyRemainVoteCount = () => {
+  return apiCall<{
+    total: number;
+    used: number;
+    remaining: number;
+  }>({
+    method: 'GET',
+    url: 'vote/myvote/count',
+  });
+};
