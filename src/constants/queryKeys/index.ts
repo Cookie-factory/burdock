@@ -40,4 +40,7 @@ export const queryKeys = {
     getFollowingList: 'get following list',
     getFollowInfo: 'get follow info',
   },
+  block: {
+    getBlockedUserList: 'get blocked user list',
+  },
 } as const;

@@ -22,6 +22,8 @@ interface Props {
 function BoardItem({data}: Props) {
   const {navigate} = useNavigate();
 
+  if (data.isBlockedUser) return <></>;
+
   const infoTextStyle = {
     color: colors.gray[80],
     fontSzie: 10,

@@ -69,8 +69,6 @@ function Inquiry() {
       refetch().then(({data}) => {
         //
         if (data?.statusCode === 200) {
-          console.log('@@@ getMesssageOnRoomData');
-          console.log(data.data);
           setMessageList(data?.data ?? []);
         }
       });

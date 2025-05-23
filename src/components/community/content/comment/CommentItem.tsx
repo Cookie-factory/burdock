@@ -13,15 +13,17 @@ import {
   SelectedCommentType,
 } from '~/types/api/comment';
 import {usePostCommentLike} from '~/apis/comment/hook';
+import {SelectedBlockedUser} from '~/types/api/block';
 
 interface Props {
   refetch: () => void;
   onSelectedComment: (selectedComment: SelectedCommentType) => void;
+  onBlockButtonClick: (blockedUser: SelectedBlockedUser) => void;
   isRecomment?: boolean;
 }
 
 function CommentItem(props: Props & CommentItemType) {
-  const {mutateAsync: postCommentLike} = usePostCommentLike();
+  const {mutateAsync: postCommentLikeMutate} = usePostCommentLike();
 
   const infoTextStyle = {
     color: colors.gray[80],
@@ -29,7 +31,7 @@ function CommentItem(props: Props & CommentItemType) {
   };
 
   const onLike = () => {
-    postCommentLike(props.id).then(response => {
+    postCommentLikeMutate(props.id).then(response => {
       if (response.statusCode === 201) {
         props.refetch();
       }
@@ -146,7 +148,15 @@ function CommentItem(props: Props & CommentItemType) {
                 )}
 
                 {!props.isAuth && (
-                  <CenterButton width={32} h={32}>
+                  <CenterButton
+                    width={32}
+                    h={32}
+                    onPress={() =>
+                      props.onBlockButtonClick({
+                        targetUserId: props.userId,
+                        targetUserNickname: props.user.nickname,
+                      })
+                    }>
                     <Text {...infoTextStyle}>차단</Text>
                   </CenterButton>
                 )}

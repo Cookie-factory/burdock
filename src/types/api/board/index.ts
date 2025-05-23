@@ -14,6 +14,7 @@ export type BoardItem = {
   updatedAt: string;
   isBookmark: boolean;
   isLike: boolean;
+  isBlockedUser: boolean;
   author: {
     id: string;
     nickname: string;

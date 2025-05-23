@@ -18,6 +18,11 @@ import FormInput from '~/components/common/input/FormInput';
 import ActiveButton from '~/components/common/button/ActiveButton';
 import CommentTopView from './CommentTopView';
 import {TextInput} from 'react-native';
+import BlockPopup from '~/components/menu/block/BlockPopup';
+import useToastShow from '~/hooks/toast/useToastShow';
+import {usePostBlock} from '~/apis/block/hook';
+import {toastText} from '~/constants/text';
+import {SelectedBlockedUser} from '~/types/api/block';
 
 interface Props {
   boardId?: string;
@@ -27,6 +32,7 @@ interface Props {
  *@description 댓글 목록 뷰
  */
 function CommentList({boardId}: Props) {
+  const {onShowToast} = useToastShow();
   const {refetch, data, fetchNextPage, isFetchingNextPage, hasNextPage} =
     useGetCommentList({
       cursor: null,
@@ -36,6 +42,7 @@ function CommentList({boardId}: Props) {
   const {mutateAsync: deleteCommentMutate} = useDeleteComment();
   const {mutateAsync: postCommentMutate} = usePostComment();
   const {mutateAsync: patchCommentMutate} = usePatchComment();
+  const {mutateAsync: postBlockMutate} = usePostBlock();
   const ref = useRef<TextInput>(null);
 
   const defaultSelectedComment = {
@@ -45,8 +52,12 @@ function CommentList({boardId}: Props) {
   const [selectedComment, setSelectedComment] = useState<SelectedCommentType>(
     defaultSelectedComment,
   );
+  const [selectedBlockedUser, setSelectedBlockedUser] =
+    useState<SelectedBlockedUser | null>(null);
+
   const [comment, setComment] = useState('');
   const [isShowDeletePopup, setShowDeletePopup] = useState(false);
+  const [isShowBlockPopup, setShowBlockPopup] = useState(false);
 
   const commentListData = data
     ? data?.pages.flatMap(item => {
@@ -85,8 +96,6 @@ function CommentList({boardId}: Props) {
             id: selectedComment.id,
             content: comment,
           }).then(response => {
-            console.log(response.statusCode);
-
             if (response.statusCode === 200) {
               setSelectedComment(defaultSelectedComment);
               setComment('');
@@ -103,8 +112,6 @@ function CommentList({boardId}: Props) {
             boardId,
             targetUserId: selectedComment.userId,
           }).then(response => {
-            console.log(response.statusCode);
-
             if (response.statusCode === 201) {
               setSelectedComment(defaultSelectedComment);
               setComment('');
@@ -126,6 +133,25 @@ function CommentList({boardId}: Props) {
   };
 
   /**
+   *@description 유저 차단하기
+   */
+  const onBlock = (targetUserNickname?: string, targetUserId?: string) => {
+    if (!targetUserId || !targetUserNickname) {
+      return onShowToast({
+        text1: toastText.error.wrongApproach,
+      });
+    }
+
+    postBlockMutate(targetUserId).then(response => {
+      if (response.statusCode === 201) {
+        onShowToast({text1: `${targetUserNickname}을 차단하였습니다.`});
+        setShowBlockPopup(false);
+        refetch();
+      }
+    });
+  };
+
+  /**
    *@description 댓글 삭제
    */
   const onDelete = () => {
@@ -137,6 +163,14 @@ function CommentList({boardId}: Props) {
         }
       });
     }
+  };
+
+  /**
+   *@description 차단 버튼 클릭 이벤트
+   */
+  const onBlockButtonClick = (blockedUserData: SelectedBlockedUser) => {
+    setSelectedBlockedUser(blockedUserData);
+    setShowBlockPopup(true);
   };
 
   useFocusScreen(() => {
@@ -212,12 +246,14 @@ function CommentList({boardId}: Props) {
                 <CommentItem
                   {..._item}
                   refetch={refetch}
+                  onBlockButtonClick={onBlockButtonClick}
                   onSelectedComment={onSelectedComment}
                 />
                 {_item.recomment.map(_recommentItem => (
                   <CommentItem
                     {..._recommentItem}
                     refetch={refetch}
+                    onBlockButtonClick={onBlockButtonClick}
                     onSelectedComment={onSelectedComment}
                     isRecomment={true}
                   />
@@ -227,6 +263,18 @@ function CommentList({boardId}: Props) {
           }}
         />
       </VStack>
+
+      <BlockPopup
+        isOpen={isShowBlockPopup}
+        onClose={() => setShowBlockPopup(false)}
+        onOkPress={() =>
+          onBlock(
+            selectedBlockedUser?.targetUserNickname,
+            selectedBlockedUser?.targetUserId,
+          )
+        }
+        onCancelPress={() => setShowBlockPopup(false)}
+      />
 
       <Popup
         isOpen={isShowDeletePopup}

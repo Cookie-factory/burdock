@@ -6,10 +6,13 @@ import CenterButton from '~/components/common/button/CenterButton';
 import {colors} from '~/constants/style';
 import Image from '~/components/common/image/Image';
 import WritingKebabMenu from '~/components/common/kebab/WritingKebabMenu';
-import {useDeleteBoard} from '~/apis/board/hook';
+import {useDeleteBoard, useGetBoardList} from '~/apis/board/hook';
 import useNavigate from '~/hooks/navigator/useNavigation';
 import useToastShow from '~/hooks/toast/useToastShow';
 import Popup from '~/components/common/popup/Popup';
+import {toastText} from '~/constants/text';
+import {usePostBlock} from '~/apis/block/hook';
+import BlockPopup from '~/components/menu/block/BlockPopup';
 
 interface Props {
   authorData?: {
@@ -27,11 +30,18 @@ interface Props {
 function ContentTopView({authorData, userId, boardId}: Props) {
   const {navigate, goBack} = useNavigate();
   const {onShowToast} = useToastShow();
+  const {refetch: getBoardListRefetch} = useGetBoardList({
+    cursor: null,
+    take: 20,
+  });
 
   const isAuthor = userId && authorData ? userId === authorData?.id : false;
   const [isWritingKebabMenuOpen, setWritingKebabMenuOpen] = useState(false);
   const deleteBoard = useDeleteBoard();
   const [isShowDeletePopup, setShowDeletePopup] = useState(false);
+  const [isShowBlockPopup, setShowBlockPopup] = useState(false);
+
+  const {mutateAsync: postBlockMutate} = usePostBlock();
 
   const onDelete = () => {
     if (!boardId) {
@@ -46,8 +56,26 @@ function ContentTopView({authorData, userId, boardId}: Props) {
         onShowToast({
           text1: '게시글이 삭제되었습니다.',
         });
-
+        getBoardListRefetch();
         goBack();
+      }
+    });
+  };
+
+  /**
+   *@description 유저 차단하기
+   */
+  const onBlock = (targetUserNickname?: string, targetUserId?: string) => {
+    if (!targetUserId || !targetUserNickname) {
+      return onShowToast({
+        text1: toastText.error.wrongApproach,
+      });
+    }
+
+    postBlockMutate(targetUserId).then(response => {
+      if (response.statusCode === 201) {
+        onShowToast({text1: `${targetUserNickname}을 차단하였습니다.`});
+        setShowBlockPopup(false);
       }
     });
   };
@@ -71,6 +99,23 @@ function ContentTopView({authorData, userId, boardId}: Props) {
       onMoveModifyPage();
     } else {
       // 차단
+      if (authorData?.id) {
+        postBlockMutate(authorData?.id).then(response => {
+          if (response.statusCode === 201) {
+            onShowToast({
+              text1: `${authorData.nickname}님이 차단되었습니다.`,
+              text2:
+                '차단 해제는 메뉴 -> 차단 유저 리스트에서 해제 가능합니다.',
+            });
+
+            setWritingKebabMenuOpen(false);
+          }
+        });
+      } else {
+        onShowToast({
+          text1: toastText.error.wrongApproach,
+        });
+      }
     }
   };
 
@@ -121,6 +166,13 @@ function ContentTopView({authorData, userId, boardId}: Props) {
         onPress={() => setWritingKebabMenuOpen(true)}>
         <IconMore24 />
       </CenterButton>
+
+      <BlockPopup
+        isOpen={isShowBlockPopup}
+        onClose={() => setShowBlockPopup(false)}
+        onOkPress={() => onBlock(authorData?.nickname, authorData?.id)}
+        onCancelPress={() => setShowBlockPopup(false)}
+      />
 
       <Popup
         isOpen={isShowDeletePopup}

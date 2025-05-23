@@ -23,6 +23,10 @@ function MenuMain() {
       url: 'EventList',
     },
     {
+      name: '차단 유저 리스트',
+      url: 'BlockedUserPage',
+    },
+    {
       name: '문의하기',
       url: 'Inquiry',
     },

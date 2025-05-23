@@ -24,6 +24,7 @@ import CharacterSearch from '~/pages/character/search';
 import VoteRankingList from '~/pages/vote/rankingList';
 import {colors} from '~/constants/style';
 import UserInfo from '~/pages/userInfo';
+import BlockedUserPage from '~/pages/menu/block';
 
 const stack = createNativeStackNavigator<RouteList>();
 
@@ -214,6 +215,21 @@ function BaseRouter() {
         <stack.Screen
           name="UserInfo"
           component={UserInfo}
+          options={{
+            headerShown: true,
+            header: () => (
+              <Header
+                bgColor={colors.gray[10]}
+                title=""
+                leftButton={<BackButton />}
+              />
+            ),
+          }}
+        />
+
+        <stack.Screen
+          name="BlockedUserPage"
+          component={BlockedUserPage}
           options={{
             headerShown: true,
             header: () => (

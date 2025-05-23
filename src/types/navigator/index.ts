@@ -60,6 +60,7 @@ export type RootStackParamList = {
   UserInfo: {
     targetUserId: string;
   };
+  BlockedUserPage: undefined;
 };
 
 // export type RouteList = RootStackParamList;
