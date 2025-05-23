@@ -119,7 +119,7 @@ function VoteModal({
 
   return (
     <CustomModal
-      visible={isOpen}
+      isVisible={isOpen}
       onDismiss={onClose}
       justifyContent="center"
       alignItems="center">

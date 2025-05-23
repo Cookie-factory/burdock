@@ -19,11 +19,13 @@ function FollowButton({isActive, refetch, targetUserId}: Props) {
   const {mutateAsync} = usePatchFollow();
   const {onShowToast} = useToastShow();
 
+  /**
+   *@description follow api 실행 이벤트
+   */
   const onFollow = () => {
     if (targetUserId) {
       mutateAsync(targetUserId).then(response => {
         if (response.statusCode / 100 === 2) {
-          console.log(2);
           refetch();
         }
       });

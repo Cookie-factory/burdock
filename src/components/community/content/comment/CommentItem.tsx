@@ -14,11 +14,13 @@ import {
 } from '~/types/api/comment';
 import {usePostCommentLike} from '~/apis/comment/hook';
 import {SelectedBlockedUser} from '~/types/api/block';
+import {SelectedReportData} from '~/types/api/report';
 
 interface Props {
   refetch: () => void;
   onSelectedComment: (selectedComment: SelectedCommentType) => void;
   onBlockButtonClick: (blockedUser: SelectedBlockedUser) => void;
+  onReportButtonClick: (_selectedReportData: SelectedReportData) => void;
   isRecomment?: boolean;
 }
 
@@ -162,7 +164,16 @@ function CommentItem(props: Props & CommentItemType) {
                 )}
 
                 {!props.isAuth && (
-                  <CenterButton width={32} h={32}>
+                  <CenterButton
+                    onPress={() =>
+                      props.onReportButtonClick({
+                        targetId: props.id,
+                        targetType: 'COMMENT',
+                        targetUserId: props.userId,
+                      })
+                    }
+                    width={32}
+                    h={32}>
                     <Text {...infoTextStyle}>신고</Text>
                   </CenterButton>
                 )}

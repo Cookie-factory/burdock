@@ -13,6 +13,7 @@ import Popup from '~/components/common/popup/Popup';
 import {toastText} from '~/constants/text';
 import {usePostBlock} from '~/apis/block/hook';
 import BlockPopup from '~/components/menu/block/BlockPopup';
+import {SelectedReportData} from '~/types/api/report';
 
 interface Props {
   authorData?: {
@@ -22,12 +23,19 @@ interface Props {
   };
   userId?: string;
   boardId?: string;
+
+  onReportButtonClick: (_selectedReportData: SelectedReportData) => void;
 }
 
 /**
  *@description 게시글 상단 -> 유저, 추가 기능 버튼 뷰
  */
-function ContentTopView({authorData, userId, boardId}: Props) {
+function ContentTopView({
+  authorData,
+  userId,
+  boardId,
+  onReportButtonClick,
+}: Props) {
   const {navigate, goBack} = useNavigate();
   const {onShowToast} = useToastShow();
   const {refetch: getBoardListRefetch} = useGetBoardList({
@@ -125,6 +133,16 @@ function ContentTopView({authorData, userId, boardId}: Props) {
       setTimeout(() => setShowDeletePopup(true), 150);
     } else {
       // 신고
+      if (!boardId || !authorData?.id) {
+        onShowToast({text1: toastText.error.wrongApproach});
+        return;
+      }
+
+      onReportButtonClick({
+        targetId: boardId,
+        targetType: 'BOARD',
+        targetUserId: authorData?.id,
+      });
     }
   };
 

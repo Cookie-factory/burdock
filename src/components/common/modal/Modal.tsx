@@ -1,19 +1,19 @@
 import React from 'react';
-import {Modal as _Modal, ModalProps} from 'react-native-paper';
-import {CustomUIProps} from '~/types/style';
+import {CustomModalProps, CustomUIProps} from '~/types/style';
 import {styleTransform} from '~/utils/style';
+import Modal from 'react-native-modal';
 
 /**
  *@description Modal ui,
  *@TODO 추후 style props 수정
  */
-function CustomModal(props: CustomUIProps<ModalProps>) {
+function CustomModal(props: CustomUIProps<CustomModalProps>) {
   const transformStyle = styleTransform(props);
 
   return (
-    <_Modal {...props} style={[transformStyle, props.style]}>
+    <Modal {...props} style={[transformStyle, props.style]} avoidKeyboard>
       {props.children}
-    </_Modal>
+    </Modal>
   );
 }
 

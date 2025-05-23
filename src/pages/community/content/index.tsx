@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useGetAuthInfo} from '~/apis/auth/hook';
 import {
   usePostBookmarkBoard,
@@ -15,9 +15,11 @@ import ContentHelperView from '~/components/community/content/ContentHelperView'
 import ContentText from '~/components/community/content/ContentText';
 import ContentTitle from '~/components/community/content/ContentTitle';
 import ContentTopView from '~/components/community/content/ContentTopView';
+import ReportModal from '~/components/report/ReportModal';
 import useFocusScreen from '~/hooks/navigator/useFocusScreen';
 import useNavigate from '~/hooks/navigator/useNavigation';
 import useParam from '~/hooks/navigator/useParam';
+import {SelectedReportData} from '~/types/api/report';
 
 /**
  *@description 게시글 내용 페이지
@@ -32,6 +34,9 @@ function CommunityContent() {
 
   const {mutateAsync: bookmarkBoardMutate} = usePostBookmarkBoard();
   const {mutateAsync: postBoardLike} = usePostBoardLike();
+  const [selectedReport, setSelectedReport] =
+    useState<SelectedReportData | null>(null);
+  const [isShowReportPopup, setShowReportPopup] = useState(false);
 
   const onLike = () => {
     if (param?.id) {
@@ -41,6 +46,14 @@ function CommunityContent() {
         }
       });
     }
+  };
+
+  /**
+   *@description 신고 버튼 클릭 이벤트
+   */
+  const onReportButtonClick = (_selectedReportData: SelectedReportData) => {
+    setSelectedReport(_selectedReportData);
+    setShowReportPopup(true);
   };
 
   const onBookmark = () => {
@@ -65,6 +78,7 @@ function CommunityContent() {
             boardId={data?.data.id}
             authorData={data?.data.author}
             userId={userData?.data.id}
+            onReportButtonClick={onReportButtonClick}
           />
 
           <BigImageSwiper images={data?.data.images ?? []} />
@@ -87,6 +101,12 @@ function CommunityContent() {
           </InnerLayout>
         </VStack>
       </ScrollView>
+
+      <ReportModal
+        isOpen={isShowReportPopup}
+        onClose={() => setShowReportPopup(false)}
+        selectedReport={selectedReport}
+      />
     </WhiteSafeAreaView>
   );
 }

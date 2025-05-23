@@ -23,6 +23,8 @@ import useToastShow from '~/hooks/toast/useToastShow';
 import {usePostBlock} from '~/apis/block/hook';
 import {toastText} from '~/constants/text';
 import {SelectedBlockedUser} from '~/types/api/block';
+import ReportModal from '~/components/report/ReportModal';
+import {SelectedReportData} from '~/types/api/report';
 
 interface Props {
   boardId?: string;
@@ -55,9 +57,13 @@ function CommentList({boardId}: Props) {
   const [selectedBlockedUser, setSelectedBlockedUser] =
     useState<SelectedBlockedUser | null>(null);
 
+  const [selectedReport, setSelectedReport] =
+    useState<SelectedReportData | null>(null);
+
   const [comment, setComment] = useState('');
   const [isShowDeletePopup, setShowDeletePopup] = useState(false);
   const [isShowBlockPopup, setShowBlockPopup] = useState(false);
+  const [isShowReportPopup, setShowReportPopup] = useState(false);
 
   const commentListData = data
     ? data?.pages.flatMap(item => {
@@ -173,6 +179,14 @@ function CommentList({boardId}: Props) {
     setShowBlockPopup(true);
   };
 
+  /**
+   *@description 신고 버튼 클릭 이벤트
+   */
+  const onReportButtonClick = (_selectedReportData: SelectedReportData) => {
+    setSelectedReport(_selectedReportData);
+    setShowReportPopup(true);
+  };
+
   useFocusScreen(() => {
     refetch();
   });
@@ -247,6 +261,7 @@ function CommentList({boardId}: Props) {
                   {..._item}
                   refetch={refetch}
                   onBlockButtonClick={onBlockButtonClick}
+                  onReportButtonClick={onReportButtonClick}
                   onSelectedComment={onSelectedComment}
                 />
                 {_item.recomment.map(_recommentItem => (
@@ -255,6 +270,7 @@ function CommentList({boardId}: Props) {
                     refetch={refetch}
                     onBlockButtonClick={onBlockButtonClick}
                     onSelectedComment={onSelectedComment}
+                    onReportButtonClick={onReportButtonClick}
                     isRecomment={true}
                   />
                 ))}
@@ -284,6 +300,12 @@ function CommentList({boardId}: Props) {
         okText={'삭제'}
         cancelText={'취소'}
         title={'삭제하시겠습니까?'}
+      />
+
+      <ReportModal
+        isOpen={isShowReportPopup}
+        onClose={() => setShowReportPopup(false)}
+        selectedReport={selectedReport}
       />
     </VStack>
   );

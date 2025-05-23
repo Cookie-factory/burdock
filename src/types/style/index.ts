@@ -14,8 +14,8 @@ import {
   ViewStyle,
 } from 'react-native';
 import {MakeOptional} from '../util/utility';
-import {ModalProps} from 'react-native-paper';
 import {styleKey, styleTransformKey} from '~/constants/style';
+import {ReactChildren} from 'react-native-toast-message';
 
 // style 통합 이슈에 따른 => style type 재정의
 export type PressableProps<
@@ -26,9 +26,12 @@ export type PressableProps<
   style: T;
 };
 
-export type CustomModalProps = ModalProps & {
-  visible: boolean;
+export type CustomModalProps = {
+  isVisible: boolean;
   onDismiss: () => void;
+} & {
+  children: ReactChildren;
+  style: StyleProp<ViewStyle>;
 };
 
 export type CustomUIProps<
@@ -36,8 +39,8 @@ export type CustomUIProps<
     | ViewProps
     | PressableProps
     | TextInputProps
-    | CustomModalProps
     | ImageProps
+    | CustomModalProps
     | TextProps = ViewProps,
   K extends
     | CustomViewStyle
