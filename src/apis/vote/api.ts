@@ -6,8 +6,10 @@ import queryString from 'query-string';
 import {
   GetRanking3PerThemesResponse,
   GetRankVoteResponse,
+  GetVoteMyHistoryResponse,
   GetVoteSubjectListResponse,
 } from '~/types/api/vote/response';
+import {CursorQuery} from '~/types/api/common/query';
 
 /**
  *@description 투표 등록 api
@@ -74,5 +76,16 @@ export const getMyRemainVoteCount = () => {
   }>({
     method: 'GET',
     url: 'vote/myvote/count',
+  });
+};
+
+/**
+ *@description 본인 투표 히스토리 조회 api
+ */
+export const getVoteMyHistory = (query: CursorQuery) => {
+  const _query = queryString.stringify({...query});
+  return apiCall<GetVoteMyHistoryResponse>({
+    method: 'GET',
+    url: `vote/myhistory?${_query}`,
   });
 };

@@ -2,6 +2,7 @@ import {useInfiniteQuery, useMutation, useQuery} from '@tanstack/react-query';
 import {
   getMyRemainVoteCount,
   getRanking3PerThemes,
+  getVoteMyHistory,
   getVoteRank,
   getVoteSubjectList,
   postDailyVote,
@@ -10,6 +11,7 @@ import {
 import {PostDailyVoteData, PostVoteData} from '~/types/api/vote/data';
 import {queryKeys} from '~/constants/queryKeys';
 import {GetVoteRankQuery} from '~/types/api/vote/query';
+import {CursorQuery} from '~/types/api/common/query';
 
 /**
  *@description [투표 등록] 훅
@@ -74,9 +76,34 @@ export const useGetRanking3PerThemes = () => {
   });
 };
 
+/**
+ *@description 본인 남아있는 투표 수 조회 훅
+ */
 export const useGetMyRemainVoteCount = () => {
   return useQuery({
     queryKey: [queryKeys.vote.getMyRemainVoteCount],
     queryFn: () => getMyRemainVoteCount(),
+  });
+};
+
+/**
+ *@description 자기 투표 히스토리 조회 훅
+ */
+export const useGetVoteMyHistory = (query: CursorQuery) => {
+  return useInfiniteQuery({
+    queryKey: [queryKeys.vote.getVoteMyHistory, query],
+    queryFn: ({pageParam}) => getVoteMyHistory(pageParam),
+    initialPageParam: query,
+    getNextPageParam: (lastPage, __, lastPageParam) => {
+      const previousData = [...lastPage.data];
+      if (previousData.length !== 0) {
+        return {
+          ...lastPageParam,
+          cursor: previousData.reverse()[0].id,
+        } as CursorQuery;
+      } else {
+        return null;
+      }
+    },
   });
 };

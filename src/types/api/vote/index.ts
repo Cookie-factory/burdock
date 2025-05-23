@@ -25,3 +25,21 @@ export type Ranking3PerThemesItem = {
     totalVotes: number;
   }[];
 };
+
+/**
+ *@description 내 투표 이력 항목 타입
+ */
+export type VoteMyHistoryItem = {
+  id: string;
+  count: number;
+  createdAt: string;
+  candidate: {
+    id: string;
+    character: {
+      id: string;
+      name: string;
+      profile: string;
+    };
+  };
+  voteSubject: {id: string; title: string};
+};

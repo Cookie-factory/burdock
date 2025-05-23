@@ -26,6 +26,7 @@ export const queryKeys = {
     getVoteSubjectList: 'get vote subject list',
     getRanking3PerThemes: 'get ranking 3 per themes',
     getMyRemainVoteCount: 'get my remain vote count',
+    getVoteMyHistory: 'get vote my history',
   },
 
   comment: {
